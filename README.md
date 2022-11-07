@@ -72,5 +72,5 @@ liste des utilisateurs autorisés à visualiser la galerie.
 
 - [ ] Gestion de profil : chaque utilisateur peut définir et gérer des informations dans son profil. Ces informations peuvent être affichées avec les galeries dont il est propriétaire.
 
-- [ ] gestion de groupes : dans son profil, un utilisateur peut définir des groupes d’utilisateurs enregistrés. Ces groupes sont utilisés lors de la création de galeries privées ou partagées, pour donner rapidement des droits d’accès ou de contribution à des ensemble d’utilisateurs.
+- [ ] Gestion de groupes : dans son profil, un utilisateur peut définir des groupes d’utilisateurs enregistrés. Ces groupes sont utilisés lors de la création de galeries privées ou partagées, pour donner rapidement des droits d’accès ou de contribution à des ensemble d’utilisateurs.
 
