@@ -22,4 +22,4 @@
  
 <h3>Affichage d’une galerie :</h3>
 
-    - [ ] Affichage d’informations relatives à la galerie : titre, nombre photos, nom du créateur,date de création, mots-clés associés à la galerie 
+- [ ] Affichage d’informations relatives à la galerie : titre, nombre photos, nom du créateur,date de création, mots-clés associés à la galerie 
