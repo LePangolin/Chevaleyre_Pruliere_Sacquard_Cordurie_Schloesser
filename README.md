@@ -24,7 +24,6 @@
 /
 
 - app/
-  - config/
   - database/
     - seeders/
   - logs
@@ -35,13 +34,14 @@
       - site/
     - index.html
   - src/
-    - controllers/
-    - models/
-    - views/
+    - Controllers/
+    - Models/
+    - Views/
       - style/
         - css/
         - scss/
       - js/
+      - parts/
 - docs/
 
 ## Fonctionnalités Obligatoires
