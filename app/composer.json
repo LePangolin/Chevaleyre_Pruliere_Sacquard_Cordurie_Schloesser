@@ -3,12 +3,11 @@
     "slim/slim": "4.*",
     "slim/psr7": "^1.5",
     "doctrine/orm": "^2.13",
-    "symfony/cache": "^6.1",
     "doctrine/annotations": "^1.13",
     "slim/twig-view": "^3.3",
     "doctrine/migrations": "3.5.2",
-    "monolog/monolog": "^3.2",
-    "symfony/yaml": "^6.1"
+    "symfony/yaml": "^6.0",
+    "monolog/monolog": "^2.8"
   },
   "autoload": {
     "psr-4": {
