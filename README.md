@@ -66,7 +66,7 @@
 
 - [ ] Les données descriptives d’une galerie sont modifiables à tout moment par son propriétaire, y compris la liste des utilisateurs autorisés
 
-- [ ] le propriétaire d’une galerie peut ajouter des photos à tout moment.
+- [ ] Le propriétaire d’une galerie peut ajouter des photos à tout moment.
 
 <h3>Affichage des listes de galeries : </h3>
 <h4>Pour les utilisateur non connecter : </h4>
