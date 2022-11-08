@@ -30,9 +30,11 @@ final class Gallery
     #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false)]
     private DateTimeImmutable $created_at; 
 
-    public function __construct(string $name, bool $public)
+    public function __construct(string $name, string $description, int $nb_pictures, bool $public)
     {
         $this->name = $name;
+        $this->description = $description;
+        $this->nb_pictures = $nb_pictures;
         $this->public = $public;
         $this->created_at = new DateTimeImmutable();
     }
