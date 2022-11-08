@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity, Table(name: 'PicturesToMetadatas')]
-final class PictureToComment
+final class PicturesToMetadata
 {
     #[Id, Column(type: 'integer', nullable: false)]
     private int $id_picture;
