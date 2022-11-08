@@ -24,7 +24,7 @@ $container = new Container($logger, require __DIR__ . '/settings.php');
 
 $container->set("view", function () {
     // return Twig::create(__DIR__ . '/app/Views/templates', ['cache' => __DIR__ . '/app/Views/cache']);
-    return Twig::create(__DIR__ . '/src/Views/templates', ['cache' => false]);
+    return Twig::create(__DIR__ . '/src/views/templates', ['cache' => false]);
 });
 
 $container->set(LoggerInterface::class, function (ContainerInterface $c) {
