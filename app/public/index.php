@@ -2,11 +2,11 @@
 
 use Slim\Factory\AppFactory;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-$container = require __DIR__ . '/../../bootstrap.php';
+$container = require __DIR__ . '/../bootstrap.php';
 
 AppFactory::setContainer($container);
 

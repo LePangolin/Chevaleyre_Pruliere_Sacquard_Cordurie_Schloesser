@@ -4,7 +4,7 @@ services:
         ports:
             - "8081:8081"
         command: php -S 0.0.0.0:8081 
-        working_dir: /app/src/public
+        working_dir: /app/public
         restart: always
         volumes:
           - .:/app
