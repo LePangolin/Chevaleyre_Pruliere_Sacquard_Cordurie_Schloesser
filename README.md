@@ -26,6 +26,8 @@
 - app/
   - config/
   - database/
+    - seeders/
+  - logs
   - public/
     - img/
       - gallery_pictures/
@@ -36,7 +38,9 @@
     - controllers/
     - models/
     - views/
-      - css/
+      - style/
+        - css/
+        - scss/
       - js/
 - docs/
 
