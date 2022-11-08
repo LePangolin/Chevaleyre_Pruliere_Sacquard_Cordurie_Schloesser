@@ -2,9 +2,9 @@ services:
     php:
         build: .
         ports:
-            - "9000:9000"
-        command: php -S localhost:9000
-        working_dir: /src/public
+            - "8081:8081"
+        command: php -S 0.0.0.0:8081 
+        working_dir: /app/src/public
         restart: always
         volumes:
           - .:/app
