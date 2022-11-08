@@ -25,11 +25,21 @@ class UserService{
             $this->logger->info("User $username already exists");
             return false;
         }
-        // TODO: hash password
-        $user = new User($username, $password);
+        $user = new User($username,  $password);
         $this->em->persist($user);
         $this->em->flush();
         $this->logger->info("User $username has been created");
         return true;
+    }
+
+    public function login(string $username, string $password) : ?User 
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['username' => $username, 'password' => hash('md5', $password)]);
+        if($user === null){
+            $this->logger->info("User $username has failed to login");
+            return null;
+        }
+        $this->logger->info("User $username has logged in");
+        return $user;
     }
 }
