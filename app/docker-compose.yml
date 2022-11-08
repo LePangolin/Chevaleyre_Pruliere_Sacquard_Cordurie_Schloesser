@@ -4,7 +4,7 @@ services:
         ports:
             - "9000:9000"
         command: php -S localhost:9000
-        working_dir: /app/public
+        working_dir: /src/public
         restart: always
         volumes:
           - .:/app
