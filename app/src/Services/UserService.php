@@ -32,6 +32,7 @@ class UserService{
         return true;
     }
 
+
     public function login(string $username, string $password) : ?User 
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['username' => $username, 'password' => hash('md5', $password)]);
@@ -43,3 +44,5 @@ class UserService{
         return $user;
     }
 }
+
+

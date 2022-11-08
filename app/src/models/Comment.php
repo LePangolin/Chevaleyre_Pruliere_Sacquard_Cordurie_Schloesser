@@ -21,7 +21,7 @@ final class Comment
     #[Column(type: 'string', nullable: false)]
     private string $content;
 
-    #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false), GeneratedValue(strategy: 'CURRENT_TIMESTAMP')]
+    #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false)]
     private DateTimeImmutable $sent_at;
 
     public function __construct(int $id_author, string $content) {
@@ -49,4 +49,4 @@ final class Comment
     {
         return $this->sent_at;
     }
-}
+} 
