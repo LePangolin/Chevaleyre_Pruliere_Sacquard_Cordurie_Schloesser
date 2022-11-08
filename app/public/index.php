@@ -16,7 +16,11 @@ $app->addBodyParsingMiddleware();
 
 $app->get('/', App\Controllers\HTMLController::class . ':index')->setName('index');
 
-$app->post('/signUp', App\controllers\UserController::class . ':signUp')->setName('signUp');
+$app->post('/signUp', App\Controllers\UserController::class . ':signUp')->setName('signUp');
+
+$app->get('/create', App\Controllers\GalleryController::class . ':create')->setName('create');
+
+$app->post('/createGallery', App\Controllers\GalleryController::class . ':createGallery')->setName('createGallery');
 
 $app->post('/logIn', App\Controllers\UserController::class . ':login')->setName('signIn');
 
