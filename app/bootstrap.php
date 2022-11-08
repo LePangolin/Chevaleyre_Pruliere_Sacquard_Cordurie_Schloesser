@@ -15,6 +15,11 @@ use Slim\Views\Twig;
 use App\Container;
 use Psr\Log\LogLevel;
 
+use App\Services\UserService;
+
+use App\Controllers\UserController;
+use App\Controllers\HTMLController;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 $logger =  new Logger('container');
@@ -24,7 +29,7 @@ $container = new Container($logger, require __DIR__ . '/settings.php');
 
 $container->set("view", function () {
     // return Twig::create(__DIR__ . '/app/Views/templates', ['cache' => __DIR__ . '/app/Views/cache']);
-    return Twig::create(__DIR__ . '/src/views/templates', ['cache' => false]);
+    return Twig::create(__DIR__ . '/src/Views', ['cache' => false]);
 });
 
 $container->set(LoggerInterface::class, function (ContainerInterface $c) {
@@ -54,8 +59,16 @@ $container->set(EntityManager::class, static function (Container $c): EntityMana
     return EntityManager::create($settings['doctrine']['connection'], $config);
 });
 
-/*$container->set(ClasseExemple::class, static function (Container $c) {
-    return new ClasseExemple($c->get(EntityManager::class), $c->get(LoggerInterface::class));
-});*/
+$container->set(UserService::class, static function (Container $c): UserService {
+    return new UserService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
+});
+
+$container->set(UserController::class, static function (Container $c): UserController {
+    return new UserController($c->get(UserService::class), $c->get("view"));
+});
+
+$container->set(HTMLController::class, static function (Container $c): HTMLController {
+    return new HTMLController($c->get('view'));
+});
 
 return $container;
