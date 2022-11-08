@@ -17,6 +17,12 @@ final class Picture
     #[Column(type: 'string', nullable: true)]
     private string $name;
 
+    #[Column(type: 'string', nullable: true)]
+    private string $descr;
+
+    #[Column(type: 'string', nullable: true)]
+    private string $link;
+
     public function __construct() {
 
     }
@@ -29,5 +35,15 @@ final class Picture
     public function getName(): string 
     {
         return $this->name;
+    }
+
+    public function getDescr() : string
+    {
+        return $this->descr;
+    }
+
+    public function getLink() : string
+    {
+        return $this->link;
     }
 }
