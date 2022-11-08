@@ -14,10 +14,9 @@ $app = AppFactory::create();
 
 $app->addBodyParsingMiddleware();
 
-$app->get('/', function ($request, $response, $args) {
-    $response->getBody()->write("Hello world!");
-    return $response;
-});
+$app->get('/', App\Controllers\HTMLController::class . ':index')->setName('index');
+
+$app->post('/signUp', App\controllers\UserController::class . ':signUp')->setName('signUp');
 
 
 $app->run();
