@@ -59,15 +59,15 @@ $container->set(EntityManager::class, static function (Container $c): EntityMana
     return EntityManager::create($settings['doctrine']['connection'], $config);
 });
 
-$container->set(UserService::class, static function (Container $c): UserService {
+$container->set(UserService::class, function (Container $c): UserService {
     return new UserService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
 });
 
-$container->set(UserController::class, static function (Container $c): UserController {
+$container->set(UserController::class, function (Container $c): UserController {
     return new UserController($c->get(UserService::class), $c->get("view"));
 });
 
-$container->set(HTMLController::class, static function (Container $c): HTMLController {
+$container->set(HTMLController::class, function (Container $c): HTMLController {
     return new HTMLController($c->get('view'));
 });
 
