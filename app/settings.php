@@ -36,11 +36,11 @@ return [
             // of valid parameters: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
             'connection' => [
                 'driver' => 'pdo_mysql',
-                'host' => 'mariadb',
+                'host' => 'mysql',
                 'port' => 3306,
-                'dbname' => 'mediaphoto',
-                'user' => 'test',
-                'password' => 'test',
+                'dbname' => 'atelier',
+                'user' => 'admin',
+                'password' => 'admin',
                 // 'charset' => 'utf-8'
             ]
         ]

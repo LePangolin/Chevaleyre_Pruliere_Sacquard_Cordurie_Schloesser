@@ -15,16 +15,16 @@ final class Gallery
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    #[Id, Column(type: 'string', nullable: false)]
+    #[Column(type: 'string', nullable: false)]
     private string $name;
 
-    #[Id, Column(type: 'string', nullable: true)]
+    #[Column(type: 'string', nullable: true)]
     private string $description;
 
-    #[Id, Column(type: 'integer', nullable: false)]
+    #[Column(type: 'integer', nullable: false)]
     private int $nb_pictures;
 
-    #[Id, Column(type: 'boolean', nullable: false)]
+    #[Column(type: 'boolean', nullable: false)]
     private bool $public;
 
     #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false)]
