@@ -8,17 +8,17 @@ use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
 use App\Container;
+use Psr\Log\LogLevel;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $logger =  new Logger('container');
-$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/container.log', Level::Debug));
+$logger->pushHandler(new StreamHandler(__DIR__ . '/logs/container.log', LogLevel::DEBUG));
 
 $container = new Container($logger, require __DIR__ . '/settings.php');
 
@@ -30,7 +30,7 @@ $container->set("view", function () {
 $container->set(LoggerInterface::class, function (ContainerInterface $c) {
     $settings = $c->get('settings')['logger'];
     $logger = new Logger($settings['name']);
-    $logger->pushHandler(new StreamHandler($settings['path'], Level::Debug));
+    $logger->pushHandler(new StreamHandler($settings['path'], LogLevel::DEBUG));
     return $logger;
 });
 
