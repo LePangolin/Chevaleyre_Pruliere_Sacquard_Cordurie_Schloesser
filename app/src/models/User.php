@@ -27,7 +27,7 @@ final class User
     #[Column(type: 'string', nullable: false)]
     private string $password;
 
-    #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false), GeneratedValue(strategy: 'CURRENT_TIMESTAMP')]
+    #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false)]
     private DateTimeImmutable $created_at;
 
     public function __construct(string $username, string $password)
