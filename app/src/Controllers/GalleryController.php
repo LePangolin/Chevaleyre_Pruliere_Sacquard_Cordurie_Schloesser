@@ -46,7 +46,7 @@ class GalleryController {
         // On vérifie si l'id de la session correspond à celui du créateur de la galerie
         $is_author = false;
         if (isset($_SESSION['user'])) {
-            if ($a->getId() == $_SESSION['user']->getId()) {
+            if ($this->galleryService->getCreator($args['id'])[0]->getIdUser() == $_SESSION['user']->getId()) {
                 $is_author = true;
             }
         }        

@@ -6,6 +6,7 @@ use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
+use App\Models\UserToGallery;
 use App\Models\Picture;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
@@ -62,5 +63,11 @@ final class GalleryService {
             array_push($pictures, $picture);
         }
         return $pictures;
+    }
+
+    public function getCreator($id_gallery)
+    {
+        $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
+        return $creator;
     }
 }
