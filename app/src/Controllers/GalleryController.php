@@ -30,18 +30,10 @@ class GalleryController
 
         $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $data["tag"]);
         if($bool){
-            $resp = array(
-                'status' => 'success',
-                'message' => 'Form sent'
-            );
+            return $response->withHeader('Location', '/')->withStatus(302);
         }else{
-            $resp = array(
-                'status' => 'error',
-                'message' => 'A problem occured'
-            );
+            return $response->withHeader('Location', '/create')->withStatus(302);
         }
-        $response->getBody()->write(json_encode($resp));
-        return $response->withHeader('Content-Type', 'application/json');
     }
 
 }
