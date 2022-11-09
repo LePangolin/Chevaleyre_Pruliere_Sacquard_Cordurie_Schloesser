@@ -24,6 +24,14 @@ $app->post('/createGallery', App\Controllers\GalleryController::class . ':create
 
 $app->post('/logIn', App\Controllers\UserController::class . ':login')->setName('signIn');
 
+$app->get('/auth', App\Controllers\UserController::class . ':auth')->setName('auth');
+
 $app->get('/gallery/{id}', \App\Controllers\GalleryController::class . ':displayGallery')->setName('displayGallery');
 
+$app->get('/profile', \App\Controllers\UserController::class . ':displayProfile')->setName('displayProfile');
+
+$app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
+
+
 $app->run();
+

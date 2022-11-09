@@ -20,16 +20,26 @@ class GalleryController
 
     public function create(Request $request, Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'createGallery.html.twig', [
-            
-        ]);
+        if(isset($_SESSION["user"])){
+            return $this->twig->render($response, 'createGallery.html.twig', [
+                "title" => "Création d'une galerie",
+                "user" => $_SESSION["user"]
+            ]);
+        }else{
+            return $response->withHeader('Location', '/auth')->withStatus(302);
+        }
     }
 
     public function createGallery(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $data["tag"]);
+        if(isset($data["tags"])){
+            $tags = json_decode($data["tags"]);
+        }else{
+            $tags = array();
+        }
+        $idUser = $_SESSION["user"]->getId();
+        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{
@@ -41,14 +51,31 @@ class GalleryController
     {
         // On récupère la galerie d'id args['id']
         $a = $this->galleryService->getGallery($args['id']);
+        if (is_null($a)) {
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
         $gallery = [
             'id' => $a->getId(),
             'title' => $a->getName(),
         ];
+
+        if (!$a->getPublic()) {
+            if (!isset($_SESSION['user'])) {
+                return $response->withHeader('Location', '/')->withStatus(302);
+            } else {
+                $id_current_user = $_SESSION['user']->getId();
+                $id_creator = $this->galleryService->getCreator($args['id'])[0]->getIdUser();
+                $id_users = $this->galleryService->getListUser($args['id']);
+                if ($id_current_user != $id_creator && !in_array($id_current_user, $id_users)) {
+                    return $response->withHeader('Location', '/')->withStatus(302);
+                }
+            }
+        }
+
         // On vérifie si l'id de la session correspond à celui du créateur de la galerie
         $is_author = false;
         if (isset($_SESSION['user'])) {
-            if ($a->getId() == $_SESSION['user']->getId()) {
+            if ($this->galleryService->getCreator($args['id'])[0]->getIdUser() == $_SESSION['user']->getId()) {
                 $is_author = true;
             }
         }        
