@@ -13,7 +13,6 @@ use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
 use App\Container;
-use App\Controllers\GalleryController;
 use Psr\Log\LogLevel;
 
 use App\Services\UserService;
@@ -80,14 +79,6 @@ $container->set(GalleryController::class, static function (Container $c): Galler
 
 $container->set(HTMLController::class, static function (Container $c): HTMLController {
     return new HTMLController($c->get('view'));
-});
-
-$container->set(GalleryService::class, static function (Container $c): GalleryService {
-    return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
-});
-
-$container->set(GalleryController::class, static function (Container $c): GalleryController {
-    return new GalleryController($c->get(GalleryService::class), $c->get("view"));
 });
 
 return $container;
