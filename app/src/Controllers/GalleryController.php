@@ -70,11 +70,26 @@ class GalleryController
 
     public function searchGalleries(Request $request, Response $response, array $args): Response
     {
-        $search = "";
-        if (isset($_POST['searchBar'])) {
-            $search = $_POST['searchBar'];
+        $data = $request->getParsedBody();
+
+        $tags = [];
+        if (!empty($data["tags"])) {
+            $tags = json_decode($data["tags"]);
         }
-        $galleriesObjects = $this->galleryService->findGalleryByName($search);
+
+        $nameSearch = "";
+        if (!empty($data["searchBar"])) {
+            $nameSearch = $data["searchBar"];
+        }
+
+        $galleriesObjects = [];
+        if (empty($tags)) {
+            $galleriesObjects = $this->galleryService->findGalleriesByName($nameSearch);
+        } else {
+            $galleriesObjects = $this->galleryService->findGalleriesByNameAndTags($nameSearch, $tags);
+        }
+
+        var_dump($galleriesObjects);
 
         $galleriesArray = [];
         foreach ($galleriesObjects as $gallery) {
@@ -86,14 +101,10 @@ class GalleryController
                 'public' => $gallery->getPublic()
             ];
         }
-
-        $tags = [];        
-        $data = $request->getParsedBody();
-        $tags = json_decode($data["tags"]);
        
         return $this->twig->render($response, 'searchPage.html.twig', [
             'title' => 'Recherche',
-            'search' => $search,
+            'search' => $nameSearch,
             'galleries' => $galleriesArray,
             'tags' => $tags
         ]);

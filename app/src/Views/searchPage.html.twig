@@ -7,18 +7,13 @@
         
         <form class="search" action="/search" method="POST">
             <input class="search_name" type="text" name="searchBar" placeholder="Recherche par nom" value="{{ search }}">
-            <input class="search_tags" type="text" name="tagsBar" placeholder="Ajouter un tag">
+            <div id="tagsDiv">
+                <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                <button class="addTag">Ajouter</button>
+            </div>
+            <input type="hidden" id="tags" name="tags">
             <button type="submit">Search</button>
         </form>
-        <div class="tags">
-            <ul class="tags_tagsList">
-                {% for tag in tags %}
-                    <li class="tagsList_tagItem">
-                        <p class="tagItem_name">{{ tag.name }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
 
         {% for gallery in galleries %}
             <div class="container">
@@ -28,14 +23,15 @@
             <br>
         {% endfor %}
 
+        <footer>
+            <script type="module">
+                {{ source('/js/tagsSearch.js') }}
+                {{ source('/js/manageTags.js') }}
+                restoreTags({{ tags|json_encode|raw }});
+            </script>
+        </footer>
+
     {% endblock %}
 </body>
-{% block javascripts %}
-    <script>
-        {{ source('./js/tagsSearch.js') }}
-    </script>
-{% endblock %}
-
-
 
 {% include "parts/footer.html.twig"%}
