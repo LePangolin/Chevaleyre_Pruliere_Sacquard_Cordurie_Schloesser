@@ -9,6 +9,7 @@ use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
 use App\Models\UserAccess;
+use App\Services\UserService;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
@@ -18,12 +19,13 @@ final class GalleryService {
 
     private EntityManager $em;
 
-    public function __construct(EntityManager $em, LoggerInterface $logger) {
+    public function __construct(EntityManager $em, LoggerInterface $logger, UserService $us) {
         $this->em = $em;
         $this->logger = $logger;
+        $this->us = $us;
     }
 
-    public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags){
+    public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags, array $users){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));
             $this->em->persist($gallery);
@@ -47,7 +49,18 @@ final class GalleryService {
             $linkUser = new UserToGallery($idUser,$idG);
             $this->em->persist($linkUser);
             $this->em->flush();
-            $this->logger->info("Link between gallery $name and user number" . $idUser . " has been created");
+            $this->logger->info("Link between gallery $name and user number " . $idUser . " has been created");
+            if($gallery->getPublic() == 0){
+                foreach($users as $user){
+                    $userAdd = $this->us->getUserByUsername($user);
+                    if($userAdd !== null){
+                        $linkUserPrivate = new UserAccess($userAdd->getId(),$idG);
+                        $this->em->persist($linkUserPrivate);
+                        $this->em->flush();
+                        $this->logger->info("Link between private gallery $name and user " . $userAdd->getUsername() . " has been created");
+                    }
+                }
+            }
             return true;
         }catch(\Exception $e){
             $this->logger->error("Erreur lors de la création de la galerie $name : " . $e->getMessage());

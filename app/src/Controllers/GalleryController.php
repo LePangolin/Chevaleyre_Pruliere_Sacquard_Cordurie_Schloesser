@@ -38,8 +38,15 @@ class GalleryController
         }else{
             $tags = array();
         }
+
+        if(!empty($data["users"]) && $data["statut"] == 0){
+            $users = json_decode($data["users"]);
+        }else{
+            $users = array();
+        }
+
         $idUser = $_SESSION["user"]->getId();
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags);
+        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{

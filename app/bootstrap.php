@@ -70,7 +70,7 @@ $container->set(UserController::class, static function (Container $c): UserContr
 });
 
 $container->set(GalleryService::class, static function (Container $c): GalleryService {
-    return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
+    return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class), $c->get(UserService::class));
 });
 
 $container->set(GalleryController::class, static function (Container $c): GalleryController {
