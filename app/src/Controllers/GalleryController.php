@@ -7,7 +7,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class GalleryController {
+class GalleryController
+{
+
     private Twig $twig;
     private GalleryService $galleryService;
 
@@ -26,8 +28,8 @@ class GalleryController {
     public function createGallery(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $data["tag"]);
+        $tags = json_decode($data["tags"]);
+        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $tags);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{
@@ -65,4 +67,23 @@ class GalleryController {
             'pictures' => $pictures,
         ]);
     }
+
+
+    public function displayPublicGalleries(Request $request, Response $response, array $args): Response
+    {
+        $galleries = $this->galleryService->listPublicGalleries();
+        $tabImg = array();
+
+        foreach ($galleries as $gallery) {
+            $random = rand(1, $gallery->getNbPictures());
+            $idGallery = $gallery->getId();
+            $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+        }
+
+        return $this->twig->render($response, 'index.html.twig', [
+            'listPublicGalleries' => $galleries,
+            'tabImg' => $tabImg
+        ]);
+    }
+    
 }

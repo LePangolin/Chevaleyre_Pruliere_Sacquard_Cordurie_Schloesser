@@ -1,1 +1,24 @@
-<h1>HELLO WORLD</h1>
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %}
+
+        {% include "parts/navbar.html.twig"%}
+
+        <div id="publicGallery">
+            {% for publicGallery in listPublicGalleries %}
+                <div>
+                    {{ publicGallery.name }}
+                    {{ tabImg[publicGallery.id] }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            <button><< précédent</button> <button type="button">suivant >></button>
+        </div>
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}

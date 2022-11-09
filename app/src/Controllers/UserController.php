@@ -17,6 +17,14 @@ class UserController
         $this->twig = $twig;
     }
 
+
+    public function auth(Request $request, Response $response, array $args): Response
+    {
+        return $this->twig->render($response, 'authentification.html.twig', [
+            'title' => 'Auth',
+        ]);
+    }
+
     public function login(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();

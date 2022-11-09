@@ -4,14 +4,15 @@ namespace App\Services;
 
 use App\Models\Gallery;
 use App\Models\Tag;
+use App\Models\Picture;
 use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
-use App\Models\Picture;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 
 final class GalleryService {
+
     private EntityManager $em;
 
     public function __construct(EntityManager $em, LoggerInterface $logger) {
@@ -19,28 +20,27 @@ final class GalleryService {
         $this->logger = $logger;
     }
 
-    public function create(string $name, string $descr, int $nb_pictures, int $public, string $tags){
+    public function create(string $name, string $descr, int $nb_pictures, int $public, array $tags){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));
             $this->em->persist($gallery);
             $this->em->flush();
             $this->logger->info("Gallery $name has been created");
-            // foreach($tags as $tag){
-            //     $idsT = [];
-                $tag = new Tag(filter_var($tags));
-                $this->em->persist($tag);
+            $idsT = [];
+            foreach($tags as $tag){
+                $tagg = new Tag(filter_var($tag));
+                $this->em->persist($tagg);
                 $this->em->flush();
-                $this->logger->info("Tag" . $tag->getTag() . "has been created");
-                // array_push($idsT, $tag->getId());
-            // }
+                $this->logger->info("Tag " . $tagg->getTag() . " has been created");
+                array_push($idsT, $tagg->getId());
+            }
             $idG = $gallery->getId();
-            $idT = $tag->getId();
-            // foreach($idsT as $id){
-                $link = new GalleryToTag($idG,$idT);
+            foreach($idsT as $id){
+                $link = new GalleryToTag($idG,$id);
                 $this->em->persist($link);
                 $this->em->flush();
-                $this->logger->info("Link between gallery $name and tag number" . $tag->getTag() . "has been created");
-            // }
+                $this->logger->info("Link between gallery $name and tag " . $tagg->getTag() . " has been created");
+            }
             return true;
         }catch(\Exception $e){
             $this->logger->error("Erreur lors de la création de la galerie $name : " . $e->getMessage());
@@ -63,6 +63,21 @@ final class GalleryService {
             array_push($pictures, $picture);
         }
         return $pictures;
+
+    }
+
+    public function listPublicGalleries()
+    {
+        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1]);
+        return $galleries;
+    }
+
+    public function getPictureById($id, $random)
+    {
+        $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
+        $index = $galToPicture[$random-1];
+        $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+        return $picture;
     }
 
     public function getCreator($id_gallery)
@@ -70,4 +85,11 @@ final class GalleryService {
         $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
         return $creator;
     }
+
+    public function getCreator($id_gallery)
+    {
+        $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
+        return $creator;
+    }
+
 }
