@@ -18,5 +18,6 @@ $app->get('/', App\Controllers\HTMLController::class . ':index')->setName('index
 
 $app->post('/signUp', App\controllers\UserController::class . ':signUp')->setName('signUp');
 
+$app->get('/gallery/{id}', \App\Controllers\GalleryController::class . 'displayGallery')->setName('displayGallery');
 
 $app->run();
