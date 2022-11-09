@@ -22,5 +22,8 @@ $app->get('/create', App\Controllers\GalleryController::class . ':create')->setN
 
 $app->post('/createGallery', App\Controllers\GalleryController::class . ':createGallery')->setName('createGallery');
 
+$app->post('/logIn', App\Controllers\UserController::class . ':login')->setName('signIn');
+
+$app->get('/gallery/{id}', \App\Controllers\GalleryController::class . 'displayGallery')->setName('displayGallery');
 
 $app->run();
