@@ -21,7 +21,7 @@ class UserController
     public function auth(Request $request, Response $response, array $args): Response
     {
         return $this->twig->render($response, 'authentification.html.twig', [
-            'title' => 'Auth',
+            'title' => 'Authentification',
         ]);
     }
 

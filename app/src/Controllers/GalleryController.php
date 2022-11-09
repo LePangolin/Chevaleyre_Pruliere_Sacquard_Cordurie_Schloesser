@@ -21,7 +21,10 @@ class GalleryController
     public function create(Request $request, Response $response, array $args): Response
     {
         if(isset($_SESSION["user"])){
-            return $this->twig->render($response, 'createGallery.html.twig', []);
+            return $this->twig->render($response, 'createGallery.html.twig', [
+                "title" => "Création d'une galerie",
+                "user" => $_SESSION["user"]
+            ]);
         }else{
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
