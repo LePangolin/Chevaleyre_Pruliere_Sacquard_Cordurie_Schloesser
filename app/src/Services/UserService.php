@@ -63,4 +63,13 @@ class UserService{
             return null;
         }
     }
+
+    public function getUser(int $id){
+        try{
+            $userGallery = $this->em->getRepository(User::class)->find($id);
+        }catch(\Exception $e){
+            $this->logger->error("Error while getting user by id: " . $e->getMessage());
+            return null;
+        }
+    }
 }

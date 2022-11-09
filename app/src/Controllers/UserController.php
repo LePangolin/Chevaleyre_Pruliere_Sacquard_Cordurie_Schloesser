@@ -21,9 +21,19 @@ class UserController
     public function auth(Request $request, Response $response, array $args): Response
     {
         return $this->twig->render($response, 'authentification.html.twig', [
-            'title' => 'Auth',
+            'title' => 'Authentification',
         ]);
     }
+
+    public function profile(Request $request, Response $response, array $args): Response{
+        if(!isset($_SESSION['user'])){
+            return $response->withHeader('Location', '/auth')->withStatus(302);
+        }
+        return $this->twig->render($response, 'profile.html.twig', [
+            'title' => 'Profile',
+        ]);
+    }
+
 
     public function login(Request $request, Response $response, array $args): Response
     {
@@ -77,5 +87,11 @@ class UserController
         $response->getBody()->write(json_encode($resp));
 
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function logout(Request $request, Response $response, array $args): Response
+    {
+        unset($_SESSION['user']);
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }

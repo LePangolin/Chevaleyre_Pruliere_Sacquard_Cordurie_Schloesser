@@ -28,7 +28,9 @@ $app->get('/auth', App\Controllers\UserController::class . ':auth')->setName('au
 
 $app->get('/gallery/{id}', \App\Controllers\GalleryController::class . ':displayGallery')->setName('displayGallery');
 
-$app->get('/profile/{user}', \App\Controllers\UserController::class . ':displayProfile')->setName('displayProfile');
+$app->get('/profile', \App\Controllers\UserController::class . ':displayProfile')->setName('displayProfile');
+
+$app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
 
 
 $app->run();
