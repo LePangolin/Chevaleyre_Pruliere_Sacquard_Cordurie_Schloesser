@@ -88,4 +88,10 @@ class UserController
 
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public function logout(Request $request, Response $response, array $args): Response
+    {
+        unset($_SESSION['user']);
+        return $response->withHeader('Location', '/')->withStatus(302);
+    }
 }
