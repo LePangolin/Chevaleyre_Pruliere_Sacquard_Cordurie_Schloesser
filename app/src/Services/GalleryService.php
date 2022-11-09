@@ -8,6 +8,7 @@ use App\Models\Picture;
 use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
+use App\Models\UserAccess;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
