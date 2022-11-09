@@ -20,16 +20,23 @@ class GalleryController
 
     public function create(Request $request, Response $response, array $args): Response
     {
-        return $this->twig->render($response, 'createGallery.html.twig', [
-            
-        ]);
+        if(isset($_SESSION["user"])){
+            return $this->twig->render($response, 'createGallery.html.twig', []);
+        }else{
+            return $this->twig->render($response, 'authentification.html.twig', []);
+        }
     }
 
     public function createGallery(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-        $tags = json_decode($data["tags"]);
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $tags);
+        if(isset($data["tags"])){
+            $tags = json_decode($data["tags"]);
+        }else{
+            $tags = array();
+        }
+        $idUser = $_SESSION["user"]->getId();
+        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{

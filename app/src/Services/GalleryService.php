@@ -9,6 +9,7 @@ use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
 use Doctrine\ORM\EntityManager;
+use GMP;
 use Psr\Log\LoggerInterface;
 
 final class GalleryService {
@@ -20,7 +21,7 @@ final class GalleryService {
         $this->logger = $logger;
     }
 
-    public function create(string $name, string $descr, int $nb_pictures, int $public, array $tags){
+    public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));
             $this->em->persist($gallery);
@@ -36,11 +37,15 @@ final class GalleryService {
             }
             $idG = $gallery->getId();
             foreach($idsT as $id){
-                $link = new GalleryToTag($idG,$id);
-                $this->em->persist($link);
+                $linkTag = new GalleryToTag($idG,$id);
+                $this->em->persist($linkTag);
                 $this->em->flush();
                 $this->logger->info("Link between gallery $name and tag " . $tagg->getTag() . " has been created");
             }
+            $linkUser = new UserToGallery($idUser,$idG);
+            $this->em->persist($linkUser);
+            $this->em->flush();
+            $this->logger->info("Link between gallery $name and user number" . $idUser . " has been created");
             return true;
         }catch(\Exception $e){
             $this->logger->error("Erreur lors de la création de la galerie $name : " . $e->getMessage());
