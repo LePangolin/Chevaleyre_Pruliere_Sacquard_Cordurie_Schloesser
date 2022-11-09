@@ -5,9 +5,9 @@
 
         {% include "parts/navbar.html.twig"%}
 
-        <div id="publicGallery">
+        <div class="grid-auto-fit">
             {% for publicGallery in listPublicGalleries %}
-                <div>
+                <div class="grid-col2">
                     {{ publicGallery.name }}
                     {{ tabImg[publicGallery.id] }}
                 </div>
@@ -15,10 +15,13 @@
         </div>
 
         <div>
-            <button><< précédent</button> <button type="button">suivant >></button>
+            <button id="btnPrev"><< précédent</button> <button id="btnNext">suivant >></button>
         </div>
 
     {% endblock %}
+    <footer>
+        <script>{{source('./js/index.js')}}</script>
+    </footer>
 </body>
 
 {% include "parts/footer.html.twig"%}
