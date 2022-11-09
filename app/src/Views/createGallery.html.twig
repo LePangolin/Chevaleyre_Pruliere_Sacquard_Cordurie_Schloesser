@@ -1,19 +1,30 @@
-<form action="/createGallery" method="post">
-    <h1>Informations générales</h1>
+{% include "parts/head.html.twig"%}
 
-    <input type="text" id="name" name="name" placeholder="Nom de la galerie" required><br><br>
-    <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de la galerie" required></textarea>
+<body>
+    {% block body %} 
 
-    <h1>Mots-clés</h1>
+        {% include "parts/navbar.html.twig"%}
+        <form action="/createGallery" method="post">
+            <h1>Informations générales</h1>
 
-    <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+            <input type="text" id="name" name="name" placeholder="Nom de la galerie" required><br><br>
+            <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de la galerie" required></textarea>
 
-    <h1>Statut de la galerie</h1>
+            <h1>Mots-clés</h1>
 
-    <input type="radio" id="public" name="statut" value="1" checked>
-    <label for="public">Publique</label>
-    <input type="radio" id="private" name="statut" value="0">
-    <label for="private">Privée</label><br><br>
+            <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
 
-    <input type="submit" id="confirm" name="confirm" value="Confirmer">
-</form>
+            <h1>Statut de la galerie</h1>
+
+            <input type="radio" id="public" name="statut" value="1" checked>
+            <label for="public">Publique</label>
+            <input type="radio" id="private" name="statut" value="0">
+            <label for="private">Privée</label><br><br>
+
+            <input type="submit" id="confirm" name="confirm" value="Confirmer">
+        </form>
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}
