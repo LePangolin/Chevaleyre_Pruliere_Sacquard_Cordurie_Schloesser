@@ -72,7 +72,7 @@ class UserService{
             $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $id]);
             $usergalleries = [];
             foreach($userToGalleries as $userToGallery){
-                $usergalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getGalleryId()]);
+                $usergalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getIdGallery()]);
             }
            
 
