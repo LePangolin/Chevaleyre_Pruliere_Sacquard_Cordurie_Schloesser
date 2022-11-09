@@ -1,33 +1,31 @@
+let params = new URLSearchParams(window.location.search)
+let offsetPublic = params.has('offsetPublic')?parseInt(params.get('offsetPublic'), 10):0
+let offsetPrivate = params.has('offsetPrivate')?parseInt(params.get('offsetPrivate'), 10):0
+
 document.getElementById('btnNext').addEventListener('click', function () {
-    let params = new URLSearchParams(window.location.search)
-    let offset = parseInt(params.get('offsetPublic'), 10)
-    offset += 10
-    window.location.href = '/?offsetPublic=' + offset
+    offsetPublic += 10
+    window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
 })
 
 document.getElementById('btnPrev').addEventListener('click', function () {
-    let params = new URLSearchParams(window.location.search)
-    let offset = parseInt(params.get('offsetPublic'), 10)
-    offset -= 10
-    if(offset < 0) {
-        offset = 0
+    if (offsetPublic > 0) {
+        offsetPublic -= 10
+        window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
     }
-    window.location.href = '/?offsetPublic=' + offset
 })
 
-document.getElementById('btnNextPrivate').addEventListener('click', function () {
-    let params = new URLSearchParams(window.location.search)
-    let offset = parseInt(params.get('offsetPublic'), 10)
-    offset += 10
-    window.location.href = '/?offsetPublic=' + offset
-})
+if (document.body.contains(document.getElementById('btnNextPrivate'))) {
+    document.getElementById('btnNextPrivate').addEventListener('click', function () {
+        offsetPrivate += 10
+        window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
+    })
+}
 
-document.getElementById('btnPrevPrivate').addEventListener('click', function () {
-    let params = new URLSearchParams(window.location.search)
-    let offset = parseInt(params.get('offsetPrivate'), 10)
-    offset -= 10
-    if(offset < 0) {
-        offset = 0
-    }
-    window.location.href = '/?offsetPrivate=' + offset
-})
+if(document.body.contains(document.getElementById('btnPrevPrivate'))) {
+    document.getElementById('btnPrevPrivate').addEventListener('click', function () {
+        if (offsetPrivate > 0) {
+            offsetPrivate -= 10
+            window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
+        }
+    })
+}

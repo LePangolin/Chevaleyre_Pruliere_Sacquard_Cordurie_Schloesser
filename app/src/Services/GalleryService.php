@@ -74,7 +74,7 @@ final class GalleryService {
         return $galleries;
     }
 
-    public function listPrivateGalleries($offsetPrivate = 0, $idUser)
+    public function listPrivateGalleries($idUser, $offsetPrivate = 0)
     {
         $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $idUser]);
         $userGalleries = [];
