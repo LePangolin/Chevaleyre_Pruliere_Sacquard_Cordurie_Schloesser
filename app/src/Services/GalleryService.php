@@ -66,18 +66,24 @@ final class GalleryService {
 
     }
 
-    public function listPublicGalleries()
+    public function listPublicGalleries($offsetPublic = 0)
     {
-        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1]);
+        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1], ['id' => 'DESC'], 10, $offsetPublic);
         return $galleries;
     }
 
     public function getPictureById($id, $random)
     {
-        $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
-        $index = $galToPicture[$random-1];
-        $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
-        return $picture;
+        try {
+            $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
+            $index = $galToPicture[$random-1];
+            $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+            return $picture;
+        } catch (\Exception $e) {
+            $this->logger->error("Erreur lors de la récupération de la galerie ou des photos $id : " . $e->getMessage());
+            return null;
+        }
+
     }
 
 }

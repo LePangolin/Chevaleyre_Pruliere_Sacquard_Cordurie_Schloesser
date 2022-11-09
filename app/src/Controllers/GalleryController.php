@@ -71,7 +71,8 @@ class GalleryController
 
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
-        $galleries = $this->galleryService->listPublicGalleries();
+        $offsetPublic = $request->getQueryParams()['offsetPublic'];
+        $galleries = $this->galleryService->listPublicGalleries($offsetPublic);
         $tabImg = array();
 
         foreach ($galleries as $gallery) {
@@ -85,5 +86,5 @@ class GalleryController
             'tabImg' => $tabImg
         ]);
     }
-    
+
 }
