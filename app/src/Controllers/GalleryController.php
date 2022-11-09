@@ -23,7 +23,7 @@ class GalleryController
         if(isset($_SESSION["user"])){
             return $this->twig->render($response, 'createGallery.html.twig', []);
         }else{
-            return $this->twig->render($response, 'authentification.html.twig', []);
+            return $response->withHeader('Location', '/auth')->withStatus(302);
         }
     }
 
