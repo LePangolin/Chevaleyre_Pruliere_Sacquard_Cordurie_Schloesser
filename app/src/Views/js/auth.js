@@ -25,7 +25,5 @@ document.getElementById('password2').addEventListener('input', function (e) {
 });
 
 
-document.getElementById("id").value = JSON.stringify(tab)
-
 
 
