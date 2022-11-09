@@ -17,23 +17,35 @@ class UserController
         $this->twig = $twig;
     }
 
-    // public function login(Request $request, Response $response, array $args): Response
-    // {
-    //     $data = $request->getParsedBody();
+    public function login(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
 
-    //     $user = $this->userService->login($data['username'], $data['password']);
+        $user = $this->userService->login($data['username'], $data['password']);
 
-    //     if ($user === null) {
-    //         $response->getBody()->write('Invalid credentials');
-    //         return $response->withStatus(401);
-    //     }
+        if ($user === null) {
 
-    //     $_SESSION['user'] = $user;
+            $resp = array(
+                'status' => 'error',
+                'message' => 'Invalid username or password'
+            );
 
-    //     return $this->twig->render($response, 'index.html.twig', [
+            $response->getBody()->write(json_encode($resp));
 
-    //     ]);
-    // }
+            return $response;
+        }
+
+        $_SESSION['user'] = $user;
+
+        $resp = array(
+            'status' => 'success',
+            'message' => 'Logged in successfully'
+        );
+
+        $response->getBody()->write(json_encode($resp));
+
+        return $response;
+    }
 
     public function signUp(Request $request, Response $response, array $args): Response
     {

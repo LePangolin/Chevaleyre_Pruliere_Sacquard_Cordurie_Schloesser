@@ -16,6 +16,14 @@ final class GalleryService {
         $this->logger = $logger;
     }
 
+    public function create(string $name, string $descr, int $nb_pictures, int $public){
+        $gallery = new Gallery($name, $descr, $nb_pictures, $public);
+        $this->em->persist($gallery);
+        $this->em->flush();
+        $this->logger->info("Gallery $name has been created");
+        return true;
+    }
+    
     public function getGallery($id_gallery)
     {
         $gallery = $this->em->getRepository(Gallery::class)->find($id_gallery);
@@ -30,7 +38,6 @@ final class GalleryService {
             $picture = $this->em->getRepository(Picture::class)->find($id_picture);
             array_push($pictures, $picture);
         }
-        
-        return $pictures; 
+        return $pictures;
     }
 }

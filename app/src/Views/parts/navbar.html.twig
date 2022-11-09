@@ -1,0 +1,28 @@
+<header class="header">
+    {% block header %}
+
+        <a class="header_logo" href="">
+            <h1 class="logo_title">MediaPhoto</h1>
+            <img class="logo_image" src="./img/site/logo.png" alt="Logo">
+        </a>
+        <nav class="header_nav">
+            <ul class="nav_list">
+                <li class="nav_item"><a class="nav_link" href="">Galeries publiques</a></li>
+                <li class="nav_item"><a class="nav_link" href="">Mes galeries</a></li>
+            </ul>
+        </nav>
+        <form class="header_search" action="">
+            <span class="search_icon material-symbols-outlined"> search </span>
+            <input class="search_input" type="text" placeholder="Rechercher">
+        </form>
+        <span class="header_user">
+         {% if sessions is defined %}
+            <img class="user_image" src="./img/site/user.png" alt="User">
+        {% else %}
+            <a class="user_link" href="">Se connecter</a>
+            <a class="user_link" href="">S'inscrire</a>
+        {% endif %}
+        </span>
+
+    {% endblock %}
+</header>
