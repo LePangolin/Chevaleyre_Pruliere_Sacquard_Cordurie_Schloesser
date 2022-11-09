@@ -16,28 +16,27 @@ class GalleryService
         $this->logger = $logger;
     }
 
-    public function create(string $name, string $descr, int $nb_pictures, int $public, string $tags){
+    public function create(string $name, string $descr, int $nb_pictures, int $public, array $tags){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));
             $this->em->persist($gallery);
             $this->em->flush();
             $this->logger->info("Gallery $name has been created");
-            // foreach($tags as $tag){
-            //     $idsT = [];
-                $tag = new Tag(filter_var($tags));
-                $this->em->persist($tag);
+            $idsT = [];
+            foreach($tags as $tag){
+                $tagg = new Tag(filter_var($tag));
+                $this->em->persist($tagg);
                 $this->em->flush();
-                $this->logger->info("Tag" . $tag->getTag() . "has been created");
-                // array_push($idsT, $tag->getId());
-            // }
+                $this->logger->info("Tag" . $tagg->getTag() . "has been created");
+                array_push($idsT, $tagg->getId());
+            }
             $idG = $gallery->getId();
-            $idT = $tag->getId();
-            // foreach($idsT as $id){
-                $link = new GalleryToTag($idG,$idT);
+            foreach($idsT as $id){
+                $link = new GalleryToTag($idG,$id);
                 $this->em->persist($link);
                 $this->em->flush();
-                $this->logger->info("Link between gallery $name and tag number" . $tag->getTag() . "has been created");
-            // }
+                $this->logger->info("Link between gallery $name and tag" . $tagg->getTag() . "has been created");
+            }
             return true;
         }catch(\Exception $e){
             $this->logger->error("Erreur lors de la création de la galerie $name : " . $e->getMessage());
