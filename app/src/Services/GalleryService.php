@@ -30,7 +30,7 @@ final class GalleryService {
                 $tagg = new Tag(filter_var($tag));
                 $this->em->persist($tagg);
                 $this->em->flush();
-                $this->logger->info("Tag" . $tagg->getTag() . "has been created");
+                $this->logger->info("Tag " . $tagg->getTag() . " has been created");
                 array_push($idsT, $tagg->getId());
             }
             $idG = $gallery->getId();
@@ -38,7 +38,7 @@ final class GalleryService {
                 $link = new GalleryToTag($idG,$id);
                 $this->em->persist($link);
                 $this->em->flush();
-                $this->logger->info("Link between gallery $name and tag" . $tagg->getTag() . "has been created");
+                $this->logger->info("Link between gallery $name and tag " . $tagg->getTag() . " has been created");
             }
             return true;
         }catch(\Exception $e){
