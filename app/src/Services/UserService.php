@@ -6,6 +6,9 @@ use App\Models\User;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 
+use App\Models\UserToGallery;
+use App\Models\Gallery;
+
 class UserService{
 
     public function __construct(EntityManager $em, LoggerInterface $logger){
@@ -64,12 +67,25 @@ class UserService{
         }
     }
 
-    public function getUser(int $id){
+    public function getUserInfo(int $id){
         try{
-            $userGallery = $this->em->getRepository(User::class)->find($id);
+            $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $id]);
+            $usergalleries = [];
+            foreach($userToGalleries as $userToGallery){
+                $usergalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getIdGallery()]);
+            }
+           
+
+            $tabFinal = [];
+            $tabFinal['MyGalleries'] =  $usergalleries;
+
+            $this->logger->info("User $id has got his galleries");
+            return $tabFinal;
         }catch(\Exception $e){
-            $this->logger->error("Error while getting user by id: " . $e->getMessage());
-            return null;
+            $this->logger->error("Error while getting user galleries : " . $e->getMessage());
+            $tabFinal = [];
+            $tabFinal['MyGalleries'] =  [];
+            return $tabFinal;
         }
     }
 }
