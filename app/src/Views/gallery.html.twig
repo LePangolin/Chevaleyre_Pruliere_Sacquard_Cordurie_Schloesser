@@ -1,0 +1,29 @@
+{% include "./parts/head.html.twig" %}
+    
+{% include "./parts/navbar.html.twig" %}
+
+{% block body %}
+
+{# Récupérer le titre de la galerie et l'afficher #}
+    {% if gallery is defined %}
+        <h1>{{gallery['title']}}</h1>
+    {% else %}
+        <h1>Pas de titre</h1>
+    {% endif %}
+
+{# Si on est le créateur de la galerie : à côté de titre avoir l'option de supprimer et d'éditer #}
+    {% if is_author == true %}
+        <button class="edit_button">Edit</button>
+        <button class="delete_button">Delete</button>
+    {% endif %}
+
+{# Pour toutes les photos: les afficher #}
+    {% if pictures %}
+        {% for picture in pictures %}
+            <img src="{{picture['link']}}" alt="{{picture['desc']}}">
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}
+
+{% include "./parts/footer.html.twig" %}
