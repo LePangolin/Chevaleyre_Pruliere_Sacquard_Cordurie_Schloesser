@@ -25,14 +25,15 @@ class UserController
         ]);
     }
 
-    public function displayProfile(Request $request, Response $response, array $args): Response
-    {
+    public function profile(Request $request, Response $response, array $args): Response{
         if(!isset($_SESSION['user'])){
-            return $response->withHeader('Location', '/')->withStatus(302);
+            return $response->withHeader('Location', '/auth')->withStatus(302);
         }
-
-        $user = $this->userService->getUser($_SESSION['user']->getId());
+        return $this->twig->render($response, 'profile.html.twig', [
+            'title' => 'Profile',
+        ]);
     }
+
 
     public function login(Request $request, Response $response, array $args): Response
     {
@@ -86,12 +87,5 @@ class UserController
         $response->getBody()->write(json_encode($resp));
 
         return $response->withHeader('Content-Type', 'application/json');
-    }
-
-    public function logout(Request $request, Response $response, array $args): Response
-    {
-        unset($_SESSION['user']);
-
-        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }
