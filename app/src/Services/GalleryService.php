@@ -49,15 +49,15 @@ final class GalleryService {
             $linkUser = new UserToGallery($idUser,$idG);
             $this->em->persist($linkUser);
             $this->em->flush();
-            $this->logger->info("Link between gallery $name and user number" . $idUser . " has been created");
+            $this->logger->info("Link between gallery $name and user number " . $idUser . " has been created");
             if($gallery->getPublic() == 0){
                 foreach($users as $user){
-                    $id = $this->us->getUserByUsername($user);
-                    if($id !== null){
-                        $linkUserPrivate = new UserAccess($id->getId(),$idG);
+                    $userAdd = $this->us->getUserByUsername($user);
+                    if($userAdd !== null){
+                        $linkUserPrivate = new UserAccess($userAdd->getId(),$idG);
                         $this->em->persist($linkUserPrivate);
                         $this->em->flush();
-                        $this->logger->info("Link between private gallery $name and user" . $id->getUsername() . " has been created");
+                        $this->logger->info("Link between private gallery $name and user " . $userAdd->getUsername() . " has been created");
                     }
                 }
             }
