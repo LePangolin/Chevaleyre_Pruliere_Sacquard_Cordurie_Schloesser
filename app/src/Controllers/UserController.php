@@ -25,6 +25,15 @@ class UserController
         ]);
     }
 
+    public function displayProfile(Request $request, Response $response, array $args): Response
+    {
+        if(!isset($_SESSION['user'])){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
+        $user = $this->userService->getUser($_SESSION['user']->getId());
+    }
+
     public function login(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
@@ -77,5 +86,12 @@ class UserController
         $response->getBody()->write(json_encode($resp));
 
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function logout(Request $request, Response $response, array $args): Response
+    {
+        unset($_SESSION['user']);
+
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }
