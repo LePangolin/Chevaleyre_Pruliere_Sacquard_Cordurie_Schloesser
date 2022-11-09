@@ -28,7 +28,7 @@ class GalleryController
     {
         $data = $request->getParsedBody();
 
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"]);
+        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $data["tag"]);
         if($bool){
             $resp = array(
                 'status' => 'success',
