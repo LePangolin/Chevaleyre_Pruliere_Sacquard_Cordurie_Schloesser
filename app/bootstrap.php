@@ -13,7 +13,6 @@ use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
 use App\Container;
-use App\Controllers\GalleryController;
 use Psr\Log\LogLevel;
 
 use App\Services\UserService;
@@ -21,6 +20,7 @@ use App\Services\GalleryService;
 
 use App\Controllers\UserController;
 use App\Controllers\HTMLController;
+use App\Controllers\GalleryController;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -69,16 +69,16 @@ $container->set(UserController::class, static function (Container $c): UserContr
     return new UserController($c->get(UserService::class), $c->get("view"));
 });
 
-$container->set(HTMLController::class, static function (Container $c): HTMLController {
-    return new HTMLController($c->get('view'));
-});
-
 $container->set(GalleryService::class, static function (Container $c): GalleryService {
     return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
 });
 
 $container->set(GalleryController::class, static function (Container $c): GalleryController {
     return new GalleryController($c->get(GalleryService::class), $c->get("view"));
+});
+
+$container->set(HTMLController::class, static function (Container $c): HTMLController {
+    return new HTMLController($c->get('view'));
 });
 
 return $container;
