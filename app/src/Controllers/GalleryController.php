@@ -71,7 +71,12 @@ class GalleryController
 
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
-        $offsetPublic = $request->getQueryParams()['offsetPublic'];
+        if(isset($request->getQueryParams()['offsetPublic'])){
+            $offsetPublic = $request->getQueryParams()['offsetPublic'];
+        } else {
+            $offsetPublic = 0;
+        }
+
         $galleries = $this->galleryService->listPublicGalleries($offsetPublic);
         $tabImg = array();
 
