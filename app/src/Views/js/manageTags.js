@@ -16,4 +16,3 @@ document.querySelector(".addTag").addEventListener("click", function(e){
         document.getElementById("tags").value = JSON.stringify(tab);
     })
 })
-

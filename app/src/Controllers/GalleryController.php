@@ -33,7 +33,7 @@ class GalleryController
     public function createGallery(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-        if(isset($data["tags"])){
+        if(!empty($data["tags"])){
             $tags = json_decode($data["tags"]);
         }else{
             $tags = array();

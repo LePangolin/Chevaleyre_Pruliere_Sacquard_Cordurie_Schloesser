@@ -19,16 +19,25 @@
                 <input type="hidden" id="tags" name="tags">
 
                 <h1>Statut de la galerie</h1>
-                <input type="radio" id="public" name="statut" value="1" checked>
-                <label for="public">Publique</label>
-                <input type="radio" id="private" name="statut" value="0">
-                <label for="private">Privée</label><br><br>
+                <div id="statutUsers">
+                    <input type="radio" id="public" name="statut" value="1" checked>
+                    <label for="public">Publique</label>
+                    <input type="radio" id="private" name="statut" value="0">
+                    <label for="private">Privée</label><br><br>
+                    <div id="addUser" class="hidden">
+                        <input type="text" id="user" name="user" placeholder="Ajouter un utilisateur">
+                        <button class="userAdd">Ajouter</button>
+                    </div><br>
+
+                    <input type="hidden" id="users" name="users">
+                </div>
 
                 <input type="submit" id="confirm" name="confirm" value="Confirmer">
             </form>
             <footer>
                 <script>
                     {{source('./js/manageTags.js')}}
+                    {{source('./js/manageUsersOnPrivateGallery.js')}}
                 </script>
             </footer>
         {% endblock %}
