@@ -1,0 +1,41 @@
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+        
+        <form class="search" action="/search" method="POST">
+            <input class="search_name" type="text" name="searchBar" placeholder="Recherche par nom" value="{{ search }}">
+            <input class="search_tags" type="text" name="tagsBar" placeholder="Ajouter un tag">
+            <button type="submit">Search</button>
+        </form>
+        <div class="tags">
+            <ul class="tags_tagsList">
+                {% for tag in tags %}
+                    <li class="tagsList_tagItem">
+                        <p class="tagItem_name">{{ tag.name }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% for gallery in galleries %}
+            <div class="container">
+                <h1>{{ gallery.name }}</h1>
+                <p>{{ gallery.description }}</p>
+            </div>
+            <br>
+        {% endfor %}
+
+    {% endblock %}
+</body>
+{% block javascripts %}
+    <script>
+        {{ source('./js/tagsSearch.js') }}
+    </script>
+{% endblock %}
+
+
+
+{% include "parts/footer.html.twig"%}

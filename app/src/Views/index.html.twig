@@ -1,1 +1,15 @@
-<h1>HELLO WORLD</h1>
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+        <p> Salut monde ! </p>
+        <span class="material-symbols-outlined">
+            search
+        </span>
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}

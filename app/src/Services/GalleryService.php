@@ -21,4 +21,17 @@ class GalleryService
         $this->logger->info("Gallery $name has been created");
         return true;
     }
+
+    /* Retourne jusqu'a 10 galeries (les plus recemment crees) dont le nom contient $name */
+    public function findGalleryByName(string $name){
+        $galleries = $this->em->getRepository(Gallery::class)->createQueryBuilder('q')
+            ->where('q.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->orderBy('q.created_at', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        return $galleries;
+    }
+
 }

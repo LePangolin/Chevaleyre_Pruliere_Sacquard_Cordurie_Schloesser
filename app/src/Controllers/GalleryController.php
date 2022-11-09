@@ -44,4 +44,34 @@ class GalleryController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public function searchGalleries(Request $rq, Response $rs, array $args): Response
+    {
+        $search = "";
+        if (isset($_POST['searchBar'])) {
+            $search = $_POST['searchBar'];
+        }
+        $galleriesObjects = $this->galleryService->findGalleryByName($search);
+
+        $galleriesArray = [];
+        foreach ($galleriesObjects as $gallery) {
+            $galleriesArray[] =  [
+                'id' => $gallery->getId(),
+                'name' => $gallery->getName(),
+                'description' => $gallery->getDescription(),
+                'nb_pictures' => $gallery->getNbPictures(),
+                'public' => $gallery->getPublic()
+            ];
+        }
+
+        $tags = [];        
+
+       
+        return $this->twig->render($rs, 'searchPage.html.twig', [
+            'title' => 'Recherche',
+            'search' => $search,
+            'galleries' => $galleriesArray,
+            'tags' => $tags
+        ]);
+    }
+
 }

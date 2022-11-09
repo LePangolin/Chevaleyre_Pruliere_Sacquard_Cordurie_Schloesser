@@ -24,5 +24,10 @@ $app->post('/createGallery', App\Controllers\GalleryController::class . ':create
 
 $app->post('/logIn', App\Controllers\UserController::class . ':login')->setName('signIn');
 
+$app->get('/search[/]', App\Controllers\GalleryController::class . ':searchGalleries')->setName('search');
+
+$app->post('/search[/]', App\Controllers\GalleryController::class . ':searchGalleries')->setName('search');
+
+
 
 $app->run();
