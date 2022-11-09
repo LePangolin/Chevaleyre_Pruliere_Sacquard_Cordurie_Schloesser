@@ -13,7 +13,6 @@ use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
 use App\Container;
-use App\Controllers\GalleryController;
 use Psr\Log\LogLevel;
 
 use App\Services\UserService;
@@ -21,6 +20,7 @@ use App\Services\GalleryService;
 
 use App\Controllers\UserController;
 use App\Controllers\HTMLController;
+use App\Controllers\GalleryController;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
