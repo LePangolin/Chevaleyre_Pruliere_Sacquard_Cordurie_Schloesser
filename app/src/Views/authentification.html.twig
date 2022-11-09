@@ -1,0 +1,46 @@
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+
+            {% block content %} 
+            
+                    <div class"signUp">
+                        <h2>S'inscrire</h2>
+                        <form action="/signUp" method="post">
+                            <label for="username">Identifiant</label>
+                            <input type="text" class="" name="username" id="username" placeholder="Identifiant">
+                            <label for="password"></label>
+                            <input type="password" name="password" id="password" placeholder="Mot de passe">
+                            <label for="password2"></label>
+                            <input type="password" name="password2" id="password2" placeholder="Confirmer le mot de passe">
+                            <input type="submit" id="submitSignUp" value="S'inscrire" disabled>
+                        </form>
+                    </div>
+                    <div>
+                        <h2>Se connecter</h2>
+                        <form action="/logIn" method="post">
+                            <label for="username">Identifiant</label>
+                            <input type="text" class="" name="username" id="username" placeholder="Identifiant">
+                            <label for="password"></label>
+                            <input type="password" name="password" id="password" placeholder="Mot de passe">
+                            <input type="submit" id="submitLogin" value="Se connecter">
+                        </form>
+                    </div>
+
+            {% endblock %}
+
+    {% endblock %}
+</body>
+
+<footer>
+    <script>
+        {{ source('./js/auth.js') }}
+    </script>
+</footer>
+
+{% include "parts/footer.html.twig"%}
+
+

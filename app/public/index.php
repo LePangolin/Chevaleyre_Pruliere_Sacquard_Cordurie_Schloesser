@@ -14,7 +14,7 @@ $app = AppFactory::create();
 
 $app->addBodyParsingMiddleware();
 
-$app->get('/', App\Controllers\HTMLController::class . ':index')->setName('index');
+$app->get('/', App\Controllers\GalleryController::class . ':displayPublicGalleries')->setName('index');
 
 $app->post('/signUp', App\Controllers\UserController::class . ':signUp')->setName('signUp');
 
@@ -28,6 +28,9 @@ $app->get('/search[/]', App\Controllers\GalleryController::class . ':searchGalle
 
 $app->post('/search[/]', App\Controllers\GalleryController::class . ':searchGalleries')->setName('search');
 
+$app->get('/auth', App\Controllers\UserController::class . ':auth')->setName('auth');
+
+$app->get('/gallery/{id}', \App\Controllers\GalleryController::class . ':displayGallery')->setName('displayGallery');
 
 
 $app->run();
