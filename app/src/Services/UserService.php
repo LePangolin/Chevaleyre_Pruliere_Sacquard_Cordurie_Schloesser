@@ -64,9 +64,23 @@ class UserService{
         }
     }
 
-    public function getUser(int $id){
+    public function getUserInfo(int $id){
         try{
-            $userGallery = $this->em->getRepository(User::class)->find($id);
+            $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $id]);
+            $usergalleries = [];
+            foreach($userToGalleries as $userToGallery){
+                $usergalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getGalleryId()]);
+            }
+            $userAccess = $this->em->getRepository(UserAccess::class)->findBy(['id_user' => $id]);
+            $userAccessGalleries = [];
+            foreach($userAccess as $access){
+                $userAccessGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $access->getGalleryId()]);
+            }
+
+            $tabFinal = [];
+            $tabFinal['MyGalleries'] = 
+
+
         }catch(\Exception $e){
             $this->logger->error("Error while getting user by id: " . $e->getMessage());
             return null;

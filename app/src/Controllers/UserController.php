@@ -27,6 +27,7 @@ class UserController
 
     public function profile(Request $request, Response $response, array $args): Response{
         if(!isset($_SESSION['user'])){
+            $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
         return $this->twig->render($response, 'profile.html.twig', [
