@@ -23,7 +23,7 @@ final class GalleryService {
         $this->logger = $logger;
     }
 
-    public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags){
+    public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags, array $users){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));
             $this->em->persist($gallery);

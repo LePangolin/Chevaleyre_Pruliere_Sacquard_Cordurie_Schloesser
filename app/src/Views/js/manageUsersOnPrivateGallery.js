@@ -26,5 +26,7 @@ document.querySelector(".userAdd").addEventListener("click", function(e){
         index = e.target.dataset.id;
         tabUsers.splice(index,1);
         document.getElementById("users").value = JSON.stringify(tabUsers);
+        console.log(tabUsers);
     })
+    console.log(tabUsers);
 })
