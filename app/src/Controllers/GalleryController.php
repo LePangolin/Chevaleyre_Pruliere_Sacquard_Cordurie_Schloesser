@@ -7,13 +7,15 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class GalleryController {
+class GalleryController
+{
+
     private Twig $twig;
     private GalleryService $galleryService;
 
     public function __construct(GalleryService $galleryService, Twig $twig) {
-        $this->twig = $twig;
         $this->galleryService = $galleryService;
+        $this->twig = $twig;
     }
 
     public function create(Request $request, Response $response, array $args): Response
@@ -43,7 +45,6 @@ class GalleryController {
             'id' => $a->getId(),
             'title' => $a->getName(),
         ];
-
         // On vérifie si l'id de la session correspond à celui du créateur de la galerie
         $is_author = false;
         if (isset($_SESSION['user'])) {
@@ -56,7 +57,7 @@ class GalleryController {
         $b = $this->galleryService->getPictures($args['id']);
         $pictures = []; 
         foreach($b as $picture) {
-            array_push($pictures, ['link' => $picture->getLink(), 'desc' => $picture->getDescription()]);
+            array_push($pictures, ['link' => $picture->getLink(), 'descr' => $picture->getDescr()]);
         }
 
         return $this->twig->render($response, 'gallery.html.twig', [
@@ -66,4 +67,23 @@ class GalleryController {
             'pictures' => $pictures,
         ]);
     }
+
+
+    public function displayPublicGalleries(Request $request, Response $response, array $args): Response
+    {
+        $galleries = $this->galleryService->listPublicGalleries();
+        $tabImg = array();
+
+        foreach ($galleries as $gallery) {
+            $random = rand(1, $gallery->getNbPictures());
+            $idGallery = $gallery->getId();
+            $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+        }
+
+        return $this->twig->render($response, 'index.html.twig', [
+            'listPublicGalleries' => $galleries,
+            'tabImg' => $tabImg
+        ]);
+    }
+    
 }

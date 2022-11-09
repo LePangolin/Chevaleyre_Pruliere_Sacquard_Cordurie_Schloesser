@@ -1,7 +1,7 @@
 {% include "./parts/head.html.twig" %}
-    <style>
-        {{ source("./style/gallery.css") }}
-    </style>
+    
+{% include "./parts/navbar.html.twig" %}
+
 {% block body %}
 
 {# Récupérer le titre de la galerie et l'afficher #}
@@ -26,4 +26,4 @@
 
 {% endblock %}
 
-{% iclude "./parts/footer.html.twig" %}
+{% include "./parts/footer.html.twig" %}

@@ -5,12 +5,13 @@ namespace App\Services;
 use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\GalleryToTag;
-use App\Models\GalleryToPicture;
-use App\Models\Picture;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use App\Models\Picture;
+use App\Models\GalleryToPicture;
 
 final class GalleryService {
+
     private EntityManager $em;
 
     public function __construct(EntityManager $em, LoggerInterface $logger) {
@@ -54,12 +55,28 @@ final class GalleryService {
 
     public function getPictures($id_gallery) 
     {
-        $join = $this->em->getRepository(GalleryToPicture::class)->find($id_gallery);
+        $join = $this->em->getRepository(GalleryToPicture::class)->findBy(array('id_gallery' => $id_gallery));
         $pictures = [];
-        foreach ($join as $id_picture) {
-            $picture = $this->em->getRepository(Picture::class)->find($id_picture);
+        foreach ($join as $ids) {
+            $picture = $this->em->getRepository(Picture::class)->find($ids->getIdPicture());
             array_push($pictures, $picture);
         }
         return $pictures;
+
     }
+
+    public function listPublicGalleries()
+    {
+        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1]);
+        return $galleries;
+    }
+
+    public function getPictureById($id, $random)
+    {
+        $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
+        $index = $galToPicture[$random-1];
+        $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+        return $picture;
+    }
+
 }
