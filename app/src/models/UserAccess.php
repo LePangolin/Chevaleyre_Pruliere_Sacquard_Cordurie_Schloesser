@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity, Table(name: 'UsersAccesses')]
+
+#[Entity, Table(name: 'UserAccesses')]
+
 final class UserAccess
 {
     #[Id, Column(type: 'integer', nullable: false)]
