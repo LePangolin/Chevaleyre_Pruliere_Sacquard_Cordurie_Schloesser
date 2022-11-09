@@ -55,6 +55,20 @@ class GalleryController
             'id' => $a->getId(),
             'title' => $a->getName(),
         ];
+
+        if (!$a->getPublic()) {
+            if (!isset($_SESSION['user'])) {
+                return $response->withHeader('Location', '/')->withStatus(302);
+            } else {
+                $id_current_user = $_SESSION['user']->getId();
+                $id_creator = $this->galleryService->getCreator($args['id'])[0]->getIdUser();
+                $id_users = $this->galleryService->getListUser($args['id']);
+                if ($id_current_user != $id_creator || !in_array($id_current_user, $id_users)) {
+                    return $response->withHeader('Location', '/')->withStatus(302);
+                }
+            }
+        }
+
         // On vérifie si l'id de la session correspond à celui du créateur de la galerie
         $is_author = false;
         if (isset($_SESSION['user'])) {
