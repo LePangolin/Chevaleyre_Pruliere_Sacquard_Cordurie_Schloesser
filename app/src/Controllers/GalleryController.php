@@ -6,8 +6,11 @@ use App\Services\GalleryService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use App\Services\GalleryService;
 
-class GalleryController {
+class GalleryController
+{
+
     private Twig $twig;
     private GalleryService $galleryService;
 
@@ -65,4 +68,23 @@ class GalleryController {
             'pictures' => $pictures,
         ]);
     }
+
+
+    public function displayPublicGalleries(Request $request, Response $response, array $args): Response
+    {
+        $galleries = $this->galleryService->listPublicGalleries();
+        $tabImg = array();
+
+        foreach ($galleries as $gallery) {
+            $random = rand(1, $gallery->getNbPictures());
+            $idGallery = $gallery->getId();
+            $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+        }
+
+        return $this->twig->render($response, 'index.html.twig', [
+            'listPublicGalleries' => $galleries,
+            'tabImg' => $tabImg
+        ]);
+    }
+    
 }

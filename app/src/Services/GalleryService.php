@@ -9,8 +9,11 @@ use App\Models\GalleryToPicture;
 use App\Models\Picture;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use App\Models\Picture;
+use App\Models\GalleryToPicture;
 
 final class GalleryService {
+
     private EntityManager $em;
 
     public function __construct(EntityManager $em, LoggerInterface $logger) {
@@ -62,5 +65,21 @@ final class GalleryService {
             array_push($pictures, $picture);
         }
         return $pictures;
+
     }
+
+    public function listPublicGalleries()
+    {
+        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1]);
+        return $galleries;
+    }
+
+    public function getPictureById($id, $random)
+    {
+        $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
+        $index = $galToPicture[$random-1];
+        $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+        return $picture;
+    }
+
 }
