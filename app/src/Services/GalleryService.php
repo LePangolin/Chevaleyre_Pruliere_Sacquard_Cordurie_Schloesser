@@ -85,11 +85,4 @@ final class GalleryService {
         $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
         return $creator;
     }
-
-    public function getCreator($id_gallery)
-    {
-        $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
-        return $creator;
-    }
-
 }
