@@ -9,11 +9,11 @@ use Slim\Views\Twig;
 
 class GalleryController {
     private Twig $twig;
-    private GalleryService $gallery_service;
+    private GalleryService $galleryService;
 
-    public function __construct(Twig $twig, GalleryService $gallery_service) {
+    public function __construct(GalleryService $galleryService, Twig $twig) {
         $this->twig = $twig;
-        $this->gallery_service = $gallery_service;
+        $this->galleryService = $galleryService;
     }
 
     public function create(Request $request, Response $response, array $args): Response
@@ -38,7 +38,7 @@ class GalleryController {
     public function displayGallery(Request $request, Response $response, $args): Response 
     {
         // On récupère la galerie d'id args['id']
-        $a = $this->gallery_service->getGallery($args['id']);
+        $a = $this->galleryService->getGallery($args['id']);
         $gallery = [
             'id' => $a->getId(),
             'title' => $a->getName(),
@@ -53,7 +53,7 @@ class GalleryController {
         }        
         
         // On récupère les images de la galerie d'id args['id']
-        $b = $this->gallery_service->getPictures($args['id']);
+        $b = $this->galleryService->getPictures($args['id']);
         $pictures = []; 
         foreach($b as $picture) {
             array_push($pictures, ['link' => $picture->getLink(), 'desc' => $picture->getDescription()]);
