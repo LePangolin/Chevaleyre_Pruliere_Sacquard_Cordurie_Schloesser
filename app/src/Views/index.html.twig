@@ -18,6 +18,19 @@
             <button id="btnPrev"><< précédent</button> <button id="btnNext">suivant >></button>
         </div>
 
+        <div class="grid-auto-fit">
+            {% for privateGallery in listPrivateGalleries %}
+                <div class="grid-col2">
+                    {{ privateGallery.name }}
+                    {{ tabImg[privateGallery.id] }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            <button id="btnPrevPrivate"><< précédent</button> <button id="btnNextPrivate">suivant >></button>
+        </div>
+
     {% endblock %}
     <footer>
         <script>{{source('./js/index.js')}}</script>

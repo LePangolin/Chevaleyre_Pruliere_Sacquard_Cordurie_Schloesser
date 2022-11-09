@@ -36,7 +36,7 @@ class GalleryController
             return $response->withHeader('Location', '/create')->withStatus(302);
         }
     }
-    
+
     public function displayGallery(Request $request, Response $response, $args): Response 
     {
         // On récupère la galerie d'id args['id']
@@ -68,7 +68,6 @@ class GalleryController
         ]);
     }
 
-
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
         if(isset($request->getQueryParams()['offsetPublic'])){
@@ -89,6 +88,31 @@ class GalleryController
         return $this->twig->render($response, 'index.html.twig', [
             'listPublicGalleries' => $galleries,
             'tabImg' => $tabImg
+        ]);
+    }
+
+    public function displayPrivateGalleries(Request $request, Response $response, array $args): Response
+    {
+        $idUser = $_SESSION['user']->getId();
+
+        if(isset($request->getQueryParams()['offsetPrivate'])){
+            $offsetPrivate = $request->getQueryParams()['offsetPrivate'];
+        } else {
+            $offsetPrivate = 0;
+        }
+
+        $galleries = $this->galleryService->listPrivateGalleries($offsetPrivate, $idUser);
+        $tabImg = array();
+
+        foreach ($galleries as $gallery) {
+            $random = rand(1, $gallery->getNbPictures());
+            $idGallery = $gallery->getId();
+            $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+        }
+
+        return $this->twig->render($response, 'index.html.twig', [
+            'listPrivateGalleries' => $galleries,
+            'tabImgPrivate' => $tabImg
         ]);
     }
 

@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use App\Models\Picture;
 use App\Models\GalleryToPicture;
+use App\Models\UserAccess;
+use App\Models\User;
 
 final class GalleryService {
 
@@ -70,6 +72,27 @@ final class GalleryService {
     {
         $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1], ['id' => 'DESC'], 10, $offsetPublic);
         return $galleries;
+    }
+
+    public function listPrivateGalleries($offsetPrivate = 0, $idUser)
+    {
+        $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $idUser]);
+        $userGalleries = [];
+        foreach($userToGalleries as $userToGallery){
+            $userGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getGalleryId()]);
+        }
+
+        $userAccess = $this->em->getRepository(UserAccess::class)->findBy(['id_user' => $idUser]);
+        $userAccessGalleries = [];
+        foreach($userAccess as $access){
+            $userAccessGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $access->getGalleryId()]);
+        }
+
+        $PrivateGalleries = array_merge($userGalleries, $userAccessGalleries);
+
+        $PrivateGalleries = array_slice($PrivateGalleries, $offsetPrivate, 10);
+
+        return $PrivateGalleries;
     }
 
     public function getPictureById($id, $random)
