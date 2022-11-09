@@ -1,0 +1,37 @@
+$nb-columns: 12 !default;
+$gutter: 1% !default;
+$one-column-width: calc((100% - ($nb-columns + 1) * $gutter) / $nb-columns) !default;
+
+@mixin row() {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+@mixin column() {
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-left: $gutter;
+}
+
+@mixin span($span) {
+  flex-basis: $span * $one-column-width + $gutter * ($span - 1);
+}
+
+@mixin grid-auto-fit($columns, $gutter: 1rem) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,$columns));
+  grid-gap: $gutter;
+  grid-auto-flow: row dense;
+  padding: 0 2rem 0  1rem
+}
+
+.grid-auto-fit{
+  @include grid-auto-fit($one-column-width);
+}
+
+@mixin span-col($width) {
+  grid-column: span $width;
+}

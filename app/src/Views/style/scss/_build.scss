@@ -1,0 +1,30 @@
+
+//grid
+
+.row {
+  @include row();
+}
+
+.col {
+  @include column();
+}
+
+@for $i from 1 to $nb-columns {
+    .col-s#{$i} {
+        @include span($i);
+    }
+}
+
+@media screen and (min-width: 35em) {
+    @for $i from 1 to $nb-columns {
+        .col-m#{$i} {
+            @include span($i);
+        }
+    }
+}
+
+@for $i from 1 to $nb-columns {
+    .grid-col#{$i} {
+        @include span-col($i);
+    }
+}
