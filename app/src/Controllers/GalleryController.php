@@ -51,6 +51,9 @@ class GalleryController
     {
         // On récupère la galerie d'id args['id']
         $a = $this->galleryService->getGallery($args['id']);
+        if (is_null($a)) {
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
         $gallery = [
             'id' => $a->getId(),
             'title' => $a->getName(),
@@ -63,7 +66,7 @@ class GalleryController
                 $id_current_user = $_SESSION['user']->getId();
                 $id_creator = $this->galleryService->getCreator($args['id'])[0]->getIdUser();
                 $id_users = $this->galleryService->getListUser($args['id']);
-                if ($id_current_user != $id_creator || !in_array($id_current_user, $id_users)) {
+                if ($id_current_user != $id_creator && !in_array($id_current_user, $id_users)) {
                     return $response->withHeader('Location', '/')->withStatus(302);
                 }
             }

@@ -102,7 +102,7 @@ final class GalleryService {
     {
         $list = $this->em->getRepository(UserAccess::class)->findBy(array('id_gallery' => $id_gallery));
         $users = [];
-        foreach ($ist as $user) {
+        foreach ($list as $user) {
             array_push($users, $user->getIdUser());
         }
         return $users;
