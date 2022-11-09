@@ -43,7 +43,6 @@ class GalleryController {
             'id' => $a->getId(),
             'title' => $a->getName(),
         ];
-
         // On vérifie si l'id de la session correspond à celui du créateur de la galerie
         $is_author = false;
         if (isset($_SESSION['user'])) {
@@ -56,7 +55,7 @@ class GalleryController {
         $b = $this->galleryService->getPictures($args['id']);
         $pictures = []; 
         foreach($b as $picture) {
-            array_push($pictures, ['link' => $picture->getLink(), 'desc' => $picture->getDescription()]);
+            array_push($pictures, ['link' => $picture->getLink(), 'descr' => $picture->getDescr()]);
         }
 
         return $this->twig->render($response, 'gallery.html.twig', [

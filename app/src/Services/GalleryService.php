@@ -55,10 +55,10 @@ final class GalleryService {
 
     public function getPictures($id_gallery) 
     {
-        $join = $this->em->getRepository(GalleryToPicture::class)->find($id_gallery);
+        $join = $this->em->getRepository(GalleryToPicture::class)->findBy(array('id_gallery' => $id_gallery));
         $pictures = [];
-        foreach ($join as $id_picture) {
-            $picture = $this->em->getRepository(Picture::class)->find($id_picture);
+        foreach ($join as $ids) {
+            $picture = $this->em->getRepository(Picture::class)->find($ids->getIdPicture());
             array_push($pictures, $picture);
         }
         return $pictures;
