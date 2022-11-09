@@ -33,7 +33,7 @@ class GalleryController
     public function createGallery(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-        if(isset($data["tags"])){
+        if(!empty($data["tags"])){
             $tags = json_decode($data["tags"]);
         }else{
             $tags = array();
@@ -46,7 +46,7 @@ class GalleryController
             return $response->withHeader('Location', '/create')->withStatus(302);
         }
     }
-    
+
     public function displayGallery(Request $request, Response $response, $args): Response 
     {
         // On récupère la galerie d'id args['id']
@@ -83,7 +83,8 @@ class GalleryController
         // On récupère les images de la galerie d'id args['id']
         $b = $this->galleryService->getPictures($args['id']);
         $pictures = []; 
-        foreach($b as $picture) {
+        foreach($b as $picture)
+        {
             array_push($pictures, ['link' => $picture->getLink(), 'descr' => $picture->getDescr()]);
         }
 
@@ -95,10 +96,10 @@ class GalleryController
         ]);
     }
 
-
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
-        if(isset($request->getQueryParams()['offsetPublic'])){
+        if(isset($request->getQueryParams()['offsetPublic']))
+        {
             $offsetPublic = $request->getQueryParams()['offsetPublic'];
         } else {
             $offsetPublic = 0;
@@ -107,7 +108,8 @@ class GalleryController
         $galleries = $this->galleryService->listPublicGalleries($offsetPublic);
         $tabImg = array();
 
-        foreach ($galleries as $gallery) {
+        foreach ($galleries as $gallery)
+        {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
             $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
@@ -117,6 +119,40 @@ class GalleryController
             'listPublicGalleries' => $galleries,
             'tabImg' => $tabImg
         ]);
+    }
+
+    public function displayPrivateGalleries(Request $request, Response $response, array $args): Response
+    {
+        if(isset($_SESSION['user']))
+        {
+            $idUser = $_SESSION['user']->getId();
+
+            if(isset($request->getQueryParams()['offsetPrivate'])){
+                $offsetPrivate = $request->getQueryParams()['offsetPrivate'];
+            } else {
+                $offsetPrivate = 0;
+            }
+
+            $galleries = $this->galleryService->listPrivateGalleries($idUser, $offsetPrivate);
+            $tabImg = array();
+
+            foreach ($galleries as $gallery) {
+                $random = rand(1, $gallery->getNbPictures());
+                $idGallery = $gallery->getId();
+                $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+            }
+
+            return $this->twig->render($response, 'index.html.twig', [
+                'listPrivateGalleries' => $galleries,
+                'tabImgPrivate' => $tabImg,
+                'user' => $_SESSION['user']
+            ]);
+        }
+
+        return $this->twig->render($response, 'index.html.twig', [
+
+        ]);
+
     }
 
 }
