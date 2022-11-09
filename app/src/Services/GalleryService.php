@@ -12,10 +12,6 @@ use App\Models\UserAccess;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
-use App\Models\Picture;
-use App\Models\GalleryToPicture;
-use App\Models\UserAccess;
-use App\Models\User;
 
 
 final class GalleryService {
