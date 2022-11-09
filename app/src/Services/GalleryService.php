@@ -4,11 +4,12 @@ namespace App\Services;
 
 use App\Models\Gallery;
 use App\Models\Tag;
+use App\Models\Picture;
 use App\Models\GalleryToTag;
+use App\Models\GalleryToPicture;
+use App\Models\UserToGallery;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
-use App\Models\Picture;
-use App\Models\GalleryToPicture;
 
 final class GalleryService {
 
@@ -30,7 +31,7 @@ final class GalleryService {
                 $tagg = new Tag(filter_var($tag));
                 $this->em->persist($tagg);
                 $this->em->flush();
-                $this->logger->info("Tag" . $tagg->getTag() . "has been created");
+                $this->logger->info("Tag " . $tagg->getTag() . " has been created");
                 array_push($idsT, $tagg->getId());
             }
             $idG = $gallery->getId();
@@ -38,7 +39,7 @@ final class GalleryService {
                 $link = new GalleryToTag($idG,$id);
                 $this->em->persist($link);
                 $this->em->flush();
-                $this->logger->info("Link between gallery $name and tag" . $tagg->getTag() . "has been created");
+                $this->logger->info("Link between gallery $name and tag " . $tagg->getTag() . " has been created");
             }
             return true;
         }catch(\Exception $e){
@@ -79,4 +80,9 @@ final class GalleryService {
         return $picture;
     }
 
+    public function getCreator($id_gallery)
+    {
+        $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
+        return $creator;
+    }
 }
