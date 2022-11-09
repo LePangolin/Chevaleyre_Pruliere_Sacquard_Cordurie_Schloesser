@@ -96,4 +96,14 @@ final class GalleryService {
         $creator = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
         return $creator;
     }
+
+    public function getListUser($id_gallery)
+    {
+        $list = $this->em->getRepository(UserAccess::class)->findBy(array('id_gallery' => $id_gallery));
+        $users = [];
+        foreach ($ist as $user) {
+            array_push($users, $user->getIdUser());
+        }
+        return $users;
+    }
 }
