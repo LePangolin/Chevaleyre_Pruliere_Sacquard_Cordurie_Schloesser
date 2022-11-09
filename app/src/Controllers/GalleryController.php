@@ -38,7 +38,7 @@ class GalleryController {
     public function displayGallery(Request $request, Response $response, $args): Response 
     {
         // On récupère la galerie d'id args['id']
-        $a = $this->gellaryService->getGallery($args['id']);
+        $a = $this->galleryService->getGallery($args['id']);
         $gallery = [
             'id' => $a->getId(),
             'title' => $a->getName(),
@@ -53,7 +53,7 @@ class GalleryController {
         }        
         
         // On récupère les images de la galerie d'id args['id']
-        $b = $this->gellaryService->getPictures($args['id']);
+        $b = $this->galleryService->getPictures($args['id']);
         $pictures = []; 
         foreach($b as $picture) {
             array_push($pictures, ['link' => $picture->getLink(), 'desc' => $picture->getDescription()]);
