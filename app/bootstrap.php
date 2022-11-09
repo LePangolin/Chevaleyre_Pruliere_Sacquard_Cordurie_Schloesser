@@ -19,7 +19,6 @@ use App\Services\UserService;
 use App\Services\GalleryService;
 
 use App\Controllers\UserController;
-use App\Controllers\GalleryController;
 use App\Controllers\HTMLController;
 use App\Controllers\GalleryController;
 

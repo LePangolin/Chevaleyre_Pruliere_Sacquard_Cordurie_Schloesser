@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Models\Gallery;
 use App\Models\Tag;
 use App\Models\GalleryToTag;
-use App\Models\GalleryToPicture;
-use App\Models\Picture;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use App\Models\Picture;

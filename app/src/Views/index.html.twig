@@ -4,6 +4,7 @@
     {% block body %}
 
         {% include "parts/navbar.html.twig"%}
+
         <div id="publicGallery">
             {% for publicGallery in listPublicGalleries %}
                 <div>
@@ -11,6 +12,10 @@
                     {{ tabImg[publicGallery.id] }}
                 </div>
             {% endfor %}
+        </div>
+
+        <div>
+            <button><< précédent</button> <button type="button">suivant >></button>
         </div>
 
     {% endblock %}
