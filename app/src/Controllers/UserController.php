@@ -20,18 +20,20 @@ class UserController
 
     public function auth(Request $request, Response $response, array $args): Response
     {
+        
         return $this->twig->render($response, 'authentification.html.twig', [
             'title' => 'Auth',
         ]);
     }
 
-    public function profile(Request $request, Response $response, array $args): Response{
+    public function displayProfile(Request $request, Response $response, array $args): Response{
         if(!isset($_SESSION['user'])){
-            $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
+        $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
         return $this->twig->render($response, 'profile.html.twig', [
             'title' => 'Profile',
+            'userGalleries' => $tabInfo['MyGalleries'],
         ]);
     }
 
@@ -44,26 +46,16 @@ class UserController
 
         if ($user === null) {
 
-            $resp = array(
-                'status' => 'error',
-                'message' => 'Invalid username or password'
-            );
+            return $this->twig->render($response, 'authentification.html.twig', [
+                'title' => 'Auth',
+                'error' => 'Wrong username or password',
+            ]);
 
-            $response->getBody()->write(json_encode($resp));
-
-            return $response;
         }
 
         $_SESSION['user'] = $user;
 
-        $resp = array(
-            'status' => 'success',
-            'message' => 'Logged in successfully'
-        );
-
-        $response->getBody()->write(json_encode($resp));
-
-        return $response;
+        return $response->withHeader('Location', '/profile')->withStatus(302);
     }
 
     public function signUp(Request $request, Response $response, array $args): Response
