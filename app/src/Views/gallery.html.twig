@@ -10,14 +10,11 @@
         <h1>{{gallery['name']}}</h1>
         <p>Description : {{gallery['description']}}</p>
         <p>Crée le : {{gallery['createdAt']}} par {{gallery['creator']}}</p>
-    {% else %}
-        <h1>Pas d'information</h1>
-    {% endif %}
-    
-    {% if tags is defined %}
-        {% for tag in tags %}
+        {% for tag in gallery['tags'] %}
             <p>{{tag}}</p>
         {% endfor %}
+    {% else %}
+        <h1>Pas d'information</h1>
     {% endif %}
 
     {% if is_author == true and pictures %}

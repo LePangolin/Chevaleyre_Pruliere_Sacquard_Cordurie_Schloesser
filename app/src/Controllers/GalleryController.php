@@ -62,10 +62,6 @@ class GalleryController
             return $response->withHeader('Location', '/')->withStatus(302);
         }
         $gallery = $this->galleryService->getGalleryInfo($args['id']);
-        $tags = [];
-        foreach ($gallery['tags'] as $tag) {
-            array_push($tags, $tag->getName());
-        }
         if (!$a->getPublic()) {
             if (!isset($_SESSION['user'])) {
                 return $response->withHeader('Location', '/')->withStatus(302);
@@ -102,8 +98,7 @@ class GalleryController
             "user" => $userSession,
             'gallery' => $gallery,
             'is_author' => $is_author,
-            'pictures' => $pictures,
-            'tags' => $tags,
+            'pictures' => $pictures
         ]);
     }
 
@@ -166,7 +161,7 @@ class GalleryController
         {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
-            if ($gallery->getNbPictures() > 0) {
+            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() == null) {
                 $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
             } else {
                 $tabImg[$idGallery] = null;
