@@ -225,30 +225,25 @@ class GalleryController
     {
         $data = $request->getParsedBody();
 
-        $response->getBody()->write(json_encode($data));
+        if(!empty($data["tags"])){
+            $tags = json_decode($data["tags"]);
+        }else{
+            $tags = array();
+        }
 
-        return $response;
+        if(!empty($data["users"]) && $data["statut"] == 0){
+            $users = json_decode($data["users"]);
+        }else{
+            $users = array();
+        }
 
-
-        // if(!empty($data["tags"])){
-        //     $tags = json_decode($data["tags"]);
-        // }else{
-        //     $tags = array();
-        // }
-
-        // if(!empty($data["users"]) && $data["statut"] == 0){
-        //     $users = json_decode($data["users"]);
-        // }else{
-        //     $users = array();
-        // }
-
-        // $idUser = $_SESSION["user"]->getId();
-        // $bool = $this->galleryService->edit($args['id'], $data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
-        // if($bool){
-        //     return $response->withHeader('Location', '/')->withStatus(302);
-        // }else{
-        //     return $response->withHeader('Location', '/edit/'.$args['id'])->withStatus(302);
-        // }
+        $idUser = $_SESSION["user"]->getId();
+        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        if($bool){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }else{
+            return $response->withHeader('Location', '/edit/'.$args['id'])->withStatus(302);
+        }
     }
 
 }

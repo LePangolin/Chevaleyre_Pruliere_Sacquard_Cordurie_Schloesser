@@ -69,4 +69,29 @@ final class Gallery
         return $this->created_at;
     }
 
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setNbPictures(int $nb_pictures): void
+    {
+        $this->nb_pictures = $nb_pictures;
+    }
+
+    public function setPublic(bool $public): void
+    {
+        $this->public = $public;
+    }
 }
