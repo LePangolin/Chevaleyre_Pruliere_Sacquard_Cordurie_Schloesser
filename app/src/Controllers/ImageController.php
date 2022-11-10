@@ -38,7 +38,7 @@ class ImageController
 
         if(!empty($_FILES['uploadImage']['name']))
         {
-            $this->uploadImage($data['title'], $data['description']);
+            $this->imageService->uploadImage($data['title'], $data['description']);
         }
 
         //return $response->withHeader('Location', "/gallery/.{$idGallery}")->withStatus(302);
