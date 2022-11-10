@@ -20,8 +20,9 @@ class UserController
 
     public function auth(Request $request, Response $response, array $args): Response
     {
-        
+        $userSession = $_SESSION["user"] ?? null;
         return $this->twig->render($response, 'authentification.html.twig', [
+            "user" => $userSession,
             'title' => 'Authentification',
         ]);
     }
@@ -33,6 +34,7 @@ class UserController
         $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
         return $this->twig->render($response, 'profile.html.twig', [
             'title' => 'Profile',
+            "user" => $_SESSION["user"],
             'userGalleries' => $tabInfo['MyGalleries'],
         ]);
     }
@@ -48,6 +50,7 @@ class UserController
 
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
+                "user" => $userSession,
                 'error' => 'Wrong username or password',
             ]);
 

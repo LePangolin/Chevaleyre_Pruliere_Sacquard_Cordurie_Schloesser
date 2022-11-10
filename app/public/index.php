@@ -36,6 +36,8 @@ $app->get('/profile', \App\Controllers\UserController::class . ':displayProfile'
 
 $app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
 
+$app->post('/deleteGallery', \App\Controllers\GalleryController::class . ':deleteGallery')->setName('deleteGallery');
+
 $app->post('/gallery/{id}', \App\Controllers\ImageController::class . ':uploadImage')->setName('uploadImage');
 
 $app->get('/editGallery/{id}', \App\Controllers\GalleryController::class . ':diaplayEditGallery')->setName('editGallery');

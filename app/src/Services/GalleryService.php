@@ -9,10 +9,16 @@ use App\Models\GalleryToTag;
 use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
 use App\Models\UserAccess;
+use App\Models\PictureToComment;
+use App\Models\Metadata;
+use App\Models\PictureToMetadata;
+use App\Models\Comment;
+use App\Models\PictureToTag;
 use App\Services\UserService;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use App\Models\User;
+
 final class GalleryService {
 
     private EntityManager $em;
@@ -21,6 +27,17 @@ final class GalleryService {
         $this->em = $em;
         $this->logger = $logger;
         $this->us = $us;
+    }
+
+    public function getGalleryById(int $id): ?Gallery
+    {
+        try {
+            $gallery = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $id]);
+            return $gallery;
+        } catch (\Exception $e) {
+            $this->logger->error("Error while getting user by username: " . $e->getMessage());
+            return "error";
+        }
     }
 
     public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags, array $users){
@@ -183,6 +200,106 @@ final class GalleryService {
         return $users;
     }
 
+    public function deleteGallery()
+    {
+        
+            $id_gallery = $_POST['id_gallery'];
+            $gallery = $this->em->getRepository(Gallery::class)->find($id_gallery);
+            $user_access = $this->em->getRepository(UserAccess::class)->findBy(array('id_gallery' => $id_gallery));
+            $user_to_gallery = $this->em->getRepository(UserToGallery::class)->findBy(array('id_gallery' => $id_gallery));
+            $gallery_to_picture = $this->em->getRepository(GalleryToPicture::class)->findBy(array('id_gallery' => $id_gallery));
+            $gallery_to_tag = $this->em->getRepository(GalleryToTag::class)->findBy(array('id_gallery' => $id_gallery));
+            $pictures = [];
+            foreach ($gallery_to_picture as $id_picture) {
+                if (!empty($id_picture))
+                    array_push($pictures, $this->em->getRepository(Picture::class)->find($id_picture->getIdPicture()));
+            }
+            $picture_to_metadata = [];
+            $picture_to_comment = [];
+            $picture_to_tag = [];
+            foreach ($pictures as $picture) {
+                if (!empty($picture))
+                    array_push($picture_to_metadata, $this->em->getRepository(PictureToMetadata::class)->findBy(array('id_picture' => $picture->getId())));
+                    array_push($picture_to_comment, $this->em->getRepository(PictureToComment::class)->findBy(array('id_picture' => $picture->getId())));
+                    array_push($picture_to_tag, $this->em->getRepository(PictureToTag::class)->findBy(array('id_picture' => $picture->getId())));
+            }
+            $metadatas = [];
+            foreach ($picture_to_metadata as $id_metadata) {
+                if (!empty($id_metadata))
+                    array_push($metadatas, $this->em->getRepository(Metadata::class)->find($id_metadata->getIdMetadata()));
+            }
+            $comments = [];
+            foreach ($picture_to_comment as $id_comment) {
+                if (!empty($id_metadata))
+                    array_push($comment, $this->em->getRepository(Comment::class)->find($id_comment->getIdComment()));
+            }
+
+
+            // supprimer le lien entre les utilisateur qui y ont accès et la galerie
+            foreach ($user_access as $a) {
+                $this->em->remove($a);
+            }
+        
+            // supprimer le lien entre le créateur et la galerie
+            $this->em->remove($user_to_gallery[0]);
+
+            // supprimer les metadatas des images de la galerie
+            foreach ($metadatas as $metadata) {
+                $this->em->remove($metadata);
+            }
+            
+
+            // supprimer le lien entre les images et leurs metadata
+            foreach($picture_to_metadata as $a) {
+                foreach($a as $b) {
+                    $this->em->remove($b);
+                }
+            }
+            
+            // supprimer les commentaire d'une image 
+            foreach($comments as $comment) {
+                $this->em->remove($comment);
+            }
+            
+            
+            // supprimer le lien entre les commentaires et les images 
+            foreach($picture_to_comment as $a) {
+                foreach($a as $b) {
+                    $this->em->remove($b);
+                }
+            }
+            
+
+            // supprimer le lien entre les images et leur tag
+            foreach($picture_to_tag as $a) {
+                foreach($a as $b) {
+                    $this->em->remove($b);
+                }
+            }
+            
+
+            // supprimer le lien entre la gallerie et ses tag
+            foreach($gallery_to_tag as $a) {
+                $this->em->remove($a);
+            }
+            
+            
+            // supprimer les images de la galerie
+            foreach($pictures as $picture) {
+                $this->em->remove($picture);
+            }
+            
+
+            // supprimer le lien entre une image et la galerie
+            foreach($gallery_to_picture as $a) {
+                $this->em->remove($a);
+            }
+            
+
+            // supprimer la galerie
+            $this->em->remove($gallery);
+            $this->em->flush();
+    }
 
    public function getGalleryInfo($id){
     try{
@@ -208,6 +325,7 @@ final class GalleryService {
             "nb_pictures" => $gallery->getNbPictures(),
             "public" => $gallery->getPublic(),
             "creator" => $user->getUsername(),
+            "createdAt" => $gallery->getCreatedAt()->format('D/M/Y'),
             "tags" => $tagsList,
             "users" => $usersList
         );
@@ -307,4 +425,4 @@ final class GalleryService {
     }
    }
 }
- 
+

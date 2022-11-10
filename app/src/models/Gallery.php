@@ -68,7 +68,7 @@ final class Gallery
     {
         return $this->created_at;
     }
-
+    
     public function setName(string $name): void
     {
         $this->name = $name;

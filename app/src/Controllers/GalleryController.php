@@ -46,7 +46,7 @@ class GalleryController
         }
 
         $idUser = $_SESSION["user"]->getId();
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        $bool = $this->galleryService->create($data["name"], $data["description"], 0, $data["statut"], $idUser, $tags, $users);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{
@@ -61,11 +61,11 @@ class GalleryController
         if (is_null($a)) {
             return $response->withHeader('Location', '/')->withStatus(302);
         }
-        $gallery = [
-            'id' => $a->getId(),
-            'title' => $a->getName(),
-        ];
-
+        $gallery = $this->galleryService->getGalleryInfo($args['id']);
+        $tags = [];
+        foreach ($gallery['tags'] as $tag) {
+            array_push($tags, $tag->getName());
+        }
         if (!$a->getPublic()) {
             if (!isset($_SESSION['user'])) {
                 return $response->withHeader('Location', '/')->withStatus(302);
@@ -95,12 +95,15 @@ class GalleryController
             array_push($pictures, ['link' => $picture->getLink(), 'descr' => $picture->getDescr()]);
         }
 
+        $userSession = $_SESSION["user"] ?? null;
+
         return $this->twig->render($response, 'gallery.html.twig', [
             'title' => 'Gallery',
+            "user" => $userSession,
             'gallery' => $gallery,
             'is_author' => $is_author,
             'pictures' => $pictures,
-            'idGallery' => $args["id"]
+            'tags' => $tags,
         ]);
     }
 
@@ -136,8 +139,11 @@ class GalleryController
             ];
         }
        
+        $userSession = $_SESSION["user"] ?? null;
+
         return $this->twig->render($response, 'searchPage.html.twig', [
             'title' => 'Recherche',
+            "user" => $userSession,
             'search' => $nameSearch,
             'galleries' => $galleriesArray,
             'tags' => $tags
@@ -160,10 +166,17 @@ class GalleryController
         {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
-            $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+            if ($gallery->getNbPictures() > 0) {
+                $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+            } else {
+                $tabImg[$idGallery] = null;
+            }
         }
 
+        $userSession = $_SESSION["user"] ?? null;
+
         return $this->twig->render($response, 'index.html.twig', [
+            "user" => $userSession,
             'listPublicGalleries' => $galleries,
             'tabImg' => $tabImg
         ]);
@@ -189,15 +202,17 @@ class GalleryController
                 $idGallery = $gallery->getId();
                 $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
             }
+            
+            $userSession = $_SESSION["user"] ?? null;
 
             return $this->twig->render($response, 'index.html.twig', [
                 'listPrivateGalleries' => $galleries,
                 'tabImgPrivate' => $tabImg,
-                'user' => $_SESSION['user']
+                'user' => $userSession
             ]);
         }
 
-        return $this->twig->render($response, 'index.html.twig', []);
+        return $this->twig->render($response, 'index.html.twig', [ 'user' => $userSession ]);
 
     }
 
@@ -246,6 +261,12 @@ class GalleryController
         }else{
             return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
         }
+    }
+
+    public function deleteGallery(Request $request, Response $response, $args): Response
+    {
+        $this->galleryService->deleteGallery();
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 
 }
