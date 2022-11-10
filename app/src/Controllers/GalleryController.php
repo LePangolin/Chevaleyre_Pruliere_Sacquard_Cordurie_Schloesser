@@ -162,4 +162,55 @@ class GalleryController
 
     }
 
+    public function diaplayEditGallery(Request $request, Response $response, array $args): Response
+    {
+        if(isset($_SESSION['user']))
+        {
+            $gallery = $this->galleryService->getGalleryInfo($args['id']);
+
+            if(!empty($gallery))
+            {
+                return $this->twig->render($response, 'editGallery.html.twig', [
+                    'title' => 'Edition de la galerie',
+                    'gallery' => $gallery,
+                    'user' => $_SESSION['user']
+                ]);
+            }else{
+                return $response->withHeader('Location', '/')->withStatus(302);
+            }
+        }
+
+        return $response->withHeader('Location', '/auth')->withStatus(302);
+    }
+
+    public function editGallery(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        $response->getBody()->write(json_encode($data));
+
+        return $response;
+
+
+        // if(!empty($data["tags"])){
+        //     $tags = json_decode($data["tags"]);
+        // }else{
+        //     $tags = array();
+        // }
+
+        // if(!empty($data["users"]) && $data["statut"] == 0){
+        //     $users = json_decode($data["users"]);
+        // }else{
+        //     $users = array();
+        // }
+
+        // $idUser = $_SESSION["user"]->getId();
+        // $bool = $this->galleryService->edit($args['id'], $data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        // if($bool){
+        //     return $response->withHeader('Location', '/')->withStatus(302);
+        // }else{
+        //     return $response->withHeader('Location', '/edit/'.$args['id'])->withStatus(302);
+        // }
+    }
+
 }

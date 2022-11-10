@@ -1,6 +1,7 @@
 let private = document.getElementById("private");
 let public = document.getElementById("public");
 
+
 private.addEventListener("click", function () {
   document.getElementById("addUser").classList.remove("hidden");
 });
@@ -11,6 +12,16 @@ public.addEventListener("click", function () {
 });
 
 let tabUsers = [];
+
+
+let tabUserFromEdit = document.getElementsByClassName("tagsFromEdit")
+
+if(tabUserFromEdit.length > 0){
+  for (let i = 0; i < tabUserFromEdit.length; i++) {
+    tab.push(tabUserFromEdit[i].dataset.tag);
+  }
+  document.getElementById("users").value = JSON.stringify(tabUsers);
+}
 
 document.getElementById("user").addEventListener("keydown", function (e) {
   var key = e.charCode || e.keyCode || 0;
@@ -37,3 +48,5 @@ document
       document.getElementById("users").value = JSON.stringify(tabUsers);
     });
   });
+
+

@@ -11,10 +11,8 @@ use App\Models\UserToGallery;
 use App\Models\UserAccess;
 use App\Services\UserService;
 use Doctrine\ORM\EntityManager;
-use GMP;
 use Psr\Log\LoggerInterface;
-
-
+use App\Models\User;
 final class GalleryService {
 
     private EntityManager $em;
@@ -142,4 +140,40 @@ final class GalleryService {
         }
         return $users;
     }
+
+
+   public function getGalleryInfo($id){
+    try{
+        $gallery = $this->em->getRepository(Gallery::class)->find($id);
+        $creator = $this->em->getRepository(UserToGallery::class)->findOneBy(['id_gallery' => $id]);
+        $user = $this->em->getRepository(User::class)->find($creator->getIdUser());
+        $tags = $this->em->getRepository(GalleryToTag::class)->findBy(['id_gallery' => $id]);
+        $tagsList = [];
+        foreach($tags as $tag){
+            $tagg = $this->em->getRepository(Tag::class)->find($tag->getIdTag());
+            array_push($tagsList, $tagg->getTag());
+        }
+        $users = $this->em->getRepository(UserAccess::class)->findBy(['id_gallery' => $id]);
+        $usersList = [];
+        foreach($users as $user){
+            $user = $this->em->getRepository(User::class)->find($user->getIdUser());
+            array_push($usersList, $user->getUsername());
+        }
+        $galleryInfo = array(
+            "id" => $gallery->getId(),
+            "name" => $gallery->getName(),
+            "description" => $gallery->getDescription(),
+            "nb_pictures" => $gallery->getNbPictures(),
+            "public" => $gallery->getPublic(),
+            "creator" => $user->getUsername(),
+            "tags" => $tagsList,
+            "users" => $usersList
+        );
+        return $galleryInfo;
+    }catch(\Exception $e){
+        $this->logger->error("Erreur lors de la récupération des informations de la galerie $id : " . $e->getMessage());
+        return null;
+    }
+   }
 }
+ 

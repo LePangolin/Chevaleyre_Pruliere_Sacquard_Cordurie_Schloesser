@@ -32,6 +32,10 @@ $app->get('/profile', \App\Controllers\UserController::class . ':displayProfile'
 
 $app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
 
+$app->get('/editGallery/{id}', \App\Controllers\GalleryController::class . ':diaplayEditGallery')->setName('editGallery');
+
+$app->post('/editGallery/{id}', \App\Controllers\GalleryController::class . ':editGallery')->setName('editGallery');
+
 
 $app->run();
 

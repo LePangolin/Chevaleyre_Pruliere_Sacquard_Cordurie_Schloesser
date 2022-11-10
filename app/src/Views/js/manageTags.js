@@ -1,5 +1,15 @@
 let tab = [];
 
+let tabTagsFromedit = document.getElementsByClassName("tagsFromEdit")
+
+if(tabTagsFromedit.length > 0){
+  for (let i = 0; i < tabTagsFromedit.length; i++) {
+    tab.push(tabTagsFromedit[i].dataset.tag);
+  }
+  document.getElementById("tags").value = JSON.stringify(tab);
+}
+
+
 document.getElementById("tag").addEventListener("keydown", function (e) {
   var key = e.charCode || e.keyCode || 0;
   if (key == 13) {
