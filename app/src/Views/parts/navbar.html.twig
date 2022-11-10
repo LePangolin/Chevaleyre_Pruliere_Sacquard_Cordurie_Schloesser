@@ -1,7 +1,7 @@
 <header class="header">
     {% block header %}
 
-        <a class="header_logo" href="">
+        <a class="header_logo" href="/">
             <h1 class="logo_title">MediaPhoto</h1>
             <img class="logo_image" src="/img/site/logo.png" alt="Logo">
         </a>
@@ -20,7 +20,7 @@
         </form>
         <span class="header_user">
          {% if user is defined %}
-            <img class="user_image" src="./img/site/user.png" alt="User">
+            <img class="user_image" href="/profile" src="./img/site/user.png" alt="User">
         {% else %}
             <a class="user_link" href="/auth">Se connecter</a>
             <a class="user_link" href="/auth">S'inscrire</a>
