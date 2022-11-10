@@ -2,6 +2,9 @@
 
 <body>
     {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+            
                 <form action="/editGallery/{{gallery.id}}" method="post">
                 <h1>Informations générales</h1>
 

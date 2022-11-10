@@ -58,31 +58,29 @@ class UserController
 
         $_SESSION['user'] = $user;
 
-        return $response->withHeader('Location', '/profile')->withStatus(302);
+        $id = $_SESSION['user']->getId();
+
+        return $response = $response->withHeader('Location', '/profile/'.$id)->withStatus(302);
     }
 
     public function signUp(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
 
-        $bool = $this->userService->signUp($data['username'], $data['password']);
+        $user = $this->userService->signUp($data['username'], $data['password']);
 
-        // TODO: Redirection
-        if ($bool === false) {
-            $resp = array(
-                'status' => 'error',
-                'message' => 'User already exists'
-            );
+        if ($user === false) {
+            return $this->twig->render($response, 'authentification.html.twig', [
+                'title' => 'Auth',
+                'error' => 'Username already taken',
+            ]);
         }else{
-            $resp = array(
-                'status' => 'success',
-                'message' => 'User created'
-            );
+            
+            $response = $response->withHeader('Location', '/profile/'. $user->getId())->withStatus(302);
+
+            return $response;
         }
 
-        $response->getBody()->write(json_encode($resp));
-
-        return $response->withHeader('Content-Type', 'application/json');
     }
 
     public function logout(Request $request, Response $response, array $args): Response
