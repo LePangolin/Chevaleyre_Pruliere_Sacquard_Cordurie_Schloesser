@@ -289,7 +289,6 @@ final class GalleryService {
             $this->em->remove($gallery);
             $this->em->flush();
     }
-}
 
    public function getGalleryInfo($id){
     try{
