@@ -103,6 +103,46 @@ class GalleryController
         ]);
     }
 
+    public function searchGalleries(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        $tags = [];
+        if (!empty($data["tags"])) {
+            $tags = json_decode($data["tags"]);
+        }
+
+        $nameSearch = "";
+        if (!empty($data["searchBar"])) {
+            $nameSearch = $data["searchBar"];
+        }
+
+        $galleriesObjects = [];
+        if (empty($tags)) {
+            $galleriesObjects = $this->galleryService->findGalleriesByName($nameSearch);
+        } else {
+            $galleriesObjects = $this->galleryService->findGalleriesByNameAndTags($nameSearch, $tags);
+        }
+
+        $galleriesArray = [];
+        foreach ($galleriesObjects as $gallery) {
+            $galleriesArray[] =  [
+                'id' => $gallery->getId(),
+                'name' => $gallery->getName(),
+                'description' => $gallery->getDescription(),
+                'nb_pictures' => $gallery->getNbPictures(),
+                'public' => $gallery->getPublic()
+            ];
+        }
+       
+        return $this->twig->render($response, 'searchPage.html.twig', [
+            'title' => 'Recherche',
+            'search' => $nameSearch,
+            'galleries' => $galleriesArray,
+            'tags' => $tags
+        ]);
+    }
+
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
         if(isset($request->getQueryParams()['offsetPublic']))
