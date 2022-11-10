@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
 {# Récupérer le titre de la galerie et l'afficher #}
     {% if gallery is defined %}
         <h1>{{gallery['title']}}</h1>
@@ -19,7 +20,7 @@
             <img src="{{picture['link']}}" alt="{{picture['desc']}}">
         {% endfor %}
     {% elseif is_author == true and not pictures %}
-        <button class="edit_button">Edit</button>
+        <a href="/editGallery/{{idGallery}}"><button class="edit_button">Edit</button></a>
         <button class="delete_button">Delete</button>
         <button class="add_image_middle_button">Add Image</button>
     {% elseif is_author == false and pictures %}
@@ -56,7 +57,6 @@
 
     <footer>
         <script>
-            {{source('./js/manageTags.js')}}
             {{source('./js/manageModal.js')}}
         </script>
     </footer>
