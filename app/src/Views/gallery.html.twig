@@ -13,14 +13,20 @@
 
     {% if is_author == true and pictures %}
         <button class="edit_button">Edit</button>
-        <button class="delete_button">Delete</button>
+        <form id="delete_form" method="post" action="/deleteGallery">
+            <input type="submit" id="delete_button" value="Delete">
+            <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
+        </form>
         <button class="add_image_button">Add Image</button>
         {% for picture in pictures %}
             <img src="{{picture['link']}}" alt="{{picture['desc']}}">
         {% endfor %}
     {% elseif is_author == true and not pictures %}
         <button class="edit_button">Edit</button>
-        <button class="delete_button">Delete</button>
+        <form id="delete_form" method="post" action="/deleteGallery">
+            <input type="submit" id="delete_button" value="Delete">
+            <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
+        </form>
         <button class="add_image_middle_button">Add Image</button>
     {% elseif is_author == false and pictures %}
         {% for picture in pictures %}

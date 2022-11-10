@@ -55,7 +55,7 @@ class GalleryController
             return $response->withHeader('Location', '/')->withStatus(302);
         }
         $gallery = [
-            'id' => $a->getId(),
+            'id' => $args['id'],
             'title' => $a->getName(),
         ];
 
@@ -153,6 +153,12 @@ class GalleryController
 
         ]);
 
+    }
+
+    public function deleteGallery(Request $request, Response $response, $args): Response
+    {
+        $this->galleryService->deleteGallery();
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 
 }

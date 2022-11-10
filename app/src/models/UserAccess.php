@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 
-#[Entity, Table(name: 'UserAccesses')]
+#[Entity, Table(name: 'UsersAccesses')]
 
 final class UserAccess
 {
