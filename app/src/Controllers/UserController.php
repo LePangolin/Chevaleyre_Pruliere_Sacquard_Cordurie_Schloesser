@@ -55,7 +55,7 @@ class UserController
 
         $_SESSION['user'] = $user;
 
-        return $response->withHeader('Location', '/profile')->withStatus(302);
+        return $response = $response->withHeader('Location', '/profile/')->withStatus(302);
     }
 
     public function signUp(Request $request, Response $response, array $args): Response
