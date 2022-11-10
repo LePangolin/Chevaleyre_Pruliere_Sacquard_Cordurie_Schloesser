@@ -4,9 +4,27 @@
     {% block body %} 
 
         {% include "parts/navbar.html.twig"%}
-            <form enctype='multipart/form-data' action="/" method="post">
-                <input type='file' name='uploadImage'>
+            <form enctype='multipart/form-data' action="/uploadImage" method="post">
+                <input type='file' name='uploadImage' required><br><br>
+                <input type="text" id="title" name="title" placeholder="Titre de l'image" required><br><br>
+                <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de l'image" required></textarea><br>
+
+                <h1>Mots-clés</h1>
+
+                <div id="statutDiv">
+                    <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                    <button type="button" class="addTag">Ajouter</button>
+                </div><br>
+
+                <input type="hidden" id="tags" name="tags">
+
+                <h1>Méta-données</h1>
             </form>
+             <footer>
+                <script>
+                    {{source('./js/manageTags.js')}}
+                </script>
+            </footer>
     {% endblock %}
 </body>
 

@@ -32,6 +32,8 @@ $app->get('/profile', \App\Controllers\UserController::class . ':displayProfile'
 
 $app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
 
+$app->get('/addImage', \App\Controllers\ImageController::class . ':create')->setName('create');
+
 
 $app->run();
 

@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class ImageControllerController
+class ImageController
 {
 
     private Twig $twig;
@@ -17,6 +17,18 @@ class ImageControllerController
     {
         $this->imageService = $imageService;
         $this->twig = $twig;
+    }
+
+    public function create(Request $request, Response $response, array $args): Response
+    {
+        if(isset($_SESSION["user"])){
+            return $this->twig->render($response, 'addImage.html.twig', [
+                "title" => "Ajouter une image",
+                "user" => $_SESSION["user"]
+            ]);
+        }else{
+            return $response->withHeader('Location', '/auth')->withStatus(302);
+        }
     }
 
 }
