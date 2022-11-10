@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
 {# Récupérer le titre de la galerie et l'afficher #}
     {% if gallery is defined %}
         <h1>{{gallery['title']}}</h1>
@@ -27,6 +28,7 @@
             <input type="submit" id="delete_button" value="Delete">
             <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
         </form>
+        <a href="/editGallery/{{idGallery}}"><button class="edit_button">Edit</button></a>
         <button class="add_image_middle_button">Add Image</button>
     {% elseif is_author == false and pictures %}
         {% for picture in pictures %}
@@ -35,6 +37,36 @@
     {% elseif is_author == false and not pictures %}
         <p>Pas d'image</p>        
     {% endif %}
+
+    <div class="addImage">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form enctype='multipart/form-data' action="/gallery/{{idGallery}}" method="post">
+                <input type='file' name='uploadImage' required><br><br>
+                <input type="text" id="title" name="title" placeholder="Titre de l'image" required><br><br>
+                <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de l'image" required></textarea><br>
+
+                <h1>Mots-clés</h1>
+
+                <div id="statutDiv">
+                    <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                    <button type="button" class="addTag">Ajouter</button>
+                </div><br>
+
+                <input type="hidden" id="tags" name="tags">
+
+                <h1>Méta-données</h1>
+
+                <input type="submit" id="confirm" name="confirm" value="Confirmer">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <script>
+            {{source('./js/manageModal.js')}}
+        </script>
+    </footer>
 
 {% endblock %}
 

@@ -21,6 +21,8 @@ use App\Services\GalleryService;
 use App\Controllers\UserController;
 use App\Controllers\HTMLController;
 use App\Controllers\GalleryController;
+use App\Controllers\ImageController;
+use App\Services\ImageService;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -70,7 +72,7 @@ $container->set(UserController::class, static function (Container $c): UserContr
 });
 
 $container->set(GalleryService::class, static function (Container $c): GalleryService {
-    return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class));
+    return new GalleryService($c->get(EntityManager::class), $c->get(LoggerInterface::class), $c->get(UserService::class));
 });
 
 $container->set(GalleryController::class, static function (Container $c): GalleryController {
@@ -79,6 +81,14 @@ $container->set(GalleryController::class, static function (Container $c): Galler
 
 $container->set(HTMLController::class, static function (Container $c): HTMLController {
     return new HTMLController($c->get('view'));
+});
+
+$container->set(ImageController::class, static function (Container $c): ImageController {
+    return new ImageController($c->get(ImageService::class), $c->get('view'));
+});
+
+$container->set(ImageService::class, static function (Container $c): ImageService {
+    return new ImageService($c->get(EntityManager::class), $c->get(LoggerInterface::class), $c->get(GalleryService::class));
 });
 
 return $container;

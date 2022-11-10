@@ -9,7 +9,7 @@
 
         {% for userGallery in userGalleries %}
             
-            <p> {{userGallery.name}} </p>
+            <a href="/gallery/{{userGallery.id}}"> {{ userGallery.name }} </a>
 
         {% endfor %}
 

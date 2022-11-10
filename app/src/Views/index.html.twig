@@ -9,7 +9,7 @@
             {% for publicGallery in listPublicGalleries %}
                 <div class="grid-col2">
                     {{ publicGallery.name }}
-                    {{ tabImg[publicGallery.id] }}
+                    <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
                 </div>
             {% endfor %}
         </div>
@@ -24,7 +24,7 @@
                         {% for privateGallery in listPrivateGalleries %}
                             <div class="grid-col2">
                                 {{ privateGallery.name }}
-                                {{ tabImg[privateGallery.id] }}
+                                <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie">
                             </div>
                         {% endfor %}
                     </div>
