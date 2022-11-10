@@ -27,7 +27,7 @@ class UserService{
         }
     }
 
-    public function signUp(string $username, string $password): bool
+    public function signUp(string $username, string $password)
     {
         $user = $this->getUserByUsername($username);
         if($user === "error"){
@@ -43,7 +43,7 @@ class UserService{
             $this->em->persist($user);
             $this->em->flush();
             $this->logger->info("User $username created");
-            return true;
+            return $user;
         } catch (\Exception $e) {
             $this->logger->error("Error while creating the User  : ".$e->getMessage());
             return false;
