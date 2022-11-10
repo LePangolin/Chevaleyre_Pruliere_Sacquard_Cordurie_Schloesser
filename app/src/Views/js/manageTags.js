@@ -1,17 +1,7 @@
 let tabTags = [];
 
-if (
-  document.body.contains(document.getElementsByClassName("tagsFromEdit")[0])
-) {
-  let tabTagsFromedit = document.getElementsByClassName("tagsFromEdit");
 
-  if (tabTagsFromedit.length > 0) {
-    for (let i = 0; i < tabTagsFromedit.length; i++) {
-      tab.push(tabTagsFromedit[i].dataset.tag);
-    }
-    document.getElementsByClassName("tagsArray")[0].value = JSON.stringify(tab);
-  }
-}
+restoreTags(tabTagsFromedit);
 
 if (
   document.body.contains(
@@ -67,6 +57,7 @@ function addElement(
   document.getElementsByClassName(inputName)[0].value = "";
   tab.push(inputValue);
   document.getElementsByClassName(hiddenArray)[0].value = JSON.stringify(tab);
+  console.log(document.getElementsByClassName(hiddenArray)[0].value);
   let div = document.createElement("div");
   div.classList.add(newItemClass);
   div.dataset.id = tab.length - 1;
@@ -82,6 +73,7 @@ function addElement(
     tab.splice(index, 1);
     document.getElementsByClassName(hiddenArray)[0].value = JSON.stringify(tab);
   });
+
 }
 
 function restoreTags(arraytags) {

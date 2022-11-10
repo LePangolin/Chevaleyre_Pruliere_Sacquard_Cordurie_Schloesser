@@ -226,7 +226,7 @@ final class GalleryService {
         $gallery->setDescription($description);
         $gallery->setPublic($public);
         $this->em->persist($gallery);
-        $this->em->flush();
+        
         $this->logger->info("Galerie $id modifiée");
         // récupère les tags de la galerie
         $tagsGallery = $this->em->getRepository(GalleryToTag::class)->findBy(['id_gallery' => $id]);
@@ -235,90 +235,71 @@ final class GalleryService {
         $tagsGalleryList = [];
         foreach($tagsGallery as $tag){
             $tagg = $this->em->getRepository(Tag::class)->find($tag->getIdTag());
-            array_push($tagsGalleryList, $tagg);
+            array_push($tagsGalleryList, $tagg->getTag());
         }
         // supprime les tags de la galerie qui ne sont pas dans la liste des tags
         foreach($tagsGalleryList as $tag){
-            if(!is_array($tags)){
-                if($tag->getTag() != $tags){
-                    $tagGallery = $this->em->getRepository(GalleryToTag::class)->findOneBy(['id_gallery' => $id, 'id_tag' => $tag->getId()]);
-                    $this->em->remove($tagGallery);
-                    $this->em->flush();
-                    $this->logger->info("Tag $tag supprimé de la galerie $id");
-                }
-            }else if (!in_array($tag->getTag(), $tags)){
-                $tagGallery = $this->em->getRepository(GalleryToTag::class)->findOneBy(['id_gallery' => $id, 'id_tag' => $tag->getId()]);
-                $this->em->remove($tagGallery);
-                $this->em->flush();
-                $this->logger->info("Tag supprimé de la galerie $id");
+            if(!in_array($tag, $tags)){
+                $tagToDelete = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tag]);
+                $linkToDelete = $this->em->getRepository(GalleryToTag::class)->findOneBy(['id_gallery' => $id, 'id_tag' => $tagToDelete->getId()]);
+                $this->em->remove($linkToDelete);
+                $this->logger->info("Tag". $tag ."supprimé");
             }
         }
         // ajoute les tags qui ne sont pas dans la liste des tags de la galerie
-        if(!is_array($tags)){
-            $tagExist = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tags]);
-            if($tagExist == null){
-                $tag = new Tag($tags);
-                $this->em->persist($tag);
-                $this->em->flush();
-                $this->logger->info("Tag ajouté");
-                $tagGallery = new GalleryToTag($id, $tag->getId());
-                $this->em->persist($tagGallery);
-                $this->em->flush();
-                $this->logger->info("Tag ajouté à la galerie $id");
-            }
-        }else{
-            foreach ($tags as $tag) {
-                if (!$this->em->getRepository(GalleryToTag::class)->findOneBy(['id_gallery' => $id, 'id_tag' => $tag])) {
-                    $galleryToTag = new GalleryToTag($gallery->getId(), $tag);
-                    $this->em->persist($galleryToTag);
+        foreach($tags as $tag){
+            if(!in_array($tag, $tagsGalleryList)){
+                $tagExist = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tag]);
+                if($tagExist === null){
+                    $tag = new Tag($tag);
+                    $this->em->persist($tag);
                     $this->em->flush();
-                    $this->logger->info("Tag ajouté à la galerie $id");
+                    $this->logger->info("Tag". $tag->getTag() ."ajouté");
+
+                    $newTag = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tag->getTag()]);
+                    $galleryToTag = new GalleryToTag($gallery->getId(), $newTag->getId());
+
+
+                    $this->em->persist($galleryToTag);
+                    $this->logger->info("Lien ". $tag->getTag() ."ajouté");
+
+                }else{
+                    $galleryToTag = new GalleryToTag($gallery->getId(), $tagExist->getId());
+                    $this->em->persist($galleryToTag);
+                    $this->logger->info("Lien ". $tagExist->getTag() ."ajouté");
                 }
             }
         }
+
+
         // récupère les utilisateurs de la galerie
         $usersGallery = $this->em->getRepository(UserAccess::class)->findBy(['id_gallery' => $id]);
         // supprime les utilisateurs de la galerie qui ne sont pas dans la liste des utilisateurs
-        if(!empty($usersGallery)){
-            if (!is_array($users)) {
-                if ($usersGallery[0]->getIdUser() != $users) {
-                    $userGallery = $this->em->getRepository(UserAccess::class)->findOneBy(['id_gallery' => $id, 'id_user' => $usersGallery[0]->getIdUser()]);
-                    $this->em->remove($userGallery);
-                    $this->em->flush();
-                    $this->logger->info("Utilisateur supprimé de la galerie $id");
-                }
-            } else {
-                foreach ($usersGallery as $user) {
-                    if (!in_array($user->getIdUser(), $users)) {
-                        $userGallery = $this->em->getRepository(UserAccess::class)->findOneBy(['id_gallery' => $id, 'id_user' => $user->getIdUser()]);
-                        $this->em->remove($userGallery);
-                        $this->em->flush();
-                        $this->logger->info("Utilisateur supprimé de la galerie $id");
-                    }
-                }
+        $userList = [];
+        foreach($usersGallery as $user){
+            $user = $this->em->getRepository(User::class)->find($user->getIdUser());
+            array_push($userList, $user->getUsername());
+        }
+        foreach($userList as $user){
+            if(!in_array($user, $users)){
+                $userToDelete = $this->em->getRepository(User::class)->findOneBy(['username' => $user]);
+                $linkToDelete = $this->em->getRepository(UserAccess::class)->findOneBy(['id_gallery' => $id, 'id_user' => $userToDelete->getId()]);
+                $this->em->remove($linkToDelete);
+                $this->logger->info("Utilisateur". $user ."supprimé");
             }
-        }   
+        }
         // ajoute les utilisateurs qui ne sont pas dans la liste des utilisateurs de la galerie
-        if(!is_array($users)){
-            if(!$this->em->getRepository(UserAccess::class)->findOneBy(['id_gallery' => $id, 'id_user' => $users])){
-                $userAccess = new UserAccess($id, $users);
-                $this->em->persist($userAccess);
-                $this->em->flush();
-                $this->logger->info("Utilisateur ajouté à la galerie $id");
-            }
-        }else{
-            foreach ($users as $user) {
-                if (!$this->em->getRepository(UserAccess::class)->findOneBy(['id_gallery' => $id, 'id_user' => $user])) {
-                    $userFind = $this->em->getRepository(User::class)->find($user);
-                    if ($userFind) {
-                        $userAccess = new UserAccess($user->getId(), $gallery->getId());
-                        $this->em->persist($userAccess);
-                        $this->em->flush();
-                        $this->logger->info("Utilisateur ajouté à la galerie $id");
-                    }
+        foreach($users as $user){
+            if(!in_array($user, $usersGallery)){
+                $userToAdd = $this->em->getRepository(User::class)->findOneBy(['username' => $user]);
+                if($userToAdd !== null){
+                    $userAccess = new UserAccess($userToAdd->getId(),$gallery->getId());
+                    $this->em->persist($userAccess);
+                    $this->logger->info("Utilisateur ". $userToAdd->getUsername() ."ajouté");
                 }
             }
         }
+        $this->em->flush();
         return true;
     }catch(\Exception $e){
         $this->logger->error("Erreur lors de la modification de la galerie $id : " . $e->getMessage());

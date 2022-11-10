@@ -1,6 +1,15 @@
 let privateMod = document.getElementById("private");
 let publicMod = document.getElementById("public");
 
+
+restoreUsers(tabUsersFromedit);
+
+if(privateMod.checked){
+    document
+    .getElementsByClassName("statutDiv_userInput")[0]
+    .classList.remove("hidden");
+}
+
 privateMod.addEventListener("click", function () {
   document
     .getElementsByClassName("statutDiv_userInput")[0]
@@ -23,7 +32,7 @@ if (
 
   if (tabUserFromEdit.length > 0) {
     for (let i = 0; i < tabUserFromEdit.length; i++) {
-      tab.push(tabUserFromEdit[i].dataset.tag);
+      tabUsers.push(tabUserFromEdit[i].dataset.tag);
     }
     document.getElementsByClassName("usersArray")[0].value =
       JSON.stringify(tabUsers);
@@ -56,3 +65,18 @@ document
       );
     }
   });
+
+
+  function restoreUsers(arraytags) {
+    arraytags.forEach((user) => {
+      addElement(
+        tabUsers,
+        user,
+        "userInput_input",
+        "usersArray",
+        "usersDisplay_userItem",
+        "userItem_icon",
+        "usersDisplay"
+      );
+    });
+  }

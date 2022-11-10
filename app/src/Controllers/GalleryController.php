@@ -226,6 +226,8 @@ class GalleryController
     {
         $data = $request->getParsedBody();
 
+
+
         if(!empty($data["tags"])){
             $tags = json_decode($data["tags"]);
         }else{
@@ -238,12 +240,11 @@ class GalleryController
             $users = array();
         }
 
-        $idUser = $_SESSION["user"]->getId();
-        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], $data["statut"], $tags, $users);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{
-            return $response->withHeader('Location', '/edit/'.$args['id'])->withStatus(302);
+            return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
         }
     }
 
