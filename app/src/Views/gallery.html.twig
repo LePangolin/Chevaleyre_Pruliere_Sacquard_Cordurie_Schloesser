@@ -7,9 +7,17 @@
 
 {# Récupérer le titre de la galerie et l'afficher #}
     {% if gallery is defined %}
-        <h1>{{gallery['title']}}</h1>
+        <h1>{{gallery['name']}}</h1>
+        <p>Description : {{gallery['description']}}</p>
+        <p>Crée le : {{gallery['createdAt']}} par {{gallery['creator']}}</p>
     {% else %}
-        <h1>Pas de titre</h1>
+        <h1>Pas d'information</h1>
+    {% endif %}
+    
+    {% if tags is defined %}
+        {% for tag in tags %}
+            <p>{{tag}}</p>
+        {% endfor %}
     {% endif %}
 
     {% if is_author == true and pictures %}
