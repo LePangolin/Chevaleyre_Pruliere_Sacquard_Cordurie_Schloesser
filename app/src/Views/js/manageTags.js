@@ -1,9 +1,16 @@
 let tab = [];
 
-document
-  .querySelector(".tagInput_addButton")
-  .addEventListener("click", function (e) {
+document.getElementById("tag").addEventListener("keydown", function (e) {
+  var key = e.charCode || e.keyCode || 0;
+  if (key == 13) {
     e.preventDefault();
+    document.getElementsByClassName("addTag")[0].click();
+  }
+});
+
+document
+  .getElementsByClassName("addTag")[0]
+  .addEventListener("click", function (e) {
     let tag = document.getElementById("tag").value;
     addTag(tag);
   });

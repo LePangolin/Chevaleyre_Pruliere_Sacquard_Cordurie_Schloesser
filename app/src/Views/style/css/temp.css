@@ -194,3 +194,7 @@
 .tagItem_icon {
   margin-left: 0.25em;
 }
+
+.hidden{
+  display:none;
+}
