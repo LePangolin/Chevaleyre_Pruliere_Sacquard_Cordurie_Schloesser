@@ -49,6 +49,11 @@ final class Gallery
         return $this->name;
     }
 
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
     public function getNbPictures(): int
     {
         return $this->nb_pictures;

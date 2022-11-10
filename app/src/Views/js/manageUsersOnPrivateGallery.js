@@ -1,52 +1,58 @@
-let private = document.getElementById("private");
-let public = document.getElementById("public");
+let privateMod = document.getElementById("private");
+let publicMod = document.getElementById("public");
 
-
-private.addEventListener("click", function () {
-  document.getElementById("addUser").classList.remove("hidden");
+privateMod.addEventListener("click", function () {
+  document
+    .getElementsByClassName("statutDiv_userInput")[0]
+    .classList.remove("hidden");
 });
 
-public.addEventListener("click", function () {
-  document.getElementById("addUser").classList.add("hidden");
-  document.getElementById("users").value = "";
+publicMod.addEventListener("click", function () {
+  document
+    .getElementsByClassName("statutDiv_userInput")[0]
+    .classList.add("hidden");
+  document.getElementsByClassName("usersArray")[0].value = "";
 });
 
 let tabUsers = [];
 
+if (
+  document.body.contains(document.getElementsByClassName("tagsFromEdit")[0])
+) {
+  let tabUserFromEdit = document.getElementsByClassName("tagsFromEdit")[0];
 
-let tabUserFromEdit = document.getElementsByClassName("tagsFromEdit")
-
-if(tabUserFromEdit.length > 0){
-  for (let i = 0; i < tabUserFromEdit.length; i++) {
-    tab.push(tabUserFromEdit[i].dataset.tag);
+  if (tabUserFromEdit.length > 0) {
+    for (let i = 0; i < tabUserFromEdit.length; i++) {
+      tab.push(tabUserFromEdit[i].dataset.tag);
+    }
+    document.getElementsByClassName("usersArray")[0].value =
+      JSON.stringify(tabUsers);
   }
-  document.getElementById("users").value = JSON.stringify(tabUsers);
 }
 
-document.getElementById("user").addEventListener("keydown", function (e) {
-  var key = e.charCode || e.keyCode || 0;
-  if (key == 13) {
-    e.preventDefault();
-    document.getElementsByClassName("userAdd")[0].click();
-  }
-});
-
 document
-  .getElementsByClassName("userAdd")[0]
-  .addEventListener("click", function (e) {
-    let user = document.getElementById("user").value;
-    tabUsers.push(user);
-    document.getElementById("users").value = JSON.stringify(tabUsers);
-    let div2 = document.createElement("div");
-    div2.dataset.id = tabUsers.length - 1;
-    div2.innerHTML = user + " X";
-    document.getElementById("statutUsers").appendChild(div2);
-    div2.addEventListener("click", function (e) {
-      e.target.remove();
-      index = e.target.dataset.id;
-      tabUsers.splice(index, 1);
-      document.getElementById("users").value = JSON.stringify(tabUsers);
-    });
+  .getElementsByClassName("userInput_input")[0]
+  .addEventListener("keydown", function (e) {
+    var key = e.charCode || e.keyCode || 0;
+    if (key == 13) {
+      e.preventDefault();
+      document.getElementsByClassName("userInput_addButton")[0].click();
+    }
   });
 
-
+document
+  .getElementsByClassName("userInput_addButton")[0]
+  .addEventListener("click", function (e) {
+    let user = document.getElementsByClassName("userInput_input")[0].value;
+    if (user != "") {
+      addElement(
+        tabUsers,
+        user,
+        "userInput_input",
+        "usersArray",
+        "usersDisplay_userItem",
+        "userItem_icon",
+        "usersDisplay"
+      );
+    }
+  });

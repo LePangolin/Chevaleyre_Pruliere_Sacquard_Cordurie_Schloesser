@@ -65,6 +65,47 @@ final class GalleryService {
             return false;
         }
     }
+
+    /* Retourne jusqu'a 10 galeries (les plus recntes) dont le nom contient $name */
+    public function findGalleriesByName(string $name, array $tags = []){ 
+        $galleries = $this->em->getRepository(Gallery::class)->createQueryBuilder('q')
+            ->where('q.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%') 
+            ->orderBy('q.created_at', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        return $galleries;
+    }
+
+    /* Retourne jusqu'a 10 galeries (les plus recntes) dont le nom contient $name */
+    public function findGalleriesByNameAndTags(string $name, array $tags = []){ 
+        $tagsIDs = [];
+        foreach($tags as $tag){
+            $tag = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tag]);
+            if($tag){
+                array_push($tagsIDs, $tag->getId());
+            }
+        }
+
+        $galleries = $this->em->getRepository(Gallery::class)->createQueryBuilder('q')
+            ->where('q.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%') 
+            ->orderBy('q.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $galleries = array_filter($galleries, function($gallery) use ($tagsIDs) {
+            $galleryTags = $this->em->getRepository(GalleryToTag::class)->findBy(['id_gallery' => $gallery->getId()]);
+            $galleryTags = array_map(function($galleryTag) {
+                return $galleryTag->getIdTag();
+            }, $galleryTags);
+            return count(array_intersect($galleryTags, $tagsIDs)) > 0;
+        });
+
+        return array_slice($galleries, 0, 10);
+    }
     
     public function getGallery($id_gallery)
     {
@@ -116,13 +157,14 @@ final class GalleryService {
         try {
             $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
             $index = $galToPicture[$random-1];
-            $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
-            return $picture;
+            if($index !== null){
+                $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+                return $picture;
+            }
         } catch (\Exception $e) {
             $this->logger->error("Erreur lors de la récupération de la galerie ou des photos $id : " . $e->getMessage());
             return null;
         }
-
     }
 
     public function getCreator($id_gallery)
