@@ -166,7 +166,7 @@ class GalleryController
         {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
-            if ($gallery->getNbPictures() > 0) {
+            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() == null) {
                 $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
             } else {
                 $tabImg[$idGallery] = null;
