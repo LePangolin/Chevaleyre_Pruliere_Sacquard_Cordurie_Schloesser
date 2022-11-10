@@ -1,41 +1,43 @@
 {% include "parts/head.html.twig"%}
+
     <body>
         {% block body %} 
 
             {% include "parts/navbar.html.twig"%}
-            <form action="/createGallery" method="post">
-                <h1>Informations générales</h1>
 
-                <input type="text" id="name" name="name" placeholder="Nom de la galerie" required><br><br>
-                <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de la galerie" required></textarea>
+            <form class="creationForm" action="/createGallery" method="post">
+                <h2 class="creationForm_generalTitle">Informations générales</h2>
 
-                <h1>Mots-clés</h1>
+                <input class="creationForm_galleryName" type="text" id="name" name="name" placeholder="Nom de la galerie" required><br><br>
+                <textarea class="creationForm_gallerDescr" id="descr" name="description" rows="5" cols="33" placeholder="Description de la galerie" required></textarea>
 
-                <div id="tagsDiv">
-                    <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
-                    <button type="button" class="addTag">Ajouter</button>
+                <h2 class="creationForm_tagsTitle">Mots-clés</h2>
+
+                <div class="creationForm_tagInput">
+                    <input class="tagInput_input" type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                    <button type="button" class="tagInput_addButton"><span class="addButton_plusIcon material-symbols-outlined"> add </span></button>
                 </div>
 
-                <input type="hidden" id="tags" name="tags">
+                <input class="creationForm_hiddenArray" type="hidden" id="tags" name="tags">
 
-                <h1>Statut de la galerie</h1>
-                <div id="statutUsers">
-                    <input type="radio" id="public" name="statut" value="1" checked>
-                    <label for="public">Publique</label>
-                    <input type="radio" id="private" name="statut" value="0">
-                    <label for="private">Privée</label><br><br>
-                    <div id="addUser" class="hidden">
-                        <input type="text" id="user" name="user" placeholder="Ajouter un utilisateur">
-                        <button type="button" class="userAdd">Ajouter</button>
+                <h2 class="creationForm_statutTitle">Statut de la galerie</h2>
+                <div class="creationForm_statutDiv" id="statutUsers">
+                    <input class="statutDiv_radioPublic" type="radio" id="public" name="statut" value="1" checked>
+                    <label class="statutDiv_radioPublicLabel" for="public">Publique</label>
+                    <input class="statutDiv_radioPrivate" type="radio" id="private" name="statut" value="0">
+                    <label class="statutDiv_radioPublicLabel" for="private">Privée</label><br><br>
+                    <div class="statutDiv_userInput" id="addUser" class="hidden">
+                        <input class="userInput_input" type="text" id="user" name="user" placeholder="Ajouter un utilisateur">
+                        <button class="userInput_addButton" type="button" class="userAdd">Ajouter</button>
                     </div><br>
 
-                    <input type="hidden" id="users" name="users">
+                    <input class="statutDiv_hiddenArray" type="hidden" id="users" name="users">
                 </div>
 
-                <input type="submit" id="confirm" name="confirm" value="Confirmer">
+                <input class="creationForm_submit" type="submit" id="confirm" name="confirm" value="Confirmer">
             </form>
             <footer>
-                <script>
+                <script type="module">
                     {{source('./js/manageTags.js')}}
                     {{source('./js/manageUsersOnPrivateGallery.js')}}
                 </script>

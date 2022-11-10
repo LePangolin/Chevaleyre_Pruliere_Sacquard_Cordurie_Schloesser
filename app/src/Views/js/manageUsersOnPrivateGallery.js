@@ -1,11 +1,11 @@
-let private = document.getElementById("private");
-let public = document.getElementById("public");
+let privateMod = document.getElementById("private");
+let publicMod = document.getElementById("public");
 
-private.addEventListener("click", function () {
+privateMod.addEventListener("click", function () {
   document.getElementById("addUser").classList.remove("hidden");
 });
 
-public.addEventListener("click", function () {
+publicMod.addEventListener("click", function () {
   document.getElementById("addUser").classList.add("hidden");
   document.getElementById("users").value = "";
 });
@@ -24,16 +24,15 @@ document
   .getElementsByClassName("userAdd")[0]
   .addEventListener("click", function (e) {
     let user = document.getElementById("user").value;
-    tabUsers.push(user);
-    document.getElementById("users").value = JSON.stringify(tabUsers);
-    let div2 = document.createElement("div");
-    div2.dataset.id = tabUsers.length - 1;
-    div2.innerHTML = user + " X";
-    document.getElementById("statutUsers").appendChild(div2);
-    div2.addEventListener("click", function (e) {
-      e.target.remove();
-      index = e.target.dataset.id;
-      tabUsers.splice(index, 1);
-      document.getElementById("users").value = JSON.stringify(tabUsers);
-    });
+    if (user != "") {
+      addElement(
+        tabUsers,
+        user,
+        "user",
+        "users",
+        "userItem",
+        "userItem_icon",
+        "statutUsers"
+      );
+    }
   });

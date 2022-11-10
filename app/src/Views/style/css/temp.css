@@ -178,7 +178,8 @@
   width: 50%;
 }
 
-.tagsDisplay_tagItem {
+.tagsDisplay_tagItem,
+.userItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -187,14 +188,17 @@
   border: 1px solid black;
   border-radius: 5px;
   padding-left: 0.5rem;
-  margin: 0 0.5rem;
+  margin: 0 0.5rem 0.5rem;
   cursor: pointer;
+  max-width: fit-content;
 }
 
-.tagItem_icon {
+.tagItem_icon,
+.userItem_icon {
   margin-left: 0.25em;
+  pointer-events: none;
 }
 
-.hidden{
-  display:none;
+.hidden {
+  display: none;
 }
