@@ -100,6 +100,7 @@ class GalleryController
             'gallery' => $gallery,
             'is_author' => $is_author,
             'pictures' => $pictures,
+            'idGallery' => $args["id"]
         ]);
     }
 
