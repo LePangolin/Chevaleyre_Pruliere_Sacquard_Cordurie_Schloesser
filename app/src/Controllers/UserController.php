@@ -17,23 +17,46 @@ class UserController
         $this->twig = $twig;
     }
 
-    // public function login(Request $request, Response $response, array $args): Response
-    // {
-    //     $data = $request->getParsedBody();
 
-    //     $user = $this->userService->login($data['username'], $data['password']);
+    public function auth(Request $request, Response $response, array $args): Response
+    {
+        
+        return $this->twig->render($response, 'authentification.html.twig', [
+            'title' => 'Authentification',
+        ]);
+    }
 
-    //     if ($user === null) {
-    //         $response->getBody()->write('Invalid credentials');
-    //         return $response->withStatus(401);
-    //     }
+    public function displayProfile(Request $request, Response $response, array $args): Response{
+        if(!isset($_SESSION['user'])){
+            return $response->withHeader('Location', '/auth')->withStatus(302);
+        }
+        $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
+        return $this->twig->render($response, 'profile.html.twig', [
+            'title' => 'Profile',
+            'userGalleries' => $tabInfo['MyGalleries'],
+        ]);
+    }
 
-    //     $_SESSION['user'] = $user;
 
-    //     return $this->twig->render($response, 'index.html.twig', [
+    public function login(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
 
-    //     ]);
-    // }
+        $user = $this->userService->login($data['username'], $data['password']);
+
+        if ($user === null) {
+
+            return $this->twig->render($response, 'authentification.html.twig', [
+                'title' => 'Auth',
+                'error' => 'Wrong username or password',
+            ]);
+
+        }
+
+        $_SESSION['user'] = $user;
+
+        return $response->withHeader('Location', '/profile')->withStatus(302);
+    }
 
     public function signUp(Request $request, Response $response, array $args): Response
     {
@@ -57,5 +80,11 @@ class UserController
         $response->getBody()->write(json_encode($resp));
 
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function logout(Request $request, Response $response, array $args): Response
+    {
+        unset($_SESSION['user']);
+        return $response->withHeader('Location', '/')->withStatus(302);
     }
 }

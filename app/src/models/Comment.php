@@ -49,4 +49,4 @@ final class Comment
     {
         return $this->sent_at;
     }
-}
+} 

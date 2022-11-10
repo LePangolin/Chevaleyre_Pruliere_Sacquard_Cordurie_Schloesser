@@ -3,7 +3,7 @@
 
         <a class="header_logo" href="/">
             <h1 class="logo_title">MediaPhoto</h1>
-            <img class="logo_image" src="./img/site/logo.png" alt="Logo">
+            <img class="logo_image" src="/img/site/logo.png" alt="Logo">
         </a>
         <nav class="header_nav">
             <ul class="nav_list">
@@ -11,12 +11,15 @@
                 <li class="nav_item"><a class="nav_link" href="">Mes galeries</a></li>
             </ul>
         </nav>
-        <form class="header_search" action="">
+        <form method="POST" class="header_search" action="/search">
             <span class="search_icon material-symbols-outlined"> search </span>
-            <input class="search_input" type="text" placeholder="Rechercher">
+            <input class="search_input" type="text" placeholder="Rechercher par nom" name="searchBar">
+            <button class="search_detailButton" type="submit"> 
+                <span class="detailButton_icon material-symbols-outlined"> tune </span>
+            </button>
         </form>
         <span class="header_user">
-         {% if sessions is defined %}
+         {% if user is defined %}
             <img class="user_image" href="/profile" src="./img/site/user.png" alt="User">
         {% else %}
             <a class="user_link" href="/auth">Se connecter</a>

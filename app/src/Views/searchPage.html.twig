@@ -1,0 +1,39 @@
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+        
+        <form class="advancedSearchForm" action="/search" method="POST">
+            <input class="advancedSearchForm_nameInput" type="text" name="searchBar" placeholder="Recherche par nom" value="{{ search }}">
+            <div class="advancedSearchForm_tagInput">
+                <input class="tagInput_input" type="text" name="tag" placeholder="Ajouter un mot-clé">
+                <button type="button" class="tagInput_addButton"><span class="addButton_plusIcon material-symbols-outlined"> add </span></button>
+            </div>
+            <input class="advancedSearchForm_hiddenArray tagsArray" type="hidden" name="tags">
+            <button type="submit" class="advancedSearchForm_submit" type="submit">Search</button>
+        </form>
+        <div class="tagsDisplay">
+        </div>
+
+        {% for gallery in galleries %}
+            <div class="galleriesContainer">
+                <h1>{{ gallery.name }}</h1>
+                <p>{{ gallery.description }}</p>
+            </div>
+            <br>
+        {% endfor %}
+
+        <footer>
+            <script type="module">
+                {{ source('/js/tagsSearch.js') }}
+                {{ source('/js/manageTags.js') }}
+                restoreTags({{ tags|json_encode|raw }});
+            </script>
+        </footer>
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}

@@ -1,0 +1,20 @@
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+
+        {% include "parts/navbar.html.twig"%}
+        
+        <h1> Mes Galeries </h1>
+
+        {% for userGallery in userGalleries %}
+            
+            <a href="/gallery/{{userGallery.id}}"> {{ userGallery.name }} </a>
+
+        {% endfor %}
+
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}
