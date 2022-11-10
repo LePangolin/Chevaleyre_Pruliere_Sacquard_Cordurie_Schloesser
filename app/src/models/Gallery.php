@@ -88,4 +88,5 @@ final class Gallery
     {
         $this->public = $public;
     }
+
 }
