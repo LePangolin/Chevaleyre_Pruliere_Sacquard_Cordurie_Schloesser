@@ -29,6 +29,17 @@ final class GalleryService {
         $this->us = $us;
     }
 
+    public function getGalleryById(int $id): ?Gallery
+    {
+        try {
+            $gallery = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $id]);
+            return $gallery;
+        } catch (\Exception $e) {
+            $this->logger->error("Error while getting user by username: " . $e->getMessage());
+            return "error";
+        }
+    }
+
     public function create(string $name, string $descr, int $nb_pictures, int $public, int $idUser, array $tags, array $users){
         try{
             $gallery = new Gallery(filter_var($name), filter_var($descr), filter_var($nb_pictures), filter_var($public));

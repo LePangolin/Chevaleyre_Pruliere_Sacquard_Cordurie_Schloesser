@@ -31,7 +31,7 @@ final class ImageService
             $this->em->persist($pic);
             $this->em->flush();
 
-            $types = [".jpg", ".png", ".gif", ".JPG", ".PNG", ".GIF"];
+            $types = [".jpg", ".png", ".JPG", ".PNG"];
             if (in_array(substr($_FILES['uploadImage']['name'], -4), $types)) {
                 $extension = substr($_FILES['uploadImage']['name'], -3);
                 move_uploaded_file($_FILES['uploadImage']['tmp_name'], __DIR__ . "/../../public/img/img_{$pic->getId()}.{$extension}");
@@ -45,6 +45,10 @@ final class ImageService
             $this->em->persist($gToP);
             $this->em->flush();
             $this->logger->info("Link between image " . $name . "and gallery number " . $idGallery . " has been created");
+            $currentGal = $this->gs->getGalleryById($idGallery);
+            $currentGal->setNbPictures($currentGal->getNbPictures()+1);
+            $this->em->persist($currentGal);
+            $this->em->flush();
         } catch (\Exception $e) {
             $this->logger->error("Error while uploading image: " . $e->getMessage());
             return false;

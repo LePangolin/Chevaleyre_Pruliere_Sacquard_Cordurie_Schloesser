@@ -46,7 +46,7 @@ class GalleryController
         }
 
         $idUser = $_SESSION["user"]->getId();
-        $bool = $this->galleryService->create($data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        $bool = $this->galleryService->create($data["name"], $data["description"], 0, $data["statut"], $idUser, $tags, $users);
         if($bool){
             return $response->withHeader('Location', '/')->withStatus(302);
         }else{
