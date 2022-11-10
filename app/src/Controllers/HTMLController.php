@@ -16,8 +16,9 @@ class HTMLController
 
     public function index(Request $request, Response $response, array $args): Response
     {
+        $userSession = $_SESSION["user"] ?? null;
         return $this->twig->render($response, 'index.html.twig', [
-            
+            "user" => $userSession,
         ]);
     }
 }

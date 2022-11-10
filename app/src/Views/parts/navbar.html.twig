@@ -19,8 +19,9 @@
             </button>
         </form>
         <span class="header_user">
-         {% if user is defined %}
-            <img class="user_image" href="/profile" src="./img/site/user.png" alt="User">
+        {# if user is defined and not null #}
+        {% if user is defined and user %}
+            <a class="user_linkProfile" href="/profile"><img class="user_image" src="./img/site/user.png" alt="User"></a>
         {% else %}
             <a class="user_link" href="/auth">Se connecter</a>
             <a class="user_link" href="/auth">S'inscrire</a>
