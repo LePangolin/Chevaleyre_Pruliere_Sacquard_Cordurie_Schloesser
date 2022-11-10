@@ -1,0 +1,58 @@
+{% include "parts/head.html.twig"%}
+
+<body>
+    {% block body %} 
+                <form action="/editGallery/{{gallery.id}}" method="post">
+                <h1>Informations générales</h1>
+
+                <input type="text" id="name" name="name" placeholder="Nom de la galerie" required value={{gallery.name}}><br><br>
+                <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de la galerie" required>{{gallery.description}}</textarea>
+
+                <h1>Mots-clés</h1>
+
+                <div id="statutDiv">
+                    <input type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                    <button type="button" class="addTag">Ajouter</button>
+                    {% for tag in gallery.tags %}
+                        <div class="tagDiv">
+                            <p class="tagsFromEdit" data-tag={{tag}} >{{tag}} X</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <input type="hidden" id="tags" name="tags">
+
+                <h1>Statut de la galerie</h1>
+                <div id="statutUsers">
+
+                    <input type="radio" id="public" name="statut" value="1" {% if public == 1 %} checked {% endif %}>
+                    <label for="public">Publique</label>
+                    <input type="radio" id="private" name="statut" value="0" {% if public == 0 %} checked {% endif %}>
+                    <label for="private">Privée</label><br><br>
+                    <div id="addUser" {% if public == 1 %} class="hidden" {% endif %}>
+                        <input type="text" id="user" name="user" placeholder="Ajouter un utilisateur">
+                        <button type="button" class="userAdd">Ajouter</button>
+                        {% for user in gallery.users %}
+                            <div class="userDiv">
+                                <p class="userFromEdit" data-user={{user}} >{{user}} X</p>
+                            </div>
+                        {% endfor %}
+                    </div><br>
+
+                    <input type="hidden" id="users" name="users">
+                </div>
+
+                <input type="submit" id="confirm" name="confirm" value="Confirmer">
+            </form>
+            <footer>
+                <script>
+                    {{source('./js/manageTags.js')}}
+                    {{source('./js/manageUsersOnPrivateGallery.js')}}
+                </script>
+            </footer>
+        
+
+    {% endblock %}
+</body>
+
+{% include "parts/footer.html.twig"%}
