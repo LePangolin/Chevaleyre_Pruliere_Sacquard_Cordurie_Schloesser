@@ -118,13 +118,14 @@ final class GalleryService {
         try {
             $galToPicture = $this->em->getRepository(GalleryToPicture::class)->findBy(['id_gallery' => $id]);
             $index = $galToPicture[$random-1];
-            $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
-            return $picture;
+            if($index !== null){
+                $picture = $this->em->getRepository(Picture::class)->find(['id' => $index->getIdPicture()]);
+                return $picture;
+            }
         } catch (\Exception $e) {
             $this->logger->error("Erreur lors de la récupération de la galerie ou des photos $id : " . $e->getMessage());
             return null;
         }
-
     }
 
     public function getCreator($id_gallery)

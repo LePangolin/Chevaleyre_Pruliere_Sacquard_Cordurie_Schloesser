@@ -156,9 +156,7 @@ class GalleryController
             ]);
         }
 
-        return $this->twig->render($response, 'index.html.twig', [
-
-        ]);
+        return $this->twig->render($response, 'index.html.twig', []);
 
     }
 
