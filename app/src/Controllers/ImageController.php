@@ -30,5 +30,19 @@ class ImageController
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
     }
+    
+    public function uploadImage(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+        //$idGallery = $args['id'];
+
+        if(!empty($_FILES['uploadImage']['name']))
+        {
+            $this->uploadImage($data['title'], $data['description']);
+        }
+
+        //return $response->withHeader('Location', "/gallery/.{$idGallery}")->withStatus(302);
+        return $response->withHeader('Location', "/")->withStatus(302);
+    }
 
 }

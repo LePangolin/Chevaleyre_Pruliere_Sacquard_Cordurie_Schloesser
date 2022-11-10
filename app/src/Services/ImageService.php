@@ -24,4 +24,25 @@ final class ImageService
         $this->gs = $gs;
     }
 
+    public function uploadImage($name, $descr)
+    {
+        try {
+            $pic = new Picture(filter_var($name), filter_var($descr));
+            $this->em->persist($pic);
+            $this->em->flush();
+
+            $types = [".jpg", ".png", ".gif", ".JPG", ".PNG", ".GIF"];
+            if (in_array(substr($_FILES['uploadImage']['name'], -4), $types)) {
+                $extension = substr($_FILES['uploadImage']['name'], -3);
+                move_uploaded_file($_FILES['uploadImage']['tmp_name'], "../../public/img/img_{$pic->getId()}.{$extension}");
+                $pic->setLink("img/img_{$pic->getId()}.{$extension}");
+                $this->em->persist($pic);
+                $this->em->flush();
+            }
+        } catch (\Exception $e) {
+            $this->logger->error("Error while uploading image: " . $e->getMessage());
+            return false;
+        }
+    }
+
 }

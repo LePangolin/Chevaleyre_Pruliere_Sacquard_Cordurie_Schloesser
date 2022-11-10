@@ -23,8 +23,10 @@ final class Picture
     #[Column(type: 'string', nullable: true)]
     private string $link;
 
-    public function __construct() {
-
+    public function __construct($name, $descr)
+    {
+        $this->name = $name;
+        $this->descr = $descr;
     }
 
     public function getId(): int 
@@ -45,5 +47,10 @@ final class Picture
     public function getLink() : string
     {
         return $this->link;
+    }
+
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
     }
 }
