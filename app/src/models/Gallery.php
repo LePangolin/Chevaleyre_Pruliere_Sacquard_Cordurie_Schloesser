@@ -69,8 +69,4 @@ final class Gallery
         return $this->created_at;
     }
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
 }

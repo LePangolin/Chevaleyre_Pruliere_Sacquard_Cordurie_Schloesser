@@ -110,8 +110,10 @@
 }
 
 .advancedSearchForm_nameInput,
-.advancedSearchForm_tagInput {
+.advancedSearchForm_tagInput,
+.creationForm_tagInput {
   width: 40%;
+  max-width: 25em;
   height: 1.5rem;
   border: 1px solid black;
   border-radius: 5px;
@@ -121,13 +123,15 @@
   padding: 0 0.5rem;
 }
 
-.advancedSearchForm_tagInput {
+.advancedSearchForm_tagInput,
+.creationForm_tagInput {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.advancedSearchForm_tagInput:focus-within {
+.advancedSearchForm_tagInput:focus-within,
+.creationForm_tagInput:focus-within {
   outline: 1.5px solid black;
 }
 
@@ -168,7 +172,8 @@
   cursor: pointer;
 }
 
-.tagsDisplay {
+.tagsDisplay,
+.usersDisplay {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -179,7 +184,7 @@
 }
 
 .tagsDisplay_tagItem,
-.userItem {
+.usersDisplay_userItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

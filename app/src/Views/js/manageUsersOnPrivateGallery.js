@@ -2,46 +2,57 @@ let privateMod = document.getElementById("private");
 let publicMod = document.getElementById("public");
 
 privateMod.addEventListener("click", function () {
-  document.getElementById("addUser").classList.remove("hidden");
+  document
+    .getElementsByClassName("statutDiv_userInput")[0]
+    .classList.remove("hidden");
 });
 
 publicMod.addEventListener("click", function () {
-  document.getElementById("addUser").classList.add("hidden");
-  document.getElementById("users").value = "";
+  document
+    .getElementsByClassName("statutDiv_userInput")[0]
+    .classList.add("hidden");
+  document.getElementsByClassName("usersArray")[0].value = "";
 });
 
 let tabUsers = [];
 
-let tabUserFromEdit = document.getElementsByClassName("tagsFromEdit");
+if (
+  document.body.contains(document.getElementsByClassName("tagsFromEdit")[0])
+) {
+  let tabUserFromEdit = document.getElementsByClassName("tagsFromEdit")[0];
 
-if (tabUserFromEdit.length > 0) {
-  for (let i = 0; i < tabUserFromEdit.length; i++) {
-    tab.push(tabUserFromEdit[i].dataset.tag);
+  if (tabUserFromEdit.length > 0) {
+    for (let i = 0; i < tabUserFromEdit.length; i++) {
+      tab.push(tabUserFromEdit[i].dataset.tag);
+    }
+    document.getElementsByClassName("usersArray")[0].value =
+      JSON.stringify(tabUsers);
   }
-  document.getElementById("users").value = JSON.stringify(tabUsers);
 }
 
-document.getElementById("user").addEventListener("keydown", function (e) {
-  var key = e.charCode || e.keyCode || 0;
-  if (key == 13) {
-    e.preventDefault();
-    document.getElementsByClassName("userAdd")[0].click();
-  }
-});
+document
+  .getElementsByClassName("userInput_input")[0]
+  .addEventListener("keydown", function (e) {
+    var key = e.charCode || e.keyCode || 0;
+    if (key == 13) {
+      e.preventDefault();
+      document.getElementsByClassName("userInput_addButton")[0].click();
+    }
+  });
 
 document
-  .getElementsByClassName("userAdd")[0]
+  .getElementsByClassName("userInput_addButton")[0]
   .addEventListener("click", function (e) {
-    let user = document.getElementById("user").value;
+    let user = document.getElementsByClassName("userInput_input")[0].value;
     if (user != "") {
       addElement(
         tabUsers,
         user,
-        "user",
-        "users",
-        "userItem",
+        "userInput_input",
+        "usersArray",
+        "usersDisplay_userItem",
         "userItem_icon",
-        "statutUsers"
+        "usersDisplay"
       );
     }
   });

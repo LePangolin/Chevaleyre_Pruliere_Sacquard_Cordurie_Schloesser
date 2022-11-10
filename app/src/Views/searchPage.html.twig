@@ -8,13 +8,13 @@
         <form class="advancedSearchForm" action="/search" method="POST">
             <input class="advancedSearchForm_nameInput" type="text" name="searchBar" placeholder="Recherche par nom" value="{{ search }}">
             <div class="advancedSearchForm_tagInput">
-                <input class="tagInput_input" type="text" id="tag" name="tag" placeholder="Ajouter un mot-clé">
+                <input class="tagInput_input" type="text" name="tag" placeholder="Ajouter un mot-clé">
                 <button type="button" class="tagInput_addButton"><span class="addButton_plusIcon material-symbols-outlined"> add </span></button>
             </div>
-            <input class="advancedSearchForm_hiddenArray" type="hidden" id="tags" name="tags">
-            <button type="button" class="advancedSearchForm_submit" type="submit">Search</button>
+            <input class="advancedSearchForm_hiddenArray tagsArray" type="hidden" name="tags">
+            <button type="submit" class="advancedSearchForm_submit" type="submit">Search</button>
         </form>
-        <div class="tagsDisplay" id="tagsDiv">
+        <div class="tagsDisplay">
         </div>
 
         {% for gallery in galleries %}
