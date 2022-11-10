@@ -1,10 +1,12 @@
 let tab = [];
 
-document.querySelector(".addTag").addEventListener("click", function (e) {
-  e.preventDefault();
-  let tag = document.getElementById("tag").value;
-  addTag(tag);
-});
+document
+  .querySelector(".tagInput_addButton")
+  .addEventListener("click", function (e) {
+    e.preventDefault();
+    let tag = document.getElementById("tag").value;
+    addTag(tag);
+  });
 
 function addTag(tag) {
   if (tag != "") {
@@ -12,8 +14,13 @@ function addTag(tag) {
     tab.push(tag);
     document.getElementById("tags").value = JSON.stringify(tab);
     let div = document.createElement("div");
+    div.classList.add("tagsDisplay_tagItem");
     div.dataset.id = tab.length - 1;
-    div.innerHTML = tag + " X";
+    div.innerHTML = tag;
+    let iconSpan = document.createElement("span");
+    iconSpan.classList.add("tagItem_icon", "material-symbols-outlined");
+    iconSpan.innerHTML = " close ";
+    div.appendChild(iconSpan);
     document.getElementById("tagsDiv").appendChild(div);
     div.addEventListener("click", function (e) {
       let index = e.target.dataset.id;

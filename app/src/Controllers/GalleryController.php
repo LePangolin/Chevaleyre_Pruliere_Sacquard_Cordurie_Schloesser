@@ -89,8 +89,6 @@ class GalleryController
             $galleriesObjects = $this->galleryService->findGalleriesByNameAndTags($nameSearch, $tags);
         }
 
-        var_dump($galleriesObjects);
-
         $galleriesArray = [];
         foreach ($galleriesObjects as $gallery) {
             $galleriesArray[] =  [

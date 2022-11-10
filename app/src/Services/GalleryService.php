@@ -69,8 +69,6 @@ final class GalleryService {
                 array_push($tagsIDs, $tag->getId());
             }
         }
-        var_dump($tags);
-        var_dump($tagsIDs);
 
         $galleries = $this->em->getRepository(Gallery::class)->createQueryBuilder('q')
             ->where('q.name LIKE :name')
