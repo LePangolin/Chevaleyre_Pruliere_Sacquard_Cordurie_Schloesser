@@ -61,11 +61,11 @@ class GalleryController
         if (is_null($a)) {
             return $response->withHeader('Location', '/')->withStatus(302);
         }
-        $gallery = [
-            'id' => $args['id'],
-            'title' => $a->getName(),
-        ];
-
+        $gallery = $this->galleryService->getGalleryInfo($args['id']);
+        $tags = [];
+        foreach ($gallery['tags'] as $tag) {
+            array_push($tags, $tag->getName());
+        }
         if (!$a->getPublic()) {
             if (!isset($_SESSION['user'])) {
                 return $response->withHeader('Location', '/')->withStatus(302);
@@ -103,7 +103,7 @@ class GalleryController
             'gallery' => $gallery,
             'is_author' => $is_author,
             'pictures' => $pictures,
-            'idGallery' => $args["id"]
+            'tags' => $tags,
         ]);
     }
 

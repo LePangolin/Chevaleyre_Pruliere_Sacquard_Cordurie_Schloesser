@@ -325,6 +325,7 @@ final class GalleryService {
             "nb_pictures" => $gallery->getNbPictures(),
             "public" => $gallery->getPublic(),
             "creator" => $user->getUsername(),
+            "createdAt" => $gallery->getCreatedAt()->format('D/M/Y'),
             "tags" => $tagsList,
             "users" => $usersList
         );
