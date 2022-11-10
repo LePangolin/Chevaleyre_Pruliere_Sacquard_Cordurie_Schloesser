@@ -58,6 +58,7 @@
   border: 1px solid black;
   border-radius: 5px;
   background-color: white;
+  align-items: center;
 }
 
 .search_icon {
@@ -66,8 +67,19 @@
 
 .search_input {
   width: 100%;
+  height: 1.5rem;
   border: none;
   background-color: transparent;
+  padding-left: 0.5rem;
+}
+
+.search_detailButton {
+  background-color: transparent;
+  padding: 0 0.5rem;
+}
+
+.search_detailButton:hover {
+  background-color: lightgray;
 }
 
 .header_user {
@@ -126,4 +138,110 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Page de recherche */
+
+.advancedSearchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  width: 40%;
+  gap: 1rem;
+}
+
+.advancedSearchForm_nameInput,
+.advancedSearchForm_tagInput,
+.creationForm_tagInput {
+  width: 40%;
+  max-width: 25em;
+  height: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.advancedSearchForm_nameInput {
+  padding: 0 0.5rem;
+}
+
+.advancedSearchForm_tagInput,
+.creationForm_tagInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.advancedSearchForm_tagInput:focus-within,
+.creationForm_tagInput:focus-within {
+  outline: 1.5px solid black;
+}
+
+.tagInput_input:focus {
+  outline: none;
+}
+
+.tagInput_input {
+  display: flex;
+  flex-direction: row;
+  height: 1.5rem;
+  border: none;
+  background-color: transparent;
+  padding-left: 0.5rem;
+  width: auto;
+  border: none;
+}
+
+.tagInput_addButton {
+  display: flex;
+  flex-direction: row;
+  background-color: gainsboro;
+  padding: 0 0.5rem;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.advancedSearchForm_submit {
+  width: 20%;
+  height: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: gainsboro;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.tagsDisplay,
+.usersDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+  width: 50%;
+}
+
+.tagsDisplay_tagItem,
+.usersDisplay_userItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightskyblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 0.5rem;
+  margin: 0 0.5rem 0.5rem;
+  cursor: pointer;
+  max-width: fit-content;
+}
+
+.tagItem_icon,
+.userItem_icon {
+  margin-left: 0.25em;
+  pointer-events: none;
 }

@@ -104,6 +104,46 @@ class GalleryController
         ]);
     }
 
+    public function searchGalleries(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        $tags = [];
+        if (!empty($data["tags"])) {
+            $tags = json_decode($data["tags"]);
+        }
+
+        $nameSearch = "";
+        if (!empty($data["searchBar"])) {
+            $nameSearch = $data["searchBar"];
+        }
+
+        $galleriesObjects = [];
+        if (empty($tags)) {
+            $galleriesObjects = $this->galleryService->findGalleriesByName($nameSearch);
+        } else {
+            $galleriesObjects = $this->galleryService->findGalleriesByNameAndTags($nameSearch, $tags);
+        }
+
+        $galleriesArray = [];
+        foreach ($galleriesObjects as $gallery) {
+            $galleriesArray[] =  [
+                'id' => $gallery->getId(),
+                'name' => $gallery->getName(),
+                'description' => $gallery->getDescription(),
+                'nb_pictures' => $gallery->getNbPictures(),
+                'public' => $gallery->getPublic()
+            ];
+        }
+       
+        return $this->twig->render($response, 'searchPage.html.twig', [
+            'title' => 'Recherche',
+            'search' => $nameSearch,
+            'galleries' => $galleriesArray,
+            'tags' => $tags
+        ]);
+    }
+
     public function displayPublicGalleries(Request $request, Response $response, array $args): Response
     {
         if(isset($request->getQueryParams()['offsetPublic']))
@@ -157,10 +197,54 @@ class GalleryController
             ]);
         }
 
-        return $this->twig->render($response, 'index.html.twig', [
+        return $this->twig->render($response, 'index.html.twig', []);
 
-        ]);
+    }
 
+    public function diaplayEditGallery(Request $request, Response $response, array $args): Response
+    {
+        if(isset($_SESSION['user']))
+        {
+            $gallery = $this->galleryService->getGalleryInfo($args['id']);
+
+            if(!empty($gallery))
+            {
+                return $this->twig->render($response, 'editGallery.html.twig', [
+                    'title' => 'Edition de la galerie',
+                    'gallery' => $gallery,
+                    'user' => $_SESSION['user']
+                ]);
+            }else{
+                return $response->withHeader('Location', '/')->withStatus(302);
+            }
+        }
+
+        return $response->withHeader('Location', '/auth')->withStatus(302);
+    }
+
+    public function editGallery(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        if(!empty($data["tags"])){
+            $tags = json_decode($data["tags"]);
+        }else{
+            $tags = array();
+        }
+
+        if(!empty($data["users"]) && $data["statut"] == 0){
+            $users = json_decode($data["users"]);
+        }else{
+            $users = array();
+        }
+
+        $idUser = $_SESSION["user"]->getId();
+        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], 2, $data["statut"], $idUser, $tags, $users);
+        if($bool){
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }else{
+            return $response->withHeader('Location', '/edit/'.$args['id'])->withStatus(302);
+        }
     }
 
 }

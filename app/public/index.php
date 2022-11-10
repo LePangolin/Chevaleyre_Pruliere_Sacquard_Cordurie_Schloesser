@@ -24,6 +24,10 @@ $app->post('/createGallery', App\Controllers\GalleryController::class . ':create
 
 $app->post('/logIn', App\Controllers\UserController::class . ':login')->setName('signIn');
 
+$app->get('/search[/]', App\Controllers\GalleryController::class . ':searchGalleries')->setName('search');
+
+$app->post('/search[/]', App\Controllers\GalleryController::class . ':searchGalleries')->setName('search');
+
 $app->get('/auth', App\Controllers\UserController::class . ':auth')->setName('auth');
 
 $app->get('/gallery/{id}', \App\Controllers\GalleryController::class . ':displayGallery')->setName('displayGallery');
@@ -32,9 +36,11 @@ $app->get('/profile', \App\Controllers\UserController::class . ':displayProfile'
 
 $app->get('/logout', \App\Controllers\UserController::class . ':logout')->setName('logout');
 
-$app->get('/addImage', \App\Controllers\ImageController::class . ':create')->setName('create');
-
 $app->post('/gallery/{id}', \App\Controllers\ImageController::class . ':uploadImage')->setName('uploadImage');
+
+$app->get('/editGallery/{id}', \App\Controllers\GalleryController::class . ':diaplayEditGallery')->setName('editGallery');
+
+$app->post('/editGallery/{id}', \App\Controllers\GalleryController::class . ':editGallery')->setName('editGallery');
 
 $app->run();
 
