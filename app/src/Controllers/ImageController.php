@@ -34,15 +34,14 @@ class ImageController
     public function uploadImage(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-        //$idGallery = $args['id'];
+        $idGallery = $args['id'];
 
         if(!empty($_FILES['uploadImage']['name']))
         {
-            $this->imageService->uploadImage($data['title'], $data['description']);
+            $this->imageService->uploadImage($data['title'], $data['description'], $idGallery);
         }
 
-        //return $response->withHeader('Location', "/gallery/.{$idGallery}")->withStatus(302);
-        return $response->withHeader('Location', "/")->withStatus(302);
+        return $response->withHeader('Location', "/gallery/{$idGallery}")->withStatus(302);
     }
 
 }

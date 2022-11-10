@@ -34,6 +34,7 @@ $app->get('/logout', \App\Controllers\UserController::class . ':logout')->setNam
 
 $app->get('/addImage', \App\Controllers\ImageController::class . ':create')->setName('create');
 
+$app->post('/gallery/{id}', \App\Controllers\ImageController::class . ':uploadImage')->setName('uploadImage');
 
 $app->run();
 
