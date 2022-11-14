@@ -10,6 +10,7 @@
   display: inline-block;
   width: 100%;
   border-radius: 15px;
+  cursor: pointer;
 }
 .grid-container div img {
   width: 100%;
@@ -313,6 +314,11 @@
   /* min-width is width of largest child element */
   width: min-content;
   max-width: 80%;
+}
+
+.modal-content-img {
+  width: 700px;
+  height: auto;
 }
 
 /* The Close Button */

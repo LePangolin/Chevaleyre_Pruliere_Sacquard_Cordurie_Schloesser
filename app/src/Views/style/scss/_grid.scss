@@ -31,6 +31,7 @@ $one-column-width: calc((100% - ($nb-columns + 1) * $gutter) / $nb-columns) !def
     display: inline-block;
     width: 100%;
     border-radius: 15px;
+    cursor: pointer;
     img {
       width: 100%;
       border-radius: 5px;

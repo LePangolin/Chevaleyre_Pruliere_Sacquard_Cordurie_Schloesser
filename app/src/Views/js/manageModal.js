@@ -28,6 +28,7 @@ pictures.forEach((picture) => {
     const img = document.createElement("img");
     img.src = picture.dataset.link;
     img.alt = picture.dataset.descr;
+    img.classList.add("modal-content-img");
     const title = document.createElement("h1");
     title.innerHTML = picture.dataset.title;
     const desc = document.createElement("p");
