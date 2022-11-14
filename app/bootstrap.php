@@ -76,7 +76,7 @@ $container->set(GalleryService::class, static function (Container $c): GallerySe
 });
 
 $container->set(GalleryController::class, static function (Container $c): GalleryController {
-    return new GalleryController($c->get(GalleryService::class), $c->get("view"));
+    return new GalleryController($c->get(GalleryService::class), $c->get(ImageService::class), $c->get("view"));
 });
 
 $container->set(HTMLController::class, static function (Container $c): HTMLController {

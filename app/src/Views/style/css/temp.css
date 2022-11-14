@@ -103,7 +103,7 @@
 }
 
 /* The Modal (background) */
-.addImage {
+.addImage, .picture_info {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */

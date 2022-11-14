@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\GalleryService;
+use App\Services\ImageService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -12,9 +13,11 @@ class GalleryController
 
     private Twig $twig;
     private GalleryService $galleryService;
+    private ImageService $imageService;
 
-    public function __construct(GalleryService $galleryService, Twig $twig) {
+    public function __construct(GalleryService $galleryService, ImageService $imageService, Twig $twig) {
         $this->galleryService = $galleryService;
+        $this->imageService = $imageService;
         $this->twig = $twig;
     }
 
@@ -88,11 +91,10 @@ class GalleryController
         $pictures = []; 
         foreach($b as $picture)
         {
-            array_push($pictures, ['link' => $picture->getLink(), 'descr' => $picture->getDescr()]);
+            array_push($pictures, $this->imageService->getPictureInfo($picture->getId()));
         }
-
         $userSession = $_SESSION["user"] ?? null;
-
+        
         return $this->twig->render($response, 'gallery.html.twig', [
             'title' => 'Gallery',
             "user" => $userSession,
