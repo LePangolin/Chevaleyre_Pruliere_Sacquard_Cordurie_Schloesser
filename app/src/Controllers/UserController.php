@@ -33,9 +33,11 @@ class UserController
         }
         $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
         return $this->twig->render($response, 'profile.html.twig', [
-            'title' => 'Profile',
+            'title' => 'Profil',
             "user" => $_SESSION["user"],
             'userGalleries' => $tabInfo['MyGalleries'],
+            "username" => $_SESSION["user"]->getUsername(),
+            "joinedAt" => $_SESSION["user"]->getCreatedAt()
         ]);
     }
 
@@ -50,7 +52,6 @@ class UserController
 
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                "user" => $userSession,
                 'error' => 'Wrong username or password',
             ]);
 
@@ -60,7 +61,7 @@ class UserController
 
         $id = $_SESSION['user']->getId();
 
-        return $response = $response->withHeader('Location', '/profile/'.$id)->withStatus(302);
+        return $response = $response->withHeader('Location', '/profile')->withStatus(302);
     }
 
     public function signUp(Request $request, Response $response, array $args): Response
@@ -72,11 +73,13 @@ class UserController
         if ($user === false) {
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                'error' => 'Username already taken',
+                'error' => "Nom d'utilisateur déjà utilisé",
             ]);
         }else{
+
+            $_SESSION['user'] = $user;
             
-            $response = $response->withHeader('Location', '/profile/'. $user->getId())->withStatus(302);
+            $response = $response->withHeader('Location', '/profile')->withStatus(302);
 
             return $response;
         }

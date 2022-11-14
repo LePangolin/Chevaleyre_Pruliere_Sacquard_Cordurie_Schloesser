@@ -1,5 +1,5 @@
 $nb-columns: 12 !default;
-$gutter: 1% !default;
+$gutter: 2% !default;
 $one-column-width: calc((100% - ($nb-columns + 1) * $gutter) / $nb-columns) !default;
 
 @mixin row() {

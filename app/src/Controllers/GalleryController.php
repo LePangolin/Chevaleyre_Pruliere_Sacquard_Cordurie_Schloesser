@@ -163,7 +163,7 @@ class GalleryController
         {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
-            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() == null) {
+            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() !== null) {
                 $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
             } else {
                 $tabImg[$idGallery] = null;
@@ -194,10 +194,15 @@ class GalleryController
             $galleries = $this->galleryService->listPrivateGalleries($idUser, $offsetPrivate);
             $tabImg = array();
 
-            foreach ($galleries as $gallery) {
+            foreach ($galleries as $gallery)
+            {
                 $random = rand(1, $gallery->getNbPictures());
                 $idGallery = $gallery->getId();
-                $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+                if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() !== null) {
+                    $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+                } else {
+                    $tabImg[$idGallery] = null;
+                }
             }
             
             $userSession = $_SESSION["user"] ?? null;
@@ -209,7 +214,7 @@ class GalleryController
             ]);
         }
 
-        return $this->twig->render($response, 'index.html.twig', [ 'user' => $userSession ]);
+        return $this->twig->render($response, 'index.html.twig', [ 'user' => $_SESSION["user"] ]);
 
     }
 
@@ -221,13 +226,28 @@ class GalleryController
 
             if(!empty($gallery))
             {
-                return $this->twig->render($response, 'editGallery.html.twig', [
-                    'title' => 'Edition de la galerie',
-                    'gallery' => $gallery,
-                    'user' => $_SESSION['user']
-                ]);
+                // On vérifie si l'id de la session correspond à celui du créateur de la galerie
+
+                if ($this->galleryService->getCreator($args['id'])[0]->getIdUser() == $_SESSION['user']->getId()) {
+                    $is_author = true;
+                } else {
+                    $is_author = false;
+                }
+
+                if($is_author)
+                {
+                    $userSession = $_SESSION["user"] ?? null;
+
+                    return $this->twig->render($response, 'editGallery.html.twig', [
+                        'title' => 'Edit Gallery',
+                        'gallery' => $gallery,
+                        'user' => $userSession
+                    ]);
+                }else{
+                    return $response->withHeader('Location', '/')->withStatus(302);
+                }
             }else{
-                return $response->withHeader('Location', '/')->withStatus(302);
+                return $response->withHeader('Location', "/gallery/".$args['id'])->withStatus(302);
             }
         }
 
@@ -252,12 +272,10 @@ class GalleryController
             $users = array();
         }
 
-        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], $data["statut"], $tags, $users);
-        if($bool){
-            return $response->withHeader('Location', '/')->withStatus(302);
-        }else{
-            return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
-        }
+        $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], $data["statut"], $tags, $users);
+
+        return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
+
     }
 
     public function deleteGallery(Request $request, Response $response, $args): Response

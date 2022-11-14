@@ -17,8 +17,9 @@ final class Metadata
     #[Column(type: 'json', nullable: true)]
     private array $value;
 
-    public function __construct() {
-
+    public function __construct(string $value)
+    {
+        $this->value = $value;
     }
 
     public function getId(): int 

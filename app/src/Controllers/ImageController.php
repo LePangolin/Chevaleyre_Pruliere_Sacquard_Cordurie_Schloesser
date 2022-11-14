@@ -36,9 +36,21 @@ class ImageController
         $data = $request->getParsedBody();
         $idGallery = $args['id'];
 
+        if(!empty($data["tags"])){
+            $tags = json_decode($data["tags"]);
+        }else{
+            $tags = array();
+        }
+
+        if(!empty($data["metadataArray"])){
+            $metadata = $data["metadataArray"];
+        }else{
+            $metadata = "";
+        }
+
         if(!empty($_FILES['uploadImage']['name']))
         {
-            $this->imageService->uploadImage($data['title'], $data['description'], $idGallery);
+            $this->imageService->uploadImage($data['title'], $data['description'], $idGallery, $tags, $metadata);
         }
 
         return $response->withHeader('Location', "/gallery/{$idGallery}")->withStatus(302);

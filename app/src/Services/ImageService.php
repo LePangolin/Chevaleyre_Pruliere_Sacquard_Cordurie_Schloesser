@@ -26,7 +26,7 @@ final class ImageService
         $this->gs = $gs;
     }
 
-    public function uploadImage($name, $descr, $idGallery)
+    public function uploadImage($name, $descr, $idGallery, array $tags, string $metadata)
     {
         try {
             $pic = new Picture(filter_var($name), filter_var($descr));
@@ -51,6 +51,33 @@ final class ImageService
             $currentGal->setNbPictures($currentGal->getNbPictures()+1);
             $this->em->persist($currentGal);
             $this->em->flush();
+            $idsT = [];
+            foreach($tags as $tag){
+                $tagg = new Tag(filter_var($tag));
+                $this->em->persist($tagg);
+                $this->em->flush();
+                $this->logger->info("Tag " . $tagg->getTag() . " has been created");
+                array_push($idsT, $tagg->getId());
+            }
+            foreach($idsT as $id){
+                $linkTag = new PictureToTag($idPic,$id);
+                $this->em->persist($linkTag);
+                $this->em->flush();
+                $this->logger->info("Link between image $name and tag " . $tagg->getTag() . " has been created");
+            }
+            // ajout des métadonnées
+            $metadatas =  new MetaData($metadata);
+            $this->em->persist($metadatas);
+            $this->em->flush();
+            $this->logger->info("Metadata for image $name has been created");
+
+            $metaDataId = $metadatas->getId();
+
+            $pictureToMetadata = new PictureToMetadata($idPic, $metaDataId);
+            $this->em->persist($pictureToMetadata);
+            $this->em->flush();
+            $this->logger->info("Link between image $name and metadata has been created");
+
         } catch (\Exception $e) {
             $this->logger->error("Error while uploading image: " . $e->getMessage());
             return false;

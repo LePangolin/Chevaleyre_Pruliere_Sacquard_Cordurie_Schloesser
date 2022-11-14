@@ -7,7 +7,7 @@
 
         <div class="grid-auto-fit">
             {% for publicGallery in listPublicGalleries %}
-                <div class="grid-col2">
+                <div class="grid-col2 vignette">
                     {{ publicGallery.name }}
                     <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
                 </div>
