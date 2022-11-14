@@ -33,7 +33,7 @@ class UserController
         }
         $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
         return $this->twig->render($response, 'profile.html.twig', [
-            'title' => 'Profile',
+            'title' => 'Profil',
             "user" => $_SESSION["user"],
             'userGalleries' => $tabInfo['MyGalleries'],
             "username" => $_SESSION["user"]->getUsername(),
