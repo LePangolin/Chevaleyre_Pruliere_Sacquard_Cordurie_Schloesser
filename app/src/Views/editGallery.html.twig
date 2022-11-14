@@ -24,9 +24,9 @@
 
                 <h2 class="creationForm_statutTitle">Statut de la galerie</h2>
                 <div class="creationForm_statutDiv">
-                    <input class="statutDiv_radioPublic" type="radio" id="public" name="statut" value="1" {% if public == 1 %} checked {% endif %}>
+                    <input class="statutDiv_radioPublic" type="radio" id="public" name="statut" value="1" {% if gallery['public'] == 1 %} checked {% endif %}>
                     <label class="statutDiv_radioPublicLabel" for="public">Publique</label>
-                    <input class="statutDiv_radioPrivate" type="radio" id="private" name="statut" value="0" {% if public == 0 %} checked {% endif %}>
+                    <input class="statutDiv_radioPrivate" type="radio" id="private" name="statut" value="0" {% if gallery['public'] == 0 %} checked {% endif %}>
                     <label class="statutDiv_radioPublicLabel" for="private">Privée</label><br><br>
                     <div class="statutDiv_userInput hidden">
                         <input class="userInput_input" type="text" name="user" placeholder="Ajouter un utilisateur">
@@ -42,13 +42,10 @@
             </form>
             <footer>
                 <script type="module">
-
-                    let tabTagsFromedit = {{gallery.tags|json_encode|raw}};
-
-                    let tabUsersFromedit = {{gallery.users|json_encode|raw}};
-
                     {{source('./js/manageTags.js')}}
                     {{source('./js/manageUsersOnPrivateGallery.js')}}
+                    restoreTags({{ gallery.tags|json_encode|raw }});
+                    restoreUsers({{ gallery.users|json_encode|raw }});
                 </script>
             </footer>
         {% endblock %}

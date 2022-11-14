@@ -1,8 +1,5 @@
 let tabTags = [];
 
-
-restoreTags(tabTagsFromedit);
-
 if (
   document.body.contains(
     document.getElementsByClassName("advancedSearchForm_nameInput")[0]
@@ -73,7 +70,6 @@ function addElement(
     tab.splice(index, 1);
     document.getElementsByClassName(hiddenArray)[0].value = JSON.stringify(tab);
   });
-
 }
 
 function restoreTags(arraytags) {
