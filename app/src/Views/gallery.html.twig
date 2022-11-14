@@ -20,10 +20,11 @@
     {% endif %}
 
     {% if is_author == true and pictures %}
-            <input type="button" class="edit_button" onclick="self.location.href='/editGallery/{{gallery['id']}}'" value="Edit">      
-            <input type="submit" id="delete_button" value="Delete">
-            <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
-        </form>
+            <input type="button" class="edit_button" onclick="self.location.href='/editGallery/{{gallery['id']}}'" value="Edit">
+            <form action="/deleteGallery" method="post">
+                <input type="submit" id="delete_button" value="Delete">
+                <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
+            </form>
 
         <button class="add_image_button">Add Image</button>
 

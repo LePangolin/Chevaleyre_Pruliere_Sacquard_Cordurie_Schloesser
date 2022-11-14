@@ -153,13 +153,13 @@ final class GalleryService {
         $userToGalleries = $this->em->getRepository(UserToGallery::class)->findBy(['id_user' => $idUser]);
         $userGalleries = [];
         foreach($userToGalleries as $userToGallery){
-            $userGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getGalleryId()]);
+            $userGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $userToGallery->getIdGallery()]);
         }
 
         $userAccess = $this->em->getRepository(UserAccess::class)->findBy(['id_user' => $idUser]);
         $userAccessGalleries = [];
         foreach($userAccess as $access){
-            $userAccessGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $access->getGalleryId()]);
+            $userAccessGalleries[] = $this->em->getRepository(Gallery::class)->findOneBy(['id' => $access->getIdGallery()]);
         }
 
         $PrivateGalleries = array_merge($userGalleries, $userAccessGalleries);
