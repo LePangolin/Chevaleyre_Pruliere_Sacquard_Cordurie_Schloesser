@@ -20,16 +20,40 @@ $one-column-width: calc((100% - ($nb-columns + 1) * $gutter) / $nb-columns) !def
   flex-basis: $span * $one-column-width + $gutter * ($span - 1);
 }
 
-@mixin grid-auto-fit($columns, $gutter: 1rem) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,$columns));
-  grid-gap: $gutter;
-  grid-auto-flow: row dense;
-  padding: 0 2rem 0  1rem
-}
+.grid-container {
+  columns: 12 250px;
+  column-gap: 20px;
+  width: 100%;
+  margin: 0 auto;
+  div {
+    margin: 0 1.5rem 1.5rem 0;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border-radius: 15px;
+    img {
+      width: 100%;
+      border-radius: 5px;
+      filter: brightness(0.5);
+      transition: ease-in-out 0.3s;
+    }
+    &:hover img {
+      filter: brightness(1);
+      transition: ease-in-out 0.25s;
+    }
+    p {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      filter: none;
+      z-index: 1;
+      text-shadow: black 0.1em 0.1em 0.2em;
+    }
 
-.grid-auto-fit{
-  @include grid-auto-fit($one-column-width);
+  }
 }
 
 @mixin span-col($width) {
