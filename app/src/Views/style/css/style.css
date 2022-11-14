@@ -1,9 +1,36 @@
-.grid-auto-fit {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 6.1666666667%));
-  grid-gap: 1rem;
-  grid-auto-flow: row dense;
-  padding: 0 2rem 0 1rem;
+.grid-container {
+  columns: 12 250px;
+  column-gap: 20px;
+  width: 100%;
+  margin: 0 auto;
+}
+.grid-container div {
+  margin: 0 1.5rem 1.5rem 0;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-radius: 15px;
+}
+.grid-container div img {
+  width: 100%;
+  border-radius: 5px;
+  filter: brightness(0.5);
+  transition: ease-in-out 0.3s;
+}
+.grid-container div:hover img {
+  filter: brightness(1);
+  transition: ease-in-out 0.25s;
+}
+.grid-container div p {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  filter: none;
+  z-index: 1;
+  text-shadow: black 0.1em 0.1em 0.2em;
 }
 
 .row {
@@ -99,50 +126,6 @@
     flex-basis: 87.8333333333%;
   }
 }
-.grid-col1 {
-  grid-column: span 1;
-}
-
-.grid-col2 {
-  grid-column: span 2;
-}
-
-.grid-col3 {
-  grid-column: span 3;
-}
-
-.grid-col4 {
-  grid-column: span 4;
-}
-
-.grid-col5 {
-  grid-column: span 5;
-}
-
-.grid-col6 {
-  grid-column: span 6;
-}
-
-.grid-col7 {
-  grid-column: span 7;
-}
-
-.grid-col8 {
-  grid-column: span 8;
-}
-
-.grid-col9 {
-  grid-column: span 9;
-}
-
-.grid-col10 {
-  grid-column: span 10;
-}
-
-.grid-col11 {
-  grid-column: span 11;
-}
-
 .navbar {
   align-items: center;
   padding: 10px;
@@ -224,7 +207,7 @@
   position: relative;
   top: 5px;
   left: 10px;
-  z-index: 1;
+  z-index: 2;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -238,7 +221,7 @@
   left: -5px;
   cursor: pointer;
   opacity: 0;
-  z-index: 2;
+  z-index: 4;
   -webkit-touch-callout: none;
 }
 
@@ -250,7 +233,7 @@
   position: relative;
   background: #cdcdcd;
   border-radius: 3px;
-  z-index: 1;
+  z-index: 3;
   transform-origin: 4px 0px;
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
@@ -442,8 +425,16 @@
   pointer-events: none;
 }
 
-.vignette {
-  background-color: #0D47A1;
+.main {
+  justify-content: center;
+}
+
+.gallery-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
