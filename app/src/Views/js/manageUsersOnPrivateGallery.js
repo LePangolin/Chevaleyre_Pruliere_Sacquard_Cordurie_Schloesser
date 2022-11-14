@@ -1,11 +1,8 @@
 let privateMod = document.getElementById("private");
 let publicMod = document.getElementById("public");
 
-
-restoreUsers(tabUsersFromedit);
-
-if(privateMod.checked){
-    document
+if (privateMod.checked) {
+  document
     .getElementsByClassName("statutDiv_userInput")[0]
     .classList.remove("hidden");
 }
@@ -66,17 +63,16 @@ document
     }
   });
 
-
-  function restoreUsers(arraytags) {
-    arraytags.forEach((user) => {
-      addElement(
-        tabUsers,
-        user,
-        "userInput_input",
-        "usersArray",
-        "usersDisplay_userItem",
-        "userItem_icon",
-        "usersDisplay"
-      );
-    });
-  }
+function restoreUsers(arraytags) {
+  arraytags.forEach((user) => {
+    addElement(
+      tabUsers,
+      user,
+      "userInput_input",
+      "usersArray",
+      "usersDisplay_userItem",
+      "userItem_icon",
+      "usersDisplay"
+    );
+  });
+}
