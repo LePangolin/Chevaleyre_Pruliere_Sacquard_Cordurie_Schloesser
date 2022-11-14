@@ -133,7 +133,7 @@ INSERT INTO UsersAccesses (id_user, id_gallery) VALUES (2,4);
 
 -- Remplissage 
 
--- Mot de passe : mdp 
+-- Mot de passe de Conteneur : mdp 
 INSERT INTO users (username, biography, password, registered_at) VALUES ("Completeur","Juste pour avoir des donnes","aa36dc6e81e2ac7ad03e12fedcb6a2c0","14/11/22 14:00:00");
 
 INSERT INTO Galleries (name, description, nb_pictures, public, registered_at) VALUES ("Remplissage","Pour donner de la donnee",11,0,"14/11/22 15:00:00");
@@ -249,5 +249,4 @@ INSERT INTO UsersToGalleries (id_user, id_gallery) VALUES (4,13);
 INSERT INTO UsersToGalleries (id_user, id_gallery) VALUES (4,14);
 INSERT INTO UsersToGalleries (id_user, id_gallery) VALUES (4,15);
 INSERT INTO UsersToGalleries (id_user, id_gallery) VALUES (4,16);
-INSERT INTO UsersToGalleries (id_user, id_gallery) VALUES (4,17);
 
