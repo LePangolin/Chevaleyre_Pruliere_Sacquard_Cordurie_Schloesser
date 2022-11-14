@@ -36,6 +36,8 @@ class UserController
             'title' => 'Profile',
             "user" => $_SESSION["user"],
             'userGalleries' => $tabInfo['MyGalleries'],
+            "username" => $_SESSION["user"]->getUsername(),
+            "joinedAt" => $_SESSION["user"]->getCreatedAt()
         ]);
     }
 
