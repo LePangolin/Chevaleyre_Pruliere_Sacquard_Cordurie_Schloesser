@@ -6,32 +6,34 @@
         {% include "parts/navbar.html.twig"%}
 
             {% block content %} 
-            
-                    <div class"signUp">
-                        <h2>S'inscrire</h2>
-                        <form action="/signUp" method="post">
-                            <label for="username">Identifiant</label>
-                            <input type="text" class="" name="username" id="username" placeholder="Identifiant">
-                            <label for="password"></label>
-                            <input type="password" name="password" id="password" placeholder="Mot de passe">
-                            <label for="password2"></label>
-                            <input type="password" name="password2" id="password2" placeholder="Confirmer le mot de passe">
-                            <input type="submit" id="submitSignUp" value="S'inscrire" disabled>
-                        </form>
+                
+                
+                <div class="container">
+                    <div class="row">
+                        <div class="signUp col-m6 box-shadow box-height-80">
+                            <h2 class="align-center inscription_text">S'inscrire</h2>
+                            <form action="/signUp" method="post" class="align-item-horizontal align-center">
+                                <label for="username" class="identifiant_text">Identifiant</label><br><br>
+                                <input type="text" class="input-text {% if error is defined %} error {% endif %}" name="username" id="username" placeholder="Identifiant"><br><br>
+                                <label for="password " class="identifiant_text_1" >Mot de passe </label><br><br>
+                                <input type="password" class="input-text" name="password" id="password" placeholder="Mot de passe"><br>
+                                <label for="password2"></label><br>
+                                <input type="password" class="input-text" name="password2" id="password2" placeholder="Confirmer le mot de passe"><br><br>
+                                <input type="submit" id="submitSignUp" class="round-button" value="S'inscrire" disabled>
+                            </form>
+                        </div>
+                        <div class="logIn col-m6 box-shadow box-height-80">
+                            <h2 class="align-center connection_text">Se connecter</h2>
+                            <form action="/logIn" method="post" class="align-item-horizontal align-center">
+                                <label for="username"  class="identifiant_text ">Identifiant</label><br><br>
+                                <input type="text" class="input-text {% if error is defined %} error {% endif %}" name="username" id="username" placeholder="Identifiant" ><br><br>
+                                <label for="password" class="identifiant_text_1 ">Mot de passe</label><br><br>
+                                <input type="password" name="password " id="password" class="input-text {% if error is defined %} error {% endif %}" placeholder="Mot de passe"><br><br>
+                                <input type="submit"  class="round-button" id="submitLogin" value="Se connecter"><br><br>
+                            </form>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Se connecter</h2>
-                        <form action="/logIn" method="post">
-                            <label for="username">Identifiant</label>
-                            <input type="text" class="" name="username" id="username" placeholder="Identifiant">
-                            <label for="password"></label>
-                            <input type="password" name="password" id="password" placeholder="Mot de passe">
-                            <input type="submit" id="submitLogin" value="Se connecter">
-                        </form>
-                    </div>
-
-
-                    <input id="btn" type="button" onclick="self.location.href='/logout'" value="Logout">    
+                </div>
 
 
             {% endblock %}

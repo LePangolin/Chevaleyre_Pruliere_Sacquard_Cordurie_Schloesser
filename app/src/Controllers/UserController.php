@@ -73,7 +73,7 @@ class UserController
         if ($user === false) {
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                'error' => 'Username already taken',
+                'error' => "Nom d'utilisateur déjà utilisé",
             ]);
         }else{
 
