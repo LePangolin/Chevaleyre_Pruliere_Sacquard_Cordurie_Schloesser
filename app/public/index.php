@@ -44,5 +44,7 @@ $app->get('/editGallery/{id}', \App\Controllers\GalleryController::class . ':dia
 
 $app->post('/editGallery/{id}', \App\Controllers\GalleryController::class . ':editGallery')->setName('editGallery');
 
+$app->get('/about[/]', \App\Controllers\HTMLController::class . ':about')->setName('about');
+
 $app->run();
 
