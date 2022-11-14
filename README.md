@@ -9,6 +9,14 @@ Fichier d'insertion de la base de données dans /app/database/seeders/inserts.sq
     - Schloesser Adrien
     - Cordurié Lucas
     - Sacquard Julien
+    
+## Mise en route
+
+```Cloner le repository
+docker-compose up -d
+docker-compose exec --workdir /app php /bin/bash
+composer install
+php vendor/bin/doctrine orm:schema-tool:create```
 
 ## Objectifs
 
