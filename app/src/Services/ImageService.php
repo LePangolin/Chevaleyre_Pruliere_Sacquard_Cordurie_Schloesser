@@ -7,11 +7,11 @@ use App\Models\Tag;
 use App\Models\Picture;
 use App\Models\PictureToTag;
 use App\Models\GalleryToPicture;
+use App\Models\PictureToMetadata;
 use App\Models\MetaData;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
-use App\Models\PictureToMetadata;
 
 
 final class ImageService
@@ -84,4 +84,26 @@ final class ImageService
         }
     }
 
+    public function getPictureInfo($id){
+        try{
+            $picture = $this->em->getRepository(Picture::class)->find($id);
+            $tags = $this->em->getRepository(PictureToTag::class)->findBy(['id_picture' => $id]);
+            $tagsList = [];
+            foreach($tags as $tag){
+                $tagg = $this->em->getRepository(Tag::class)->find($tag->getIdTag());
+                array_push($tagsList, $tagg->getTag());
+            }
+            $pictureInfo = array(
+                "id" => $picture->getId(),
+                "link" => $picture->getLink(),
+                "descr" => $picture->getDescr(),
+                "title" => $picture->getName(),
+                "tags" => json_encode($tagsList)
+                );
+            return $pictureInfo;
+        }catch(\Exception $e){
+            $this->logger->error("Erreur lors de la récupération des informations de l'image $id : " . $e->getMessage());
+            return null;
+        }
+       }
 }

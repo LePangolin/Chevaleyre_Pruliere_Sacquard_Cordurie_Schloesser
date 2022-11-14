@@ -24,7 +24,7 @@
         </form>
         <button class="add_image_button">Add Image</button>
         {% for picture in pictures %}
-            <img src="{{picture['link']}}" alt="{{picture['desc']}}">
+            <img class="clickable_picture" data-id="{{picture['id']}}" data-link="{{picture['link']}}" data-title="{{picture['title']}}" data-descr="{{picture['descr']}}" data-tags="{{picture['tags']}}" src="{{picture['link']}}" alt="{{picture['desc']}}">
         {% endfor %}
     {% elseif is_author == true and not pictures %}
         <input type="button" class="edit_button" onclick="self.location.href='/editGallery/{{gallery['id']}}'" value="Edit">
@@ -35,12 +35,18 @@
         <button class="add_image_middle_button">Add Image</button>
     {% elseif is_author == false and pictures %}
         {% for picture in pictures %}
-            <img src="{{picture['link']}}" alt="{{picture['desc']}}">
+            <img class="clickable_picture" data-id="{{picture['id']}}" data-link="{{picture['link']}}" data-descr="{{picture['descr']}}" data-tags="{{picture['tags']}}" src="{{picture['link']}}" alt="{{picture['desc']}}">
         {% endfor %}
     {% elseif is_author == false and not pictures %}
         <p>Pas d'image</p>        
     {% endif %}
-
+    <div class="picture_info">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-content-div">
+            </div>        
+        </div>
+    </div>
     <div class="addImage">
         <div class="modal-content">
             <span class="close">&times;</span>
