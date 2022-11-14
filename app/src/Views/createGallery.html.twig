@@ -42,6 +42,11 @@
             </form>
             <footer>
                 <script type="module">
+
+                    let tabTagsFromedit = {{[]|json_encode|raw}};
+
+                    let tabUsersFromedit = {{[]|json_encode|raw}};
+                    
                     {{source('./js/manageTags.js')}}
                     {{source('./js/manageUsersOnPrivateGallery.js')}}
                 </script>
