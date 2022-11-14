@@ -16,7 +16,6 @@
             </div>
         </div>
 
-
         <div class="paginate">
             <button id="btnPrev"><<</button>...<button id="btnNext">>></button>
         </div>
@@ -28,7 +27,7 @@
                     {% for privateGallery in listPrivateGalleries %}
                         <div class="gallery-vign" data-id="{{ privateGallery.id }}>
                             <p>{{ privateGallery.name }}</p>
-                            <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie"">
+                            <img src="{{ tabImgPrivate[privateGallery.id] }}" alt="vignette de la galerie"">
                         </div>
                     {% endfor %}
                 </div>
@@ -37,6 +36,7 @@
             <div class="paginate">
                 <button id="btnPrevPrivate"><<</button>...<button id="btnNextPrivate">>></button>
             </div>
+
         {% endif %}
 
 
