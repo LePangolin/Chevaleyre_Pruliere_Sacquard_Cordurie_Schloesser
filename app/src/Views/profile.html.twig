@@ -5,11 +5,14 @@
 
         {% include "parts/navbar.html.twig"%}
         
-        <h1> Mes Galeries </h1>
+        <h1> {{username}} </h1>
+        <p>A rejoint le </p>
+
+        <h2>Mes galeries</h2>
 
         {% for userGallery in userGalleries %}
             
-            <a href="/gallery/{{userGallery.id}}"> {{ userGallery.name }} </a>
+            <a href="/gallery/{{userGallery.id}}"> {{ userGallery.name }} </a><br>
 
         {% endfor %}
 
