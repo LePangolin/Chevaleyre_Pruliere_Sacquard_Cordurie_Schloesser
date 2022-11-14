@@ -31,3 +31,84 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
+
+
+
+let tabMD = document.getElementsByClassName("MD");
+
+let jsonMetadata = " { } ";
+
+
+Array.from(tabMD).forEach(element => {
+  element.addEventListener("keyup", nonVideMD);
+});
+
+
+
+function nonVideMD(){
+
+
+  let nonVide = true;
+  Array.from(tabMD).forEach(element => {
+    if(element.value == ""){
+      nonVide = false;
+    }
+  });
+  
+  if(nonVide){
+
+    // retire le } de la fin
+    jsonMetadata = jsonMetadata.slice(0, -1);
+    // ajoute les valeurs
+    jsonMetadata + " , " + " \" " + tabMD[0] + " : " + tabMD[1].name + " \" " + " } " ;
+
+    console.log(jsonMetadata);
+
+    let div = document.createElement("div");
+    div.classList.add("flex-input");
+    div.innerHTML = `
+      <input type="text" class="name MD">
+      <input type="text" class="metadata MD">
+      `;
+    
+    document.getElementsByClassName("metadata")[0].appendChild(div);
+
+    // remove event listener
+    Array.from(tabMD).forEach(element => {
+      element.removeEventListener("keyup", nonVideMD);
+    });
+    
+    // vide le tableau
+    tmp = div.getElementsByClassName("MD");
+
+    // merge les deux tableaux
+    tabMD = [...tabMD, ...tmp];
+
+    console.log(tabMD); 
+
+
+    // desactive l'input précédent si le nouveau est est cliqué
+    Array.from(tmp).forEach(element => {
+      element.addEventListener("click", function(){
+        Array.from(tabMD).forEach(element => {
+          if(element != div.getElementsByClassName("MD")[0] && element != div.getElementsByClassName("MD")[1]){
+            element.disabled = true;
+          }
+        });
+      });
+    });
+    
+
+    
+
+    // ajoute l'event listener
+
+    Array.from(tmp).forEach(element => {
+      element.addEventListener("keyup", nonVideMD);
+    });
+
+  }
+  
+}
+
+
