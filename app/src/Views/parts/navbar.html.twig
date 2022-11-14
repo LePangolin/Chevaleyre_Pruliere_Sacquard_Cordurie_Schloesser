@@ -1,32 +1,42 @@
 <header class="header">
     {% block header %}
+        <div class="row navbar">
 
-        <a class="header_logo" href="/">
-            <h1 class="logo_title">MediaPhoto</h1>
-            <img class="logo_image" src="/img/site/logo.png" alt="Logo">
-        </a>
-        <nav class="header_nav">
-            <ul class="nav_list">
-                <li class="nav_item"><a class="nav_link" href="">Galeries publiques</a></li>
-                <li class="nav_item"><a class="nav_link" href="">Mes galeries</a></li>
-            </ul>
-        </nav>
-        <form method="POST" class="header_search" action="/search">
-            <span class="search_icon material-symbols-outlined"> search </span>
-            <input class="search_input" type="text" placeholder="Rechercher par nom" name="searchBar">
-            <button class="search_detailButton" type="submit"> 
-                <span class="detailButton_icon material-symbols-outlined"> tune </span>
-            </button>
-        </form>
-        <span class="header_user">
-        {# if user is defined and not null #}
-        {% if user is defined and user %}
-            <a class="user_linkProfile" href="/profile"><img class="user_image" src="./img/site/user.png" alt="User"></a>
-        {% else %}
-            <a class="user_link" href="/auth">Se connecter</a>
-            <a class="user_link" href="/auth">S'inscrire</a>
-        {% endif %}
-        </span>
+            <a class="header-nav nav-link col-m2" href="/">
+                <img class="logo-image" src="/img_site/logo.png" alt="Logo">
+                <h1 class="logo_title">MediaPhoto</h1>
+            </a>
 
+            <div class="header-nav col-m1">
+                {# if user is defined and not null #}
+                    {% if user is defined and user %}
+                        <a class="nav-link btn-hover" href="/profile">Mes galeries</a>
+                    {% else %}
+                        <a class="nav-link btn-hover" href="/auth">Mes galeries</a>
+                {% endif %}
+            </div>
+
+            <div class="header-search col-m6 ">
+                <form method="POST" class="header_search row" action="/search">
+                    <div class="search-bar col-m11 row">
+                        <span class="col-m1 search_icon material-symbols-outlined"> search </span>
+                        <input class="search-input col-m10" type="text" placeholder="Rechercher par nom" name="searchBar">
+                    </div>
+                    <button class="search-detailButton col-m1" type="submit">
+                        <span class="detailButton_icon material-symbols-outlined"> tune </span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="header-nav col-m2">
+                {# if user is defined and not null #}
+                    {% if user is defined and user %}
+                        <a class="user-linkProfile nav-link" href="/profile"><img class="user-image" src="./img_site/user.png" alt="User"></a>
+                    {% else %}
+                        <a class="user_link nav-link" href="/auth">Connexion/Inscription</a><img class="user-image" src="./img_site/user.png" alt="User">
+                {% endif %}
+            </div>
+
+        </div>
     {% endblock %}
 </header>
