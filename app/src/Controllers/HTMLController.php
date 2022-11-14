@@ -21,4 +21,12 @@ class HTMLController
             "user" => $userSession,
         ]);
     }
+
+    public function about (Request $request, Response $response, array $args): Response
+    {
+        $userSession = $_SESSION["user"] ?? null;
+        return $this->twig->render($response, 'about.html.twig', [
+            "user" => $userSession,
+        ]);
+    }
 }

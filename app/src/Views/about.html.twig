@@ -1,0 +1,38 @@
+{% include "parts/head.html.twig"%}
+
+<body class="main">
+    {% block body %}
+
+        {% include "parts/navbar.html.twig"%}
+
+        <h1> A propos </h1>
+
+        <h2> Groupe </h2>
+        <ul> 
+            <li>Chevaleyre Antoine</li>
+            <li>Pruliere Justine</li>
+            <li>Schloesser Adrien</li>
+            <li>Sacquard Julien</li>
+            <li>Cordurié Lucas</li>
+        </ul>
+
+        <h2> Liens externes </h2>
+        <a href="https://github.com/LePangolin/Chevaleyre_Pruliere_Sacquard_Cordurie_Schloesser">GitHub</a><br>
+        <br>
+        <a href="https://trello.com/b/jhXxRym7/atelier">Trello</a>
+
+        <h2> Utilisateurs déjà créés </h2>
+        <p> jean : possède deux galeries dont une privée </p>
+        <p> mark : ne possède aucune galerie </p>
+        <p> paul : possède deux galeries dont une privée </p>
+
+        <h2> Conception </h2>
+        <a href="/docs/conception_pruliere_chevaleyre_schloesser_sacquard_cordurie.pdf" download="conception.pdf">Télécharger en pdf</a>        
+
+    {% endblock %}
+    <footer>
+        <script>{{source('./js/index.js')}}</script>
+    </footer>
+</body>
+
+{% include "parts/footer.html.twig"%}
