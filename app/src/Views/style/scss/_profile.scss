@@ -2,7 +2,7 @@ body{
     font-family: 'calibri';
 }
 
-.logout{
+.logout, .add{
     cursor: pointer;
 }
 
@@ -12,6 +12,12 @@ body{
 }
 
 .name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.galleries{
     display: flex;
     justify-content: center;
     align-items: center;

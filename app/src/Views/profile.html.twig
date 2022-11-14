@@ -12,7 +12,10 @@
 
         <hr class="separator">
         
-        <h2 class="galleries">Mes galeries</h2>
+        <div class="galleries">
+            <h2 class="galleries">Mes galeries</h2>
+            <span class="add material-symbols-outlined" onclick="self.location.href='/create'"> add </span>
+        </div>
 
         {% for userGallery in userGalleries %}
             
