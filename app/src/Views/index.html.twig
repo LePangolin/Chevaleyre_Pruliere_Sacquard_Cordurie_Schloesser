@@ -22,7 +22,7 @@
         </div>
 
 
-        {% if user is defined %}
+        {% if user is defined and user is not null %}
             <div class="gallery-display">
                 <div class="grid-container">
                     {% for privateGallery in listPrivateGalleries %}
