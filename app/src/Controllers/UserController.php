@@ -89,6 +89,6 @@ class UserController
     public function logout(Request $request, Response $response, array $args): Response
     {
         unset($_SESSION['user']);
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $response->withHeader('Location', '/auth')->withStatus(302);
     }
 }
