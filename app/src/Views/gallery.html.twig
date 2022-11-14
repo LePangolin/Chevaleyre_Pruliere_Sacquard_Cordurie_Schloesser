@@ -44,41 +44,44 @@
     <div class="addImage">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form enctype='multipart/form-data' action="/gallery/{{gallery['id']}}" method="post">
-                <input type='file' name='uploadImage' required><br><br>
-                <input type="text" id="title" name="title" placeholder="Titre de l'image" required><br><br>
-                <textarea id="descr" name="description" rows="5" cols="33" placeholder="Description de l'image" required></textarea><br>
+            <form class="addImageForm" enctype='multipart/form-data' action="/gallery/{{gallery['id']}}" method="post">
+                <input class="addImageForm_fileInput" type='file' name='uploadImage' required><br><br>
+                <input class="addImageForm_titleInput" type="text" name="title" placeholder="Titre de l'image" required><br><br>
+                <textarea class="addImageForm_descrArea" name="description" rows="5" cols="33" placeholder="Description de l'image" required></textarea><br>
 
-                <h2 class="creationForm_tagsTitle">Mots-clés</h2>
+                <h2 class="addImageForm_tagsTitle">Mots-clés</h2>
 
-                <div class="creationForm_tagInput">
+                <div class="addImageForm_tagsDiv">
                     <input class="tagInput_input" type="text" name="tag" placeholder="Ajouter un mot-clé">
-                    <button type="button" class="tagInput_addButton"><span class="addButton_plusIcon material-symbols-outlined"> add </span></button>
-                </div> 
+                    <button class="tagInput_addButton" type="button" class="addTag">Ajouter</button>
+                </div><br>
                 <div class="tagsDisplay">
                 </div>
 
-                <input class="creationForm_hiddenArray tagsArray" type="hidden" name="tags">
+                <input class="addImageForm_hiddenArray tagsArray" type="hidden" name="tags">
 
-                <h2>Méta-données</h2>
+                <h2 class="addImageForm_metadatasTitle">Méta-données</h2>
 
-                <div class="metadata">
+                <div class="addImageForm_metadataDiv">
 
-                    <div class="flex-input">
-                        <input type="text" class="name MD">
-                        <input type="text" class="metadata MD">
+                    <div class="metadataDiv_metadataElement flex-input">
+                        <input type="text" class="metadataElement_nameInput name MD">
+                        <input type="text" class="metadataElement_dataInput metadata MD">
                     </div>
 
                 </div>
 
-                <button id="confirmMetaData" type="button" class="confirmMetaData">Confirmer les méta-données</button>
+                <button id="confirmMetaData" type="button" class="addImageForm_confirmMetaData">Confirmer les méta-données</button>
 
-                <input class="creationForm_hiddenArray metadataArray" type="hidden" name="metadataArray">
+                <input class="addImageForm_hiddenArray metadataArray" type="hidden" name="metadataArray">
 
                 <br>
 
-                <input class="creationForm_submit" type="submit" name="confirm" value="Confirmer">
+                <input class="addImageForm_submit" type="submit" name="confirm" value="Confirmer">
             </form>
+
+
+
         </div>
     </div>
 
