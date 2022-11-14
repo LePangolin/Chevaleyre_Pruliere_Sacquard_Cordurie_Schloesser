@@ -71,7 +71,7 @@ function resetModal() {
   while (modal_content.firstChild) {
     modal_content.removeChild(modal_content.firstChild);
   }
-}
+};
 
 let tabMD = document.getElementsByClassName("MD");
 
@@ -89,7 +89,7 @@ function nonVideMD() {
 
   if (nonVide) {
     let div = document.createElement("div");
-    div.classList.add("flex-input");
+    div.classList.add("metadataDiv_metadataElement", "flex-input");
     div.innerHTML = `
       <input type="text" class="name MD">
       <input type="text" class="metadata MD">
