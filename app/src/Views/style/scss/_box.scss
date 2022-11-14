@@ -1,4 +1,11 @@
-.vignette {
-  background-color: #0D47A1;
+.main {
+  justify-content: center;
+}
 
+.gallery-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }

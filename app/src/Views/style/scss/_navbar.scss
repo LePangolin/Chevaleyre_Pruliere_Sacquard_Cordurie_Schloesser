@@ -43,6 +43,10 @@
   height: 38px;
 }
 
+.search-detailButton{
+  cursor: pointer;
+}
+
 .search-input:focus {
   outline: none!important;
 }
@@ -80,7 +84,7 @@
   position: relative;
   top: 5px;
   left: 10px;
-  z-index: 1;
+  z-index: 2;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -94,7 +98,7 @@
   left: -5px;
   cursor: pointer;
   opacity: 0;
-  z-index: 2;
+  z-index: 4;
   -webkit-touch-callout: none;
 }
 
@@ -106,7 +110,7 @@
   position: relative;
   background: #cdcdcd;
   border-radius: 3px;
-  z-index: 1;
+  z-index: 3;
   transform-origin: 4px 0px;
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
   background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),

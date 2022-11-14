@@ -1,18 +1,21 @@
 {% include "parts/head.html.twig"%}
 
-<body>
+<body class="main">
     {% block body %}
 
         {% include "parts/navbar.html.twig"%}
 
-        <div class="grid-auto-fit">
-            {% for publicGallery in listPublicGalleries %}
-                <div class="grid-col2 vignette">
-                    {{ publicGallery.name }}
-                    <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
-                </div>
-            {% endfor %}
+        <div class="gallery-display">
+            <div class="grid-container">
+                {% for publicGallery in listPublicGalleries %}
+                    <div class=" vignette">
+                        <p>{{ publicGallery.name }}</p>
+                        <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
+                    </div>
+                {% endfor %}
+            </div>
         </div>
+
 
         <div>
             <button id="btnPrev"><< précédent</button> <button id="btnNext">suivant >></button>
@@ -20,7 +23,7 @@
 
 
         {% if user is defined %}
-            <div class="grid-auto-fit">
+            <div class="">
                         {% for privateGallery in listPrivateGalleries %}
                             <div class="grid-col2">
                                 {{ privateGallery.name }}
