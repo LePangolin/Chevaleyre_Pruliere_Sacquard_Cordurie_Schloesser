@@ -8,7 +8,7 @@
         <div class="gallery-display">
             <div class="grid-container">
                 {% for publicGallery in listPublicGalleries %}
-                    <div class=" vignette">
+                    <div>
                         <p>{{ publicGallery.name }}</p>
                         <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
                     </div>
@@ -17,24 +17,26 @@
         </div>
 
 
-        <div>
-            <button id="btnPrev"><< précédent</button> <button id="btnNext">suivant >></button>
+        <div class="paginate">
+            <button id="btnPrev"><<</button>...<button id="btnNext">>></button>
         </div>
 
 
         {% if user is defined %}
-            <div class="">
-                        {% for privateGallery in listPrivateGalleries %}
-                            <div class="grid-col2">
-                                {{ privateGallery.name }}
-                                <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie">
-                            </div>
-                        {% endfor %}
-                    </div>
+            <div class="gallery-display">
+                <div class="grid-container">
+                    {% for privateGallery in listPrivateGalleries %}
+                        <div>
+                            <p>{{ privateGallery.name }}</p>
+                            <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
 
-                    <div>
-                        <button id="btnPrevPrivate"><< précédent</button> <button id="btnNextPrivate">suivant >></button>
-                    </div>
+            <div class="paginate">
+                <button id="btnPrevPrivate"><<</button>...<button id="btnNextPrivate">>></button>
+            </div>
         {% endif %}
 
 

@@ -9,3 +9,31 @@
   flex-direction: column;
   width: 100%;
 }
+
+.paginate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.paginate>button{
+  width: 45px;
+  height: 45px;
+  background-color: gray;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.paginate>button:hover{
+  background-color: #6b6b6b;
+}
+
+.paginate>button:active{
+  background-color: #4d4d4d;
+}
+
+
