@@ -2,21 +2,41 @@
     {% block header %}
         <div class="row navbar">
 
-            <a class="header-nav nav-link col-m2" href="/">
-                <img class="logo-image" src="/img_site/logo.png" alt="Logo">
-                <h1 class="logo_title">MediaPhoto</h1>
-            </a>
+            <nav role="navigation" class="col-m1">
+                <div class="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul class="menu">
+                        <a href="#">
+                            <li>
+                                {# if user is defined and not null #}
+                                    {% if user is defined and user %}
+                                        <a class="user-linkProfile" href="/profile"><img class="user-image" src="./img_site/user.png" alt="User"></a>
+                                    {% else %}
+                                        <a class="user_link" href="/auth">Connexion/Inscription</a><img class="user-image" src="./img_site/user.png" alt="User">
+                                {% endif %}
+                            </li>
+                        </a>
+                        <a href="#">
+                            <li>
+                                {# if user is defined and not null #}
+                                    {% if user is defined and user %}
+                                        <a class="nav-link btn-hover" href="/profile">Mes galeries</a>
+                                    {% else %}
+                                        <a class="nav-link btn-hover" href="/auth">Mes galeries</a>
+                                {% endif %}
+                            </li>
+                        </a>
+                        <a href="" target="_blank"><li>A propos</li></a>
+                    </ul>
+                </div>
+            </nav>
 
-            <div class="header-nav col-m1">
-                {# if user is defined and not null #}
-                    {% if user is defined and user %}
-                        <a class="nav-link btn-hover" href="/profile">Mes galeries</a>
-                    {% else %}
-                        <a class="nav-link btn-hover" href="/auth">Mes galeries</a>
-                {% endif %}
-            </div>
+            <div class="col-m2"></div>
 
-            <div class="header-search col-m6 ">
+            <div class="header-search col-m7 ">
                 <form method="POST" class="header_search row" action="/search">
                     <div class="search-bar col-m11 row">
                         <span class="col-m1 search_icon material-symbols-outlined"> search </span>
@@ -28,14 +48,10 @@
                 </form>
             </div>
 
-            <div class="header-nav col-m2">
-                {# if user is defined and not null #}
-                    {% if user is defined and user %}
-                        <a class="user-linkProfile nav-link" href="/profile"><img class="user-image" src="./img_site/user.png" alt="User"></a>
-                    {% else %}
-                        <a class="user_link nav-link" href="/auth">Connexion/Inscription</a><img class="user-image" src="./img_site/user.png" alt="User">
-                {% endif %}
-            </div>
+            <a class="header-nav nav-link col-m2" href="/">
+                <img class="logo-image" src="/img_site/logo.png" alt="Logo">
+                <h1 class="logo_title">MediaPhoto</h1>
+            </a>
 
         </div>
     {% endblock %}
