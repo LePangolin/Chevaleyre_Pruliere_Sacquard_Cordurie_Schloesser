@@ -359,8 +359,11 @@ final class GalleryService {
         foreach($tagsGalleryList as $tag){
             if(!in_array($tag, $tags)){
                 $tagToDelete = $this->em->getRepository(Tag::class)->findOneBy(['tag' => $tag]);
+                $this->logger->info("Gallery " . $id . " : suppression du tag " . $tag);
                 $linkToDelete = $this->em->getRepository(GalleryToTag::class)->findOneBy(['id_gallery' => $id, 'id_tag' => $tagToDelete->getId()]);
-                $this->em->remove($linkToDelete);
+                if (!empty($linkToDelete)) {
+                    $this->em->remove($linkToDelete);
+                }
                 $this->logger->info("Tag". $tag ."supprimé");
             }
         }
@@ -420,7 +423,7 @@ final class GalleryService {
         $this->em->flush();
         return true;
     }catch(\Exception $e){
-        $this->logger->error("Erreur lors de la modification de la galerie $id : " . $e->getMessage());
+        $this->logger->error("Erreur lors de la modification de la galerie $id : " . $e->getMessage() . " at " . $e->getFile() . " line " . $e->getLine());
         return false;
     }
    }

@@ -207,7 +207,7 @@ class GalleryController
             ]);
         }
 
-        return $this->twig->render($response, 'index.html.twig', [ 'user' => $userSession ]);
+        return $this->twig->render($response, 'index.html.twig', [ 'user' => $_SESSION["user"] ]);
 
     }
 
@@ -250,12 +250,10 @@ class GalleryController
             $users = array();
         }
 
-        $bool = $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], $data["statut"], $tags, $users);
-        if($bool){
-            return $response->withHeader('Location', '/')->withStatus(302);
-        }else{
-            return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
-        }
+        $this->galleryService->editGallery($args['id'], $data["name"], $data["description"], $data["statut"], $tags, $users);
+
+        return $response->withHeader('Location', '/gallery/'.$args['id'])->withStatus(302);
+
     }
 
     public function deleteGallery(Request $request, Response $response, $args): Response
