@@ -9,13 +9,13 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity, Table(name: 'Metadatas')]
-final class Metadata
+final class MetaData
 {
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
     #[Column(type: 'json', nullable: true)]
-    private array $value;
+    private string $value;
 
     public function __construct(string $value)
     {
@@ -27,7 +27,7 @@ final class Metadata
         return $this->id;
     }
 
-    public function getValue(): array 
+    public function getValue(): string 
     {
         return $this->value;
     }

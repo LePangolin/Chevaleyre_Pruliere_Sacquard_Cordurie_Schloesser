@@ -8,7 +8,7 @@ use App\Models\Picture;
 use App\Models\PictureToTag;
 use App\Models\GalleryToPicture;
 use App\Models\PictureToMetadata;
-use App\Models\Metadata;
+use App\Models\MetaData;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
@@ -93,21 +93,13 @@ final class ImageService
                 $tagg = $this->em->getRepository(Tag::class)->find($tag->getIdTag());
                 array_push($tagsList, $tagg->getTag());
             }
-            $metadataa = $this->em->getRepository(\App\Models\PictureToMetadata::class)->findOneBy(['id_picture' => $id]);
-            if (!is_null($metadataa)) {
-                $metadata = $this->em->getRepository(Metadata::class)->find($metadataa->getIdMetadata());
-                $v = $metadata->getValue();
-            } else {
-                $v = null;
-            }
             $pictureInfo = array(
                 "id" => $picture->getId(),
                 "link" => $picture->getLink(),
                 "descr" => $picture->getDescr(),
                 "title" => $picture->getName(),
-                "tags" => json_encode($tagsList),
-                "metadatas" => json_encode($v),
-            );
+                "tags" => json_encode($tagsList)
+                );
             return $pictureInfo;
         }catch(\Exception $e){
             $this->logger->error("Erreur lors de la récupération des informations de l'image $id : " . $e->getMessage());

@@ -10,7 +10,7 @@ use App\Models\GalleryToPicture;
 use App\Models\UserToGallery;
 use App\Models\UserAccess;
 use App\Models\PictureToComment;
-use App\Models\Metadata;
+use App\Models\MetaData;
 use App\Models\PictureToMetadata;
 use App\Models\Comment;
 use App\Models\PictureToTag;
@@ -226,7 +226,7 @@ final class GalleryService {
             $metadatas = [];
             foreach ($picture_to_metadata as $id_metadata) {
                 if (!empty($id_metadata))
-                    array_push($metadatas, $this->em->getRepository(Metadata::class)->find($id_metadata->getIdMetadata()));
+                    array_push($metadatas, $this->em->getRepository(MetaData::class)->find($id_metadata->getIdMetadata()));
             }
             $comments = [];
             foreach ($picture_to_comment as $id_comment) {
