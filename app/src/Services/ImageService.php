@@ -7,9 +7,11 @@ use App\Models\Tag;
 use App\Models\Picture;
 use App\Models\PictureToTag;
 use App\Models\GalleryToPicture;
+use App\Models\MetaData;
 use Doctrine\ORM\EntityManager;
 use GMP;
 use Psr\Log\LoggerInterface;
+use App\Models\PictureToMetadata;
 
 
 final class ImageService
@@ -24,7 +26,7 @@ final class ImageService
         $this->gs = $gs;
     }
 
-    public function uploadImage($name, $descr, $idGallery, array $tags)
+    public function uploadImage($name, $descr, $idGallery, array $tags, string $metadata)
     {
         try {
             $pic = new Picture(filter_var($name), filter_var($descr));
@@ -63,6 +65,19 @@ final class ImageService
                 $this->em->flush();
                 $this->logger->info("Link between image $name and tag " . $tagg->getTag() . " has been created");
             }
+            // ajout des métadonnées
+            $metadatas =  new MetaData($metadata);
+            $this->em->persist($metadatas);
+            $this->em->flush();
+            $this->logger->info("Metadata for image $name has been created");
+
+            $metaDataId = $metadatas->getId();
+
+            $pictureToMetadata = new PictureToMetadata($idPic, $metaDataId);
+            $this->em->persist($pictureToMetadata);
+            $this->em->flush();
+            $this->logger->info("Link between image $name and metadata has been created");
+
         } catch (\Exception $e) {
             $this->logger->error("Error while uploading image: " . $e->getMessage());
             return false;
