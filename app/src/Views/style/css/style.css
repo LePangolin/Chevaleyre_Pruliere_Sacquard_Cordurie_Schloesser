@@ -442,4 +442,80 @@
   pointer-events: none;
 }
 
+.signUp {
+  margin-right: 50px;
+  margin-left: 25px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+body {
+  font-family: "calibri";
+}
+
+.box-shadow {
+  box-shadow: 0px 6px 18px -11px rgba(35, 35, 35, 0.91);
+}
+
+.box-height-80 {
+  height: 80vh;
+}
+
+.input-text {
+  border-radius: 8px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 2px solid black;
+}
+
+.inscription_text {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.identifiant_text {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.identifiant_text_1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.round-button {
+  border-radius: 8px;
+  background-color: #f1f1f1;
+  border: 1px solid black;
+  font-size: 1em;
+  letter-spacing: 0.5px;
+  padding: 5px;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+.error-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.connection_text {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 520px) {
+  .connection_text {
+    font-size: 2em;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
