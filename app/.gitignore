@@ -3,3 +3,4 @@ mysql/
 /composer.lock
 logs/
 img/
+style.css.map

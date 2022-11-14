@@ -5,10 +5,14 @@
 
         {% include "parts/navbar.html.twig"%}
         
-        <h1> {{username}} </h1>
-        <p>A rejoint le </p>
+        <div class="name"> 
+            <h1 class="username">{{username}}</h1>
+            <span class="logout material-symbols-outlined" onclick="self.location.href='/logout'"> logout </span>
+        </div>
 
-        <h2>Mes galeries</h2>
+        <hr class="separator">
+        
+        <h2 class="galleries">Mes galeries</h2>
 
         {% for userGallery in userGalleries %}
             

@@ -33,7 +33,7 @@ class UserController
         }
         $tabInfo = $this->userService->getUserInfo($_SESSION['user']->getId());
         return $this->twig->render($response, 'profile.html.twig', [
-            'title' => 'Profile',
+            'title' => 'Profil',
             "user" => $_SESSION["user"],
             'userGalleries' => $tabInfo['MyGalleries'],
             "username" => $_SESSION["user"]->getUsername(),
@@ -73,7 +73,7 @@ class UserController
         if ($user === false) {
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                'error' => 'Username already taken',
+                'error' => "Nom d'utilisateur déjà utilisé",
             ]);
         }else{
 
@@ -89,6 +89,6 @@ class UserController
     public function logout(Request $request, Response $response, array $args): Response
     {
         unset($_SESSION['user']);
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $response->withHeader('Location', '/auth')->withStatus(302);
     }
 }

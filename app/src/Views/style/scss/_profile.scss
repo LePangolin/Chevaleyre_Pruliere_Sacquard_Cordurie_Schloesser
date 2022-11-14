@@ -1,0 +1,29 @@
+body{
+    font-family: 'calibri';
+}
+
+.logout{
+    cursor: pointer;
+}
+
+.username{
+    margin-right: 7px;
+    font-size: 40px;
+}
+
+.name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.separator{
+    display: flex;
+    justify-content: center;
+    width: 20%;
+}
+
+.galleries{
+    font-size: 30px;
+    text-align: center;
+}
