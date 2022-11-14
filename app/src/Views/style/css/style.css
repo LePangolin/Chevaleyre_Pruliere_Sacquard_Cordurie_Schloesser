@@ -1,17 +1,252 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 4 | @import "variables";
- *   |         ^^^^^^^^^^^
- *   '
- *   scss\style.scss 4:9  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 4 \2502  @import \"variables\";\d\a   \2502          ^^^^^^^^^^^\a   \2575 \a   scss\\style.scss 4:9  root stylesheet";
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 6.1666666667%));
+  grid-gap: 1rem;
+  grid-auto-flow: row dense;
+  padding: 0 2rem 0 1rem;
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.col {
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-left: 2%;
+}
+
+.col-s1 {
+  flex-basis: 6.1666666667%;
+}
+
+.col-s2 {
+  flex-basis: 14.3333333333%;
+}
+
+.col-s3 {
+  flex-basis: 22.5%;
+}
+
+.col-s4 {
+  flex-basis: 30.6666666667%;
+}
+
+.col-s5 {
+  flex-basis: 38.8333333333%;
+}
+
+.col-s6 {
+  flex-basis: 47%;
+}
+
+.col-s7 {
+  flex-basis: 55.1666666667%;
+}
+
+.col-s8 {
+  flex-basis: 63.3333333333%;
+}
+
+.col-s9 {
+  flex-basis: 71.5%;
+}
+
+.col-s10 {
+  flex-basis: 79.6666666667%;
+}
+
+.col-s11 {
+  flex-basis: 87.8333333333%;
+}
+
+@media screen and (min-width: 35em) {
+  .col-m1 {
+    flex-basis: 6.1666666667%;
+  }
+  .col-m2 {
+    flex-basis: 14.3333333333%;
+  }
+  .col-m3 {
+    flex-basis: 22.5%;
+  }
+  .col-m4 {
+    flex-basis: 30.6666666667%;
+  }
+  .col-m5 {
+    flex-basis: 38.8333333333%;
+  }
+  .col-m6 {
+    flex-basis: 47%;
+  }
+  .col-m7 {
+    flex-basis: 55.1666666667%;
+  }
+  .col-m8 {
+    flex-basis: 63.3333333333%;
+  }
+  .col-m9 {
+    flex-basis: 71.5%;
+  }
+  .col-m10 {
+    flex-basis: 79.6666666667%;
+  }
+  .col-m11 {
+    flex-basis: 87.8333333333%;
+  }
+}
+.grid-col1 {
+  grid-column: span 1;
+}
+
+.grid-col2 {
+  grid-column: span 2;
+}
+
+.grid-col3 {
+  grid-column: span 3;
+}
+
+.grid-col4 {
+  grid-column: span 4;
+}
+
+.grid-col5 {
+  grid-column: span 5;
+}
+
+.grid-col6 {
+  grid-column: span 6;
+}
+
+.grid-col7 {
+  grid-column: span 7;
+}
+
+.grid-col8 {
+  grid-column: span 8;
+}
+
+.grid-col9 {
+  grid-column: span 9;
+}
+
+.grid-col10 {
+  grid-column: span 10;
+}
+
+.grid-col11 {
+  grid-column: span 11;
+}
+
+.navbar {
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-family: Calibri;
+}
+
+.logo-image {
+  width: 55px;
+  height: 100%;
+  margin-right: 10px;
+}
+
+.user-image {
+  width: 30px;
+  height: 100%;
+  margin-left: 5px;
+}
+
+.search-bar {
+  padding-left: 5px;
+  height: 40px;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  background-color: #e7e7e7;
+  align-items: center;
+}
+
+.search-input {
+  border: none;
+  background-color: #e7e7e7;
+  height: 38px;
+}
+
+.search-input:focus {
+  outline: none !important;
+}
+
+.search-detailButton {
+  height: 40px;
+  padding-left: 3px;
+  border-bottom: none;
+  border-top: none;
+  border-right: none;
+  background-color: #e7e7e7;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.search-detailButton:hover {
+  background-color: #dcdcdc;
+}
+
+.search-detailButton:active {
+  background-color: #d3d3d3;
+}
+
+.header-nav {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  align-items: center;
+}
+
+/* The Modal (background) */
+.addImage {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=style.css.map */
