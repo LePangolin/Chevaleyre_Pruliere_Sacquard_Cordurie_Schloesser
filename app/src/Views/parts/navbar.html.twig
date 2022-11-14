@@ -13,9 +13,9 @@
                             <li>
                                 {# if user is defined and not null #}
                                     {% if user is defined and user %}
-                                        <a class="user-linkProfile" href="/profile"><img class="user-image" src="./img_site/user.png" alt="User"></a>
+                                        <a class="nav-link user-linkProfile" href="/profile"><img class="user-image" src="./img_site/user.png" alt="User"></a>
                                     {% else %}
-                                        <a class="user_link" href="/auth">Connexion/Inscription</a><img class="user-image" src="./img_site/user.png" alt="User">
+                                        <a class="nav-link user_link" href="/auth">Connexion/Inscription</a><img class="user-image" src="./img_site/user.png" alt="User">
                                 {% endif %}
                             </li>
                         </a>
@@ -23,13 +23,13 @@
                             <li>
                                 {# if user is defined and not null #}
                                     {% if user is defined and user %}
-                                        <a class="nav-link btn-hover" href="/profile">Mes galeries</a>
+                                        <a class="nav-link" href="/profile">Mes galeries</a>
                                     {% else %}
-                                        <a class="nav-link btn-hover" href="/auth">Mes galeries</a>
+                                        <a class="nav-link" href="/auth">Mes galeries</a>
                                 {% endif %}
                             </li>
                         </a>
-                        <a href="" target="_blank"><li>A propos</li></a>
+                        <a class="nav-link" href="" target="_blank"><li>A propos</li></a>
                     </ul>
                 </div>
             </nav>
