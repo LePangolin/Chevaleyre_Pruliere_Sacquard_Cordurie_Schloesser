@@ -188,6 +188,10 @@
   height: 38px;
 }
 
+.search-detailButton {
+  cursor: pointer;
+}
+
 .search-input:focus {
   outline: none !important;
 }
@@ -444,6 +448,36 @@
 
 .vignette {
   background-color: #0D47A1;
+}
+
+body {
+  font-family: "calibri";
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.username {
+  margin-right: 7px;
+  font-size: 40px;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.separator {
+  display: flex;
+  justify-content: center;
+  width: 20%;
+}
+
+.galleries {
+  font-size: 30px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=style.css.map */
