@@ -429,19 +429,6 @@
   pointer-events: none;
 }
 
-
-.main {
-  justify-content: center;
-}
-
-.gallery-display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-}
-
 .signUp {
   margin-right: 50px;
   margin-left: 25px;
@@ -512,22 +499,29 @@ body {
   font-weight: bold;
   margin-bottom: 20px;
 }
-
 @media screen and (max-width: 520px) {
   .connection_text {
     font-size: 2em;
   }
 }
 
-.vignette {
-  background-color: #0D47A1;
+.main {
+  justify-content: center;
+}
+
+.gallery-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 body {
   font-family: "calibri";
 }
 
-.logout {
+.logout, .add {
   cursor: pointer;
 }
 
@@ -537,6 +531,12 @@ body {
 }
 
 .name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.galleries {
   display: flex;
   justify-content: center;
   align-items: center;
