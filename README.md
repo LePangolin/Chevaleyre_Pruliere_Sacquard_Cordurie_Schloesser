@@ -12,11 +12,15 @@ Fichier d'insertion de la base de données dans /app/database/seeders/inserts.sq
     
 ## Mise en route
 
-```Cloner le repository
-docker-compose up -d
-docker-compose exec --workdir /app php /bin/bash
-composer install
-php vendor/bin/doctrine orm:schema-tool:create```
+`Cloner le repository`
+
+`docker-compose up -d`
+
+`docker-compose exec --workdir /app php /bin/bash`
+
+`composer install`
+
+`php vendor/bin/doctrine orm:schema-tool:create`
 
 ## Objectifs
 
