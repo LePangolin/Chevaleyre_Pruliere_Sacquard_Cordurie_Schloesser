@@ -8,7 +8,7 @@
         <div class="gallery-display">
             <div class="grid-container">
                 {% for publicGallery in listPublicGalleries %}
-                    <div>
+                    <div class="gallery-vign" data-id="{{ publicGallery.id }}">
                         <p>{{ publicGallery.name }}</p>
                         <img src="{{ tabImg[publicGallery.id]}}" alt="vignette de la galerie">
                     </div>
@@ -26,9 +26,9 @@
             <div class="gallery-display">
                 <div class="grid-container">
                     {% for privateGallery in listPrivateGalleries %}
-                        <div>
+                        <div class="gallery-vign" data-id="{{ privateGallery.id }}>
                             <p>{{ privateGallery.name }}</p>
-                            <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie">
+                            <img src="{{ tabImg[privateGallery.id] }}" alt="vignette de la galerie"">
                         </div>
                     {% endfor %}
                 </div>

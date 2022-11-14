@@ -29,3 +29,10 @@ if(document.body.contains(document.getElementById('btnPrevPrivate'))) {
         }
     })
 }
+
+document.querySelectorAll('.gallery-vign').forEach(function (element) {
+    element.addEventListener('click', function () {
+        let id = element.dataset.id
+        window.location.href = '/gallery/' + id
+    })
+})
