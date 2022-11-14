@@ -144,7 +144,7 @@ final class GalleryService {
 
     public function listPublicGalleries($offsetPublic = 0)
     {
-        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1], ['id' => 'DESC'], 10, $offsetPublic);
+        $galleries = $this->em->getRepository(Gallery::class)->findBy(['public' => 1], ['id' => 'DESC'], 15, $offsetPublic);
         return $galleries;
     }
 
@@ -164,7 +164,7 @@ final class GalleryService {
 
         $PrivateGalleries = array_merge($userGalleries, $userAccessGalleries);
 
-        $PrivateGalleries = array_slice($PrivateGalleries, $offsetPrivate, 10);
+        $PrivateGalleries = array_slice($PrivateGalleries, $offsetPrivate, 15);
 
         return $PrivateGalleries;
     }

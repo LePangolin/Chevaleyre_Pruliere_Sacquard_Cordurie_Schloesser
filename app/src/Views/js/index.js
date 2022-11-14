@@ -3,20 +3,20 @@ let offsetPublic = params.has('offsetPublic')?parseInt(params.get('offsetPublic'
 let offsetPrivate = params.has('offsetPrivate')?parseInt(params.get('offsetPrivate'), 10):0
 
 document.getElementById('btnNext').addEventListener('click', function () {
-    offsetPublic += 10
+    offsetPublic += 15
     window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
 })
 
 document.getElementById('btnPrev').addEventListener('click', function () {
     if (offsetPublic > 0) {
-        offsetPublic -= 10
+        offsetPublic -= 15
         window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
     }
 })
 
 if (document.body.contains(document.getElementById('btnNextPrivate'))) {
     document.getElementById('btnNextPrivate').addEventListener('click', function () {
-        offsetPrivate += 10
+        offsetPrivate += 15
         window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
     })
 }
@@ -24,7 +24,7 @@ if (document.body.contains(document.getElementById('btnNextPrivate'))) {
 if(document.body.contains(document.getElementById('btnPrevPrivate'))) {
     document.getElementById('btnPrevPrivate').addEventListener('click', function () {
         if (offsetPrivate > 0) {
-            offsetPrivate -= 10
+            offsetPrivate -= 15
             window.location.href = '/?offsetPublic=' + offsetPublic + '&offsetPrivate=' + offsetPrivate
         }
     })

@@ -23,8 +23,3 @@
     }
 }
 
-@for $i from 1 to $nb-columns {
-    .grid-col#{$i} {
-        @include span-col($i);
-    }
-}
