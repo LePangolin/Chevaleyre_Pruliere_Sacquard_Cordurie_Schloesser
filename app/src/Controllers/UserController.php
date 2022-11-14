@@ -50,7 +50,6 @@ class UserController
 
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                "user" => $_SESSION["user"],
                 'error' => 'Wrong username or password',
             ]);
 
