@@ -18,8 +18,7 @@
     {% endif %}
 
     {% if is_author == true and pictures %}
-        <a href="/editGallery/{{gallery['id']}}"><button class="edit_button">Edit</button></a>
-        <form id="delete_form" method="post" action="/deleteGallery">
+            <input type="button" class="edit_button" onclick="self.location.href='/editGallery/{{gallery['id']}}'" value="Edit">      
             <input type="submit" id="delete_button" value="Delete">
             <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
         </form>
@@ -28,7 +27,7 @@
             <img src="{{picture['link']}}" alt="{{picture['desc']}}">
         {% endfor %}
     {% elseif is_author == true and not pictures %}
-        <a href="/editGallery/{{gallery['id']}}"><button class="edit_button">Edit</button></a>
+        <input type="button" class="edit_button" onclick="self.location.href='/editGallery/{{gallery['id']}}'" value="Edit">
         <form id="delete_form" method="post" action="/deleteGallery">
             <input type="submit" id="delete_button" value="Delete">
             <input type="hidden" name="id_gallery" id="id_gallery" value={{gallery['id']}}>
