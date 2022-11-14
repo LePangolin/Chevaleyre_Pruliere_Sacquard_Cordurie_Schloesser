@@ -87,6 +87,7 @@
   z-index: 2;
   -webkit-user-select: none;
   user-select: none;
+  box-shadow: 8px 6px 18px -11px rgba(35, 35, 35, 0.91);
 }
 
 .menuToggle input {
@@ -145,9 +146,9 @@
   width: 235px;
   margin: -100px 0 0 -50px;
   padding: 125px 50px 50px 50px;
+  box-shadow: 0px 6px 18px -11px rgba(35, 35, 35, 0.91);
   background: #ededed;
   list-style-type: none;
-  -webkit-font-smoothing: antialiased;
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
