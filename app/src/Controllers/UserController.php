@@ -50,7 +50,7 @@ class UserController
 
             return $this->twig->render($response, 'authentification.html.twig', [
                 'title' => 'Auth',
-                "user" => $userSession,
+                "user" => $_SESSION["user"],
                 'error' => 'Wrong username or password',
             ]);
 
@@ -60,7 +60,7 @@ class UserController
 
         $id = $_SESSION['user']->getId();
 
-        return $response = $response->withHeader('Location', '/profile/'.$id)->withStatus(302);
+        return $response = $response->withHeader('Location', '/profile/')->withStatus(302);
     }
 
     public function signUp(Request $request, Response $response, array $args): Response
@@ -75,8 +75,10 @@ class UserController
                 'error' => 'Username already taken',
             ]);
         }else{
+
+            $_SESSION['user'] = $user;
             
-            $response = $response->withHeader('Location', '/profile/'. $user->getId())->withStatus(302);
+            $response = $response->withHeader('Location', '/profile/')->withStatus(302);
 
             return $response;
         }
