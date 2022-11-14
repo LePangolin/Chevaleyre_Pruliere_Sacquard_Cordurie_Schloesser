@@ -161,7 +161,7 @@ class GalleryController
         {
             $random = rand(1, $gallery->getNbPictures());
             $idGallery = $gallery->getId();
-            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() == null) {
+            if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() !== null) {
                 $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
             } else {
                 $tabImg[$idGallery] = null;
@@ -192,10 +192,15 @@ class GalleryController
             $galleries = $this->galleryService->listPrivateGalleries($idUser, $offsetPrivate);
             $tabImg = array();
 
-            foreach ($galleries as $gallery) {
+            foreach ($galleries as $gallery)
+            {
                 $random = rand(1, $gallery->getNbPictures());
                 $idGallery = $gallery->getId();
-                $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+                if ($gallery->getNbPictures() > 0 && $gallery->getNbPictures() !== null) {
+                    $tabImg[$idGallery] = $this->galleryService->getPictureById($idGallery, $random)->getLink();
+                } else {
+                    $tabImg[$idGallery] = null;
+                }
             }
             
             $userSession = $_SESSION["user"] ?? null;
